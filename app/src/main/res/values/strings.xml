@@ -7,4 +7,10 @@
     <string name="version">Version 1.0.0</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+
+    <string name="list_title">Sample title</string>
+    <string name="list_name">รายการ</string>
+    <string name="time">เวลาออกอากาศ</string>
+    <string name="status">สถานะ</string>
+    <string name="my_favorites">รายการโปรด</string>
 </resources>
