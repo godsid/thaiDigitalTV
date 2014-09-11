@@ -53,6 +53,7 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#CCC"
             android:layout_marginTop="10dp"/>
 
         <ExpandableListView
@@ -60,7 +61,7 @@
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:background="#EEE"
+            android:background="#F00"
             />
 
         <ExpandableListView
@@ -68,7 +69,7 @@
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:background="#EEE"
+            android:background="#0F0"
             />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
