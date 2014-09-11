@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< HEAD
+
 import android.view.Window;
-=======
->>>>>>> 44cd0a67579beca02895c2d4690a017655baed8f
+
 
 
 public class MainActivity extends Activity {

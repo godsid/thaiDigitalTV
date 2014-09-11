@@ -53,10 +53,7 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-<<<<<<< HEAD
-=======
             android:background="#CCC"
->>>>>>> 44cd0a67579beca02895c2d4690a017655baed8f
             android:layout_marginTop="10dp"/>
 
         <ExpandableListView
@@ -64,11 +61,7 @@
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-<<<<<<< HEAD
-            android:background="#EEE"
-=======
-            android:background="#F00"
->>>>>>> 44cd0a67579beca02895c2d4690a017655baed8f
+            android:background="#E00"
             />
 
         <ExpandableListView
@@ -76,11 +69,8 @@
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-<<<<<<< HEAD
-            android:background="#EEE"
-=======
-            android:background="#0F0"
->>>>>>> 44cd0a67579beca02895c2d4690a017655baed8f
+            android:background="#0E0"
+
             />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
