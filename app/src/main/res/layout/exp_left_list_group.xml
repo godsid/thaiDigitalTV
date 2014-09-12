@@ -7,7 +7,7 @@
      >
  
     <TextView
-        android:id="@+id/lblListHeader"
+        android:id="@+id/left_title_head_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 	    android:paddingTop="10dp"    
@@ -18,7 +18,7 @@
         />
 
     <ImageView
-        android:id="@+id/iv_group"
+        android:id="@+id/left_ic_head_group"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_action_camera"
