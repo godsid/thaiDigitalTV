@@ -2,22 +2,26 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
 import android.view.View;
-import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
     ImageView IV_ic_nav_top_left,IV_ic_nav_top_right;
     ExpandableListView EXP_exp_left,EXP_exp_right;
     DrawerLayout DL_drawer_layout;
+    private DrawerLayout drawer;
+    private ExpandableListView drawerList;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +64,6 @@ public class MainActivity extends Activity {
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -78,10 +79,6 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-
-
         return false;
     }
-
-
 }
