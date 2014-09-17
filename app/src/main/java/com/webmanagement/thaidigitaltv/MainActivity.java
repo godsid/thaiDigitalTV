@@ -9,16 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import android.view.Window;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -29,22 +22,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 
 public class MainActivity extends Activity{
     ImageView IV_ic_nav_top_left,IV_ic_nav_top_right;
     ExpandableListView EXP_exp_left,EXP_exp_right;
     DrawerLayout DL_drawer_layout;
 
+
+    private ExpandableListAdapter_Left ExpAdapter;
+
     private DrawerLayout drawer;
     private ExpandableListView drawerList;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-
-
 
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
@@ -105,7 +95,56 @@ public class MainActivity extends Activity{
             }
         });
 
+
+        EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                // Toast.makeText(getApplicationContext(),
+                // "Group Clicked " + listDataHeader.get(groupPosition),
+                // Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        // Listview Group expanded listener
+        EXP_exp_left.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),group_list.get(groupPosition) + " Expanded",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Listview Group collasped listener
+        EXP_exp_left.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(),group_list.get(groupPosition) + " Collapsed",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        // Listview on child click listener
+        EXP_exp_left.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                // TODO Auto-generated method stub
+                Toast.makeText(
+                        getApplicationContext(),group_list.get(groupPosition)+ " : "+ (group_list.get(groupPosition)), Toast.LENGTH_SHORT)
+                        .show();
+                return false;
+            }
+        });
     }
+
+
 
 
 
@@ -171,9 +210,9 @@ public class MainActivity extends Activity{
                                 }
 
 
+                                ExpAdapter = new ExpandableListAdapter_Left(MainActivity.this, group_list);
+                                EXP_exp_left.setAdapter(ExpAdapter);
 
-                                //ExpAdapter = new ExpanableListAdapter_Left(MainActivity.this, group_list);
-                                //EXP_exp_left.setAdapter(ExpAdapter);
 
 
                                 Log.d("logrun2", group_list.size()+" ");
