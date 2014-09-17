@@ -14,5 +14,6 @@
     <string name="status">สถานะ</string>
     <string name="setting">Setting</string>
     <string name="my_favorites">รายการโปรด</string>
+    <string name="title_of_detail">Slide From The Left -- or -- Slide From The Right</string>
 
 </resources>

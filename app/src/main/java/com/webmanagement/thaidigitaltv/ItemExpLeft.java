@@ -6,6 +6,7 @@ package com.webmanagement.thaidigitaltv;
 public class ItemExpLeft {
     private String Name;
     private String Image;
+    private int Id;
 
     public String getName() {
         return Name;
@@ -22,4 +23,13 @@ public class ItemExpLeft {
     public void setImage(String Image) {
         this.Image = Image;
     }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        this.Id = id;
+    }
+
 }
