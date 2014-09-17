@@ -1,14 +1,15 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
 import android.view.View;
+
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,17 +24,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
     ImageView IV_ic_nav_top_left,IV_ic_nav_top_right;
     ExpandableListView EXP_exp_left,EXP_exp_right;
     DrawerLayout DL_drawer_layout;
 
+
     private ExpandableListAdapter_Left ExpAdapter;
+
+    private DrawerLayout drawer;
+    private ExpandableListView drawerList;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
 
     AQuery aq;
+
+    AlertDialog alertDialogStores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +51,14 @@ public class MainActivity extends Activity {
 
         aq = new AQuery(this);
 
-        IV_ic_nav_top_left = (ImageView)findViewById(R.id.ic_nav_top_left);
-        IV_ic_nav_top_right = (ImageView)findViewById(R.id.ic_nav_top_right);
-        EXP_exp_left = (ExpandableListView)findViewById(R.id.exp_left);
-        EXP_exp_right = (ExpandableListView)findViewById(R.id.exp_right);
-        DL_drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
+        IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
+        EXP_exp_left = (ExpandableListView) findViewById(R.id.exp_left);
+        EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
+        DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 
         prepareListData();
-
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +232,6 @@ public class MainActivity extends Activity {
                 });
 
 
-
     }
 
 
@@ -244,10 +251,6 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
-
-
         return false;
     }
-
-
 }

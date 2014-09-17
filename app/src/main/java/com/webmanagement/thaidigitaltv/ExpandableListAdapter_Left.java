@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -103,8 +104,6 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
         return convertView;
     }
 
-
-
     @Override
     public boolean hasStableIds() {
         return true;
@@ -114,4 +113,5 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }
