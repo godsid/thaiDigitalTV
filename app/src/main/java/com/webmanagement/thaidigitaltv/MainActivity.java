@@ -44,7 +44,7 @@ public class MainActivity extends Activity{
     private ExpandableListView drawerList;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private ExpanableListAdapter_Left ExpAdapter;
+
 
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
@@ -172,13 +172,13 @@ public class MainActivity extends Activity{
 
 
 
-                                ExpAdapter = new ExpanableListAdapter_Left(MainActivity.this, group_list);
-                                EXP_exp_left.setAdapter(ExpAdapter);
+                                //ExpAdapter = new ExpanableListAdapter_Left(MainActivity.this, group_list);
+                                //EXP_exp_left.setAdapter(ExpAdapter);
 
 
                                 Log.d("logrun2", group_list.size()+" ");
 
-                                ExpAdapter.notifyDataSetChanged();
+                                //ExpAdapter.notifyDataSetChanged();
 
                             }  catch (JSONException e) {
                                 e.printStackTrace();
