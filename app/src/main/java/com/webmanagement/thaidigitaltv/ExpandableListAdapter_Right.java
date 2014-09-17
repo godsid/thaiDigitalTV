@@ -1,40 +1,29 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
-import java.io.IOException;
-import java.net.URL;
-import java.security.acl.Group;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by SystemDLL on 12/9/2557.
  */
 
-public class ExpanableListAdapter_Left extends BaseExpandableListAdapter {
+public class ExpandableListAdapter_Right extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<GroupExpLeft> groups;
 
     AQuery aq;
 
-    public ExpanableListAdapter_Left(Context context, ArrayList<GroupExpLeft> groups) {
+    public ExpandableListAdapter_Right(Context context, ArrayList<GroupExpLeft> groups) {
         this.context = context;
         this.groups = groups;
         aq = new AQuery(context);
@@ -114,6 +103,8 @@ public class ExpanableListAdapter_Left extends BaseExpandableListAdapter {
         return convertView;
     }
 
+
+
     @Override
     public boolean hasStableIds() {
         return true;
@@ -123,5 +114,4 @@ public class ExpanableListAdapter_Left extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
 }
