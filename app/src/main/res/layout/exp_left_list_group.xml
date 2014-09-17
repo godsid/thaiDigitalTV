@@ -6,25 +6,21 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/iv_group"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_action_camera" />
+        android:id="@+id/iv_list_group_left"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_action_camera"
+        />
 
     <TextView
-        android:id="@+id/lblListHeader"
-        android:layout_width="fill_parent"
+        android:id="@+id/tv_list_group_left"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_toRightOf="@id/iv_group"
+        android:layout_toRightOf="@id/iv_list_group_left"
         android:gravity="center_vertical"
         android:text="@string/list_name"
         android:textColor="#F9F9F9"
         android:textSize="20dp" />
-
 
 </RelativeLayout>
