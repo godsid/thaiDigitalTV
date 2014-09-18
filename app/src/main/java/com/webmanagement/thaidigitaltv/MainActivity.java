@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,7 +38,6 @@ public class MainActivity extends Activity{
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram = new DetailProgram();
 
-
     private ExpandableListAdapter_Left ExpAdapter;
 
     ArrayList<GroupExpLeft> group_list;
@@ -62,7 +62,6 @@ public class MainActivity extends Activity{
 
 
         prepareListData();
-
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +104,9 @@ public class MainActivity extends Activity{
             View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
             myLayout.addView(hiddenInfo);
         }
+
+        TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
+        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
 
 /*
         EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -166,37 +168,48 @@ public class MainActivity extends Activity{
 
 
     public void openProgramDetail() {
-                       //Check if the Layout already exists
+
+                TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
+                ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
 
+        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+        TV_title_detail_list.setText(detailProgram.getChan_name());
+        aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
 
-                TextView tv_title = (TextView) findViewById(R.id.tv_detail_list_title);
-                ImageView iv_title = (ImageView) findViewById(R.id.iv_detail_list_title);
-
-        tv_title.setText(detailProgram.getChan_name());
-        aq.id(iv_title).image(detailProgram.getChan_pic());
-
-        TableLayout ll = (TableLayout) findViewById(R.id.tb_detail_list);
-        ll.removeAllViews();
+        TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
+        TL_detail_list.removeAllViews();
 
         TableRow tbrow0 = new TableRow(this);
+
         TextView tv0 = new TextView(this);
-        tv0.setText(" Sl.No ");
-        tv0.setTextColor(Color.WHITE);
-        tbrow0.addView(tv0);
         TextView tv1 = new TextView(this);
-        tv1.setText(" Product ");
-        tv1.setTextColor(Color.WHITE);
-        tbrow0.addView(tv1);
         TextView tv2 = new TextView(this);
-        tv2.setText(" Unit Price ");
-        tv2.setTextColor(Color.WHITE);
-        tbrow0.addView(tv2);
         TextView tv3 = new TextView(this);
-        tv3.setText(" Stock Remaining ");
+
+        tv0.setText(R.string.tb_header_program);
+        tv1.setText(R.string.tb_header_time);
+        tv2.setText(R.string.tb_header_status);
+        tv3.setText(R.string.tb_header_fav);
+
+        tv0.setTextColor(Color.WHITE);
+        tv1.setTextColor(Color.WHITE);
+        tv2.setTextColor(Color.WHITE);
         tv3.setTextColor(Color.WHITE);
+
+        tv0.setGravity(Gravity.CENTER);
+        tv0.setGravity(Gravity.CENTER);
+        tv2.setGravity(Gravity.CENTER);
+        tv3.setGravity(Gravity.CENTER);
+
+        tbrow0.addView(tv0);
+        tbrow0.addView(tv1);
+        tbrow0.addView(tv2);
         tbrow0.addView(tv3);
-        ll.addView(tbrow0);
+
+
+
+        TL_detail_list.addView(tbrow0);
 
 
 
@@ -223,7 +236,7 @@ public class MainActivity extends Activity{
             t4v.setTextColor(Color.WHITE);
             t4v.setGravity(Gravity.CENTER);
             tbrow.addView(t4v);
-            ll.addView(tbrow);
+            TL_detail_list.addView(tbrow);
 
         }
 
@@ -234,12 +247,14 @@ public class MainActivity extends Activity{
     public void prepareListData() {
 
 
-        aq.ajax("https://dl.dropboxusercontent.com/u/40791893/pic_android/menu_items3.js",
-       // aq.ajax("https://dl.dropboxusercontent.com/s/yk30i4avjhxs6ue/exp_right.js",
+        aq.ajax("https://dl.dropboxusercontent.com/u/40791893/pic_android/menu_item",
+                // aq.ajax("https://dl.dropboxusercontent.com/s/yk30i4avjhxs6ue/exp_right.js",
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
                     @Override
                     public void callback(String url, JSONObject object,AjaxStatus status) {
+
+us) {
 
                         if (object != null) {
 
