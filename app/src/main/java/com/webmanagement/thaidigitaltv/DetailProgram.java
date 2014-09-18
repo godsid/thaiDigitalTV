@@ -4,10 +4,17 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 17/9/2557.
  */
 public class DetailProgram{
-    private int chan_id,cate_id;
+    private int chan_id,cate_id,prog_id;
     private String chan_name,chan_pic;
 
 
+    public int getProg_id() {
+        return prog_id;
+    }
+
+    public void setProg_id(int prog_id) {
+        this.prog_id = prog_id;
+    }
     public int getChan_id() {
         return chan_id;
     }

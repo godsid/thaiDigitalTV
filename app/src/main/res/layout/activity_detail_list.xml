@@ -6,43 +6,55 @@
     android:layout_height="wrap_content"
     android:id="@+id/ll_detail_list"
     >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#666666"
+        >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp">
 
-    <ImageView
-        android:id="@+id/iv_detail_list_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_tip"
-        />
+        <ImageView
+            android:id="@+id/iv_detail_list_title"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_tip"
+            android:layout_marginLeft="25dp"
+            />
 
-    <TextView
-        android:text="@string/title_of_detail"
-        android:id="@+id/tv_detail_list_title"
-        android:textColor="#b3000d"
-        android:gravity="center_vertical|center_horizontal"
-        android:textSize="15dip"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@+id/iv_detail_list_title"
-        android:textStyle="bold"
-        android:layout_marginTop="30dip"
-android:layout_marginLeft="25dp"
-        android:typeface="sans"/>
+        <TextView
+            android:text="@string/title_of_detail"
+            android:id="@+id/tv_detail_list_title"
+            android:textColor="#CCC"
+            android:gravity="center_vertical"
+            android:textSize="15dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/iv_detail_list_title"
+            android:textStyle="bold"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="25dp"
+            android:typeface="sans"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
 
 
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#999999"
+        >
 
     <RelativeLayout android:id="@+id/rl_country_heading"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#555555"
+        android:layout_height="fill_parent"
         >
 
         <TextView android:id="@+id/tv_header_program"
@@ -52,7 +64,7 @@ android:layout_marginLeft="25dp"
             android:text="@string/tb_header_program"
             android:textStyle="normal|bold"
             android:textColor="#FFFFFF"
-            android:textSize="16dip">
+            android:textSize="16dp">
         </TextView>
         <TextView android:id="@+id/tv_time_program"
             android:layout_width="90dp"
@@ -61,7 +73,7 @@ android:layout_marginLeft="25dp"
             android:text="@string/tb_header_time"
             android:textStyle="normal|bold"
             android:textColor="#FFFFFF"
-            android:textSize="16dip"
+            android:textSize="16dp"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"
             android:layout_toRightOf="@+id/tv_header_program">
@@ -73,7 +85,7 @@ android:layout_marginLeft="25dp"
             android:text="@string/tb_header_status"
             android:textStyle="normal|bold"
             android:textColor="#FFFFFF"
-            android:textSize="16dip"
+            android:textSize="16dp"
             android:layout_toRightOf="@+id/tv_time_program">
         </TextView>
         <TextView android:id="@+id/tv_header_fav"
@@ -83,30 +95,27 @@ android:layout_marginLeft="25dp"
             android:text="@string/tb_header_fav"
             android:textStyle="normal|bold"
             android:textColor="#FFFFFF"
-            android:textSize="16dip"
+            android:textSize="16dp"
             android:layout_toRightOf="@+id/tv_header_status">
         </TextView>
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:id="@+id/ll_country"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-        <ScrollView android:id="@+id/ScrollView11"
+
+        <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:fillViewport="true">
-            <LinearLayout android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip">
+            android:background="#FF0000"
+            >
+
                 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:stretchColumns="0,1"
-                    android:id="@+id/tb_detail_list">
+                    android:id="@+id/tb_detail_list"
+
+                    >
                 </TableLayout>
-            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

@@ -14,7 +14,7 @@
     <string name="status">สถานะ</string>
     <string name="setting">Setting</string>
     <string name="my_favorites">รายการโปรด</string>
-    <string name="title_of_detail">Slide From The Left &#62;&#62; or &#60;&#60; The Right</string>
+    <string name="title_of_detail">Slide From The Left &#62;&#62; or \n &#60;&#60; The Right</string>
     <string name="tb_header_program">รายการ</string>
     <string name="tb_header_time">เวลาออกอากาศ</string>
     <string name="tb_header_status">สถานะ</string>
