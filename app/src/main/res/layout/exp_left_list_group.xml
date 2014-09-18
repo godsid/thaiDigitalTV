@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/bg_list_item"
     android:padding="8dp">
 
     <ImageView
@@ -17,10 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginLeft="17dp"
         android:layout_toRightOf="@id/iv_list_group_left"
         android:gravity="center_vertical"
         android:text="@string/list_name"
-        android:textColor="#F9F9F9"
-        android:textSize="20dp" />
+        android:textColor="#595959"
+        android:textSize="17dp" />
 
 </RelativeLayout>
