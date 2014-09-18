@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,9 +38,8 @@ public class MainActivity extends Activity{
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram = new DetailProgram();
 
-
     private ExpandableListAdapter_Left ExpAdapter;
-
+    static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
 
@@ -63,7 +63,6 @@ public class MainActivity extends Activity{
 
 
         prepareListData();
-
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +105,9 @@ public class MainActivity extends Activity{
             View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
             myLayout.addView(hiddenInfo);
         }
+
+        TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
+        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
 
 /*
         EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -154,10 +156,11 @@ public class MainActivity extends Activity{
                 detailProgram.setChan_name(get_channel_name);
                 detailProgram.setChan_pic(get_channel_pic);
 
+                openProgramDetail();
 
                 Toast.makeText(getApplicationContext(),get_channel_id +" "+get_channel_name + "",
                         Toast.LENGTH_SHORT).show();
-                openProgramDetail();
+
                 DL_drawer_layout.closeDrawer(EXP_exp_left);
 
                 return false;
@@ -165,71 +168,117 @@ public class MainActivity extends Activity{
         });
     }
 
+    public void setDataToTable (String c1,String c2,String c3,boolean b1,int i1) {
+
+        TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
+
+        int tv_color;
+        if ((i1 % 2) != 0)
+            tv_color = Color.rgb(252,236,232);
+        else
+            tv_color = Color.rgb(228,216,205);
+
+        Log.d("logrun2", i1+" :"+(i1 % 1));
+
+        TableRow tbrow = new TableRow(this);
+        TextView t1v = new TextView(this);
+        t1v.setText(c1);
+        t1v.setTextColor(Color.BLACK);
+        t1v.setGravity(Gravity.CENTER);
+        t1v.setBackgroundColor(tv_color);
+        tbrow.addView(t1v);
+
+        TextView t2v = new TextView(this);
+        t2v.setText(c2+" - "+c3);
+        t2v.setTextColor(Color.BLACK);
+        t2v.setGravity(Gravity.CENTER);
+        t2v.setBackgroundColor(tv_color);
+        tbrow.addView(t2v);
+
+        TextView t3v = new TextView(this);
+        t3v.setText("comming");
+        t3v.setTextColor(Color.BLACK);
+        t3v.setGravity(Gravity.CENTER);
+        t3v.setBackgroundColor(tv_color);
+        tbrow.addView(t3v);
+
+        TextView t4v = new TextView(this);
+        t4v.setText(" + ");
+        t4v.setTextColor(Color.BLACK);
+        t4v.setGravity(Gravity.CENTER);
+        t4v.setBackgroundColor(tv_color);
+        tbrow.addView(t4v);
+
+        TL_detail_list.addView(tbrow);
+
+        if (b1 == false)
+            TL_detail_list.removeAllViews();
+
+    }
 
     public void openProgramDetail() {
-                       //Check if the Layout already exists
+
+     TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
+     ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
 
+        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+        TV_title_detail_list.setText(detailProgram.getChan_name());
+        aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
+        //IV_title_detail_list.setScaleY(1.5f);
+        //IV_title_detail_list.setScaleX(1.5f);
 
-                TextView tv_title = (TextView) findViewById(R.id.tv_detail_list_title);
-                ImageView iv_title = (ImageView) findViewById(R.id.iv_detail_list_title);
+        setDataToTable ("","","",false,1);
 
-        tv_title.setText(detailProgram.getChan_name());
-        aq.id(iv_title).image(detailProgram.getChan_pic());
+        aq.ajax(urlPath,
+                //aq.ajax("https://dl.dropboxusercontent.com/s/k9nxs7cb16luqe3/exp_android2.js",
+                JSONObject.class, new AjaxCallback<JSONObject>() {
+                    @Override
+                    public void callback(String url, JSONObject object,AjaxStatus status) {
 
-        TableLayout ll = (TableLayout) findViewById(R.id.tb_detail_list);
-        ll.removeAllViews();
+                        if (object != null) {
 
-        TableRow tbrow0 = new TableRow(this);
-        TextView tv0 = new TextView(this);
-        tv0.setText(" Sl.No ");
-        tv0.setTextColor(Color.WHITE);
-        tbrow0.addView(tv0);
-        TextView tv1 = new TextView(this);
-        tv1.setText(" Product ");
-        tv1.setTextColor(Color.WHITE);
-        tbrow0.addView(tv1);
-        TextView tv2 = new TextView(this);
-        tv2.setText(" Unit Price ");
-        tv2.setTextColor(Color.WHITE);
-        tbrow0.addView(tv2);
-        TextView tv3 = new TextView(this);
-        tv3.setText(" Stock Remaining ");
-        tv3.setTextColor(Color.WHITE);
-        tbrow0.addView(tv3);
-        ll.addView(tbrow0);
+                            try {
+                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(2).getJSONArray("program_detail");
 
 
+                                    for (int j = 0; j < items_array_prog.length(); j++) {
 
-        for (int i = 0; i <12; i++) {
+                                       int  prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
+                                       int  chan_id = items_array_prog.getJSONObject(j).getInt("chan_id");
+                                       String  prog_title = items_array_prog.getJSONObject(j).getString("prog_title");
+                                       String  prog_timestart = items_array_prog.getJSONObject(j).getString("prog_timestart");
+                                       String  prog_timeend = items_array_prog.getJSONObject(j).getString("prog_timeend");
 
-            TableRow tbrow = new TableRow(this);
-            TextView t1v = new TextView(this);
-            t1v.setText("" + i);
-            t1v.setTextColor(Color.WHITE);
-            t1v.setGravity(Gravity.CENTER);
-            tbrow.addView(t1v);
-            TextView t2v = new TextView(this);
-            t2v.setText("Product " + i);
-            t2v.setTextColor(Color.WHITE);
-            t2v.setGravity(Gravity.CENTER);
-            tbrow.addView(t2v);
-            TextView t3v = new TextView(this);
-            t3v.setText("Rs." + i);
-            t3v.setTextColor(Color.WHITE);
-            t3v.setGravity(Gravity.CENTER);
-            tbrow.addView(t3v);
-            TextView t4v = new TextView(this);
-            t4v.setText("" + i * 15 / 32 * 10);
-            t4v.setTextColor(Color.WHITE);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow.addView(t4v);
-            ll.addView(tbrow);
+
+                                        if (detailProgram.getChan_id() == chan_id) {
+                                            setDataToTable (prog_title,prog_timestart,prog_timeend,true,j);
+                                            // Log.d("logrun2", items_chan_id+"  "+items_cate_id_in_chan + " "+items_chan_title);
+                                        }
+                                        //arrayListData.add(new DataCustomListView(item.getString("cover"),item.getString("title"),item.getString("mask")));
+
+
+                                    }
+                                Log.d("logrun2", group_list.size()+" ");
+
+                                //ExpAdapter.notifyDataSetChanged();
+
+                            }  catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.d("logrun2", e.toString());
+                            }
+                        } else {
+                            Log.d("logrun2","Object is Null");
+                        }
+
+                        // super.callback(url, object, status);
+                    }
+                });
 
         }
 
 
-    }
+
 
 
     public void prepareListData() {
@@ -237,10 +286,15 @@ public class MainActivity extends Activity{
         aq.ajax("https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js",
         //aq.ajax("https://dl.dropboxusercontent.com/u/40791893/pic_android/menu_items3.js",
        // aq.ajax("https://dl.dropboxusercontent.com/s/yk30i4avjhxs6ue/exp_right.js",
+
+
+        aq.ajax(urlPath,
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
                     @Override
                     public void callback(String url, JSONObject object,AjaxStatus status) {
+
+
 
                         if (object != null) {
 
