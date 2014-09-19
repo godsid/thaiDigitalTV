@@ -6,44 +6,6 @@
     android:layout_height="wrap_content"
     android:id="@+id/ll_detail_list"
     >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#666666"
-        >
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp">
-
-        <ImageView
-            android:id="@+id/iv_detail_list_title"
-            android:layout_width="61dp"
-            android:layout_height="61dp"
-            android:src="@drawable/ic_tip"
-            android:layout_marginLeft="25dp"
-            />
-
-        <TextView
-            android:text="@string/title_of_detail"
-            android:id="@+id/tv_detail_list_title"
-            android:textColor="#CCC"
-            android:gravity="center_vertical"
-            android:textSize="15dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_toRightOf="@+id/iv_detail_list_title"
-            android:textStyle="bold"
-            android:layout_marginTop="10dip"
-            android:layout_marginLeft="25dp"
-            android:typeface="sans"/>
-
-    </RelativeLayout>
-</LinearLayout>
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"

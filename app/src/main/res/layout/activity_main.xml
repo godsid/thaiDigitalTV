@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#323232"
         android:orientation="horizontal" >
@@ -16,18 +16,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_drawer_l" />
+            android:src="@drawable/ic_drawer_exp_l" />
+
+        <ImageView
+            android:id="@+id/iv_detail_list_title"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/title_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:id="@+id/tv_detail_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/iv_detail_list_title"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
             android:text="thaiDigitalTV"
             android:textColor="#FFFFFF"
-            android:textSize="26dp"
-            android:textStyle="bold"/>
+            android:textSize="30dp"
+            android:textStyle="bold"
+            />
 
         <ImageView
             android:id="@+id/ic_nav_top_right"
@@ -52,9 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FCECE8"
-            android:layout_marginTop="10dp"
-            android:scrollbars="vertical"
-            />
+            android:scrollbars="vertical"/>
 
         <ExpandableListView
             android:id="@+id/exp_left"
@@ -64,8 +73,8 @@
             android:background="#FFFFFF"
             android:divider="#EEE"
             android:dividerHeight="2dp"
-            android:groupIndicator="@drawable/group_indicator"
-            />
+            android:choiceMode="singleChoice"
+            android:groupIndicator="@drawable/group_indicator"/>
 
         <ExpandableListView
             android:id="@+id/exp_right"
@@ -75,7 +84,8 @@
             android:background="#FFFFFF"
             android:divider="#EEE"
             android:dividerHeight="2dp"
+            android:choiceMode="singleChoice"
+            android:groupIndicator="@drawable/group_indicator"/>
 
-            />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

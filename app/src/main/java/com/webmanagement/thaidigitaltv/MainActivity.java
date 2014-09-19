@@ -107,7 +107,7 @@ public class MainActivity extends Activity{
         }
 
         TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,14);
+        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
 /*
         EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -151,7 +151,10 @@ public class MainActivity extends Activity{
                 String get_channel_name = group_list.get(groupPosition).getItems().get(childPosition).getName();
                 int get_channel_id = group_list.get(groupPosition).getItems().get(childPosition).getId();
                 String  get_channel_pic = group_list.get(groupPosition).getItems().get(childPosition).getImage();
-
+                //get position highlight
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                parent.setItemChecked(index, true);
+                //end
                 detailProgram.setChan_id(get_channel_id);
                 detailProgram.setChan_name(get_channel_name);
                 detailProgram.setChan_pic(get_channel_pic);
@@ -164,8 +167,11 @@ public class MainActivity extends Activity{
                 DL_drawer_layout.closeDrawer(EXP_exp_left);
 
                 return false;
+
             }
         });
+
+
     }
 
     public void setDataToTable (String c1,String c2,String c3,boolean b1,int i1) {
@@ -222,7 +228,7 @@ public class MainActivity extends Activity{
      ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
 
-        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+        //TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
         TV_title_detail_list.setText(detailProgram.getChan_name());
         aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
         //IV_title_detail_list.setScaleY(1.5f);
