@@ -2,12 +2,12 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +43,15 @@ public class MainActivity extends Activity{
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
 
+    Typeface TF_font;
+    String frontPath = "fonts/RSU_BOLD.ttf";
+
+    TextView TV_header_program,TV_header_time,TV_header_status,TV_header_fav,TV_detail_list_title;
+
+    int tv_header_tb_size = 18;
+    int tv_item_tb_size = 16;
+
+
     AQuery aq;
 
 
@@ -61,6 +70,11 @@ public class MainActivity extends Activity{
         EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+
+        TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
+        TV_detail_list_title.setTypeface(TF_font);
+        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
         prepareListData();
 
@@ -106,8 +120,23 @@ public class MainActivity extends Activity{
             myLayout.addView(hiddenInfo);
         }
 
-        TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+        TV_header_program = (TextView) findViewById(R.id.tv_header_program);
+        TV_header_time = (TextView) findViewById(R.id.tv_header_time);
+        TV_header_status = (TextView) findViewById(R.id.tv_header_status);
+        TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
+
+        TV_header_program.setTypeface(TF_font);
+        TV_header_time.setTypeface(TF_font);
+        TV_header_status.setTypeface(TF_font);
+        TV_header_fav.setTypeface(TF_font);
+
+        TV_header_program.setTextSize(tv_header_tb_size);
+        TV_header_time.setTextSize(tv_header_tb_size);
+        TV_header_status.setTextSize(tv_header_tb_size);
+        TV_header_fav.setTextSize(tv_header_tb_size);
+
+
+
 
 /*
         EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -174,48 +203,75 @@ public class MainActivity extends Activity{
 
     }
 
-    public void setDataToTable (String c1,String c2,String c3,boolean b1,int i1) {
+    public void setDataToTable (int id,String c1,String c2,String c3,boolean b1,int i1) {
+
+
+        Log.d("logrun2",  c1.length()+"  : "+TV_header_program.getPivotY());
+
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
 
-        int tv_color;
+        int bg_tv_color,item_tv_color = Color.BLACK;
         if ((i1 % 2) != 0)
-            tv_color = Color.rgb(252,236,232);
+            bg_tv_color = Color.rgb(252,236,232);
         else
-            tv_color = Color.rgb(228,216,205);
+            bg_tv_color = Color.rgb(228,216,205);
 
-        Log.d("logrun2", i1+" :"+(i1 % 1));
+        final TableRow tb_row = new TableRow(this);
 
-        TableRow tbrow = new TableRow(this);
-        TextView t1v = new TextView(this);
-        t1v.setText(c1);
-        t1v.setTextColor(Color.BLACK);
-        t1v.setGravity(Gravity.CENTER);
-        t1v.setBackgroundColor(tv_color);
-        tbrow.addView(t1v);
+        TextView tv_col_1 = new TextView(this);
+        tv_col_1.setWidth(TV_header_program.getWidth());
 
-        TextView t2v = new TextView(this);
-        t2v.setText(c2+" - "+c3);
-        t2v.setTextColor(Color.BLACK);
-        t2v.setGravity(Gravity.CENTER);
-        t2v.setBackgroundColor(tv_color);
-        tbrow.addView(t2v);
+       if (c1.length() <= 15)
+            tv_col_1.setText(c1+"\n");
+        else
+           tv_col_1.setText(c1);
 
-        TextView t3v = new TextView(this);
-        t3v.setText("comming");
-        t3v.setTextColor(Color.BLACK);
-        t3v.setGravity(Gravity.CENTER);
-        t3v.setBackgroundColor(tv_color);
-        tbrow.addView(t3v);
+        tv_col_1.setTextColor(item_tv_color);
+        tv_col_1.setGravity(Gravity.CENTER);
+        tv_col_1.setBackgroundColor(bg_tv_color);
+        tv_col_1.setTextSize(tv_item_tb_size);
 
-        TextView t4v = new TextView(this);
-        t4v.setText(" + ");
-        t4v.setTextColor(Color.BLACK);
-        t4v.setGravity(Gravity.CENTER);
-        t4v.setBackgroundColor(tv_color);
-        tbrow.addView(t4v);
 
-        TL_detail_list.addView(tbrow);
+        tb_row.addView(tv_col_1);
+
+        TextView tv_col_2 = new TextView(this);
+        tv_col_2.setWidth(TV_header_time.getWidth());
+        tv_col_2.setText(c2+"\n"+c3);
+        tv_col_2.setTextColor(item_tv_color);
+        tv_col_2.setGravity(Gravity.CENTER);
+        tv_col_2.setBackgroundColor(bg_tv_color);
+        tv_col_2.setTextSize(tv_item_tb_size);
+        tb_row.addView(tv_col_2);
+
+        TextView tv_col_3 = new TextView(this);
+        tv_col_3.setWidth(TV_header_status.getWidth());
+        tv_col_3.setText("comming"+"\n");
+        tv_col_3.setTextColor(item_tv_color);
+        tv_col_3.setGravity(Gravity.CENTER);
+        tv_col_3.setBackgroundColor(bg_tv_color);
+        tv_col_3.setTextSize(tv_item_tb_size);
+        tb_row.addView(tv_col_3);
+
+        TextView tv_col_4 = new TextView(this);
+        tv_col_4.setWidth(TV_header_fav.getWidth());
+        tv_col_4.setText(" + "+"\n");
+        tv_col_4.setTextColor(item_tv_color);
+        tv_col_4.setGravity(Gravity.CENTER);
+        tv_col_4.setBackgroundColor(bg_tv_color);
+        tv_col_4.setTextSize(tv_item_tb_size);
+        tb_row.addView(tv_col_4);
+
+        tb_row.setEnabled(true);
+        tb_row.setId(id);
+
+        tv_col_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Click :"+tb_row.getId(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        TL_detail_list.addView(tb_row);
 
         if (b1 == false)
             TL_detail_list.removeAllViews();
@@ -234,7 +290,7 @@ public class MainActivity extends Activity{
         //IV_title_detail_list.setScaleY(1.5f);
         //IV_title_detail_list.setScaleX(1.5f);
 
-        setDataToTable ("","","",false,1);
+        setDataToTable (0,"","","",false,1);
 
         aq.ajax(urlPath,
                 //aq.ajax("https://dl.dropboxusercontent.com/s/k9nxs7cb16luqe3/exp_android2.js",
@@ -258,7 +314,7 @@ public class MainActivity extends Activity{
 
 
                                         if (detailProgram.getChan_id() == chan_id) {
-                                            setDataToTable (prog_title,prog_timestart,prog_timeend,true,j);
+                                            setDataToTable (prog_id,prog_title,prog_timestart,prog_timeend,true,j);
                                             // Log.d("logrun2", items_chan_id+"  "+items_cate_id_in_chan + " "+items_chan_title);
                                         }
                                         //arrayListData.add(new DataCustomListView(item.getString("cover"),item.getString("title"),item.getString("mask")));

@@ -28,7 +28,7 @@
             android:textColor="#FFFFFF"
             android:textSize="16dp">
         </TextView>
-        <TextView android:id="@+id/tv_time_program"
+        <TextView android:id="@+id/tv_header_time"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -48,7 +48,7 @@
             android:textStyle="normal|bold"
             android:textColor="#FFFFFF"
             android:textSize="16dp"
-            android:layout_toRightOf="@+id/tv_time_program">
+            android:layout_toRightOf="@+id/tv_header_time">
         </TextView>
         <TextView android:id="@+id/tv_header_fav"
             android:layout_width="100dp"
@@ -67,7 +67,6 @@
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#FF0000"
             >
 
                 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
