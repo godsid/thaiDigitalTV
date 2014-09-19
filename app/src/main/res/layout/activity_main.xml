@@ -64,14 +64,17 @@
             android:background="#FFFFFF"
             android:divider="#EEE"
             android:dividerHeight="2dp"
+            android:groupIndicator="@drawable/group_indicator"
             />
 
         <ExpandableListView
             android:id="@+id/exp_right"
             android:layout_width="220dp"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="#bebebe"
+            android:layout_gravity="left"
+            android:background="#FFFFFF"
+            android:divider="#EEE"
+            android:dividerHeight="2dp"
 
             />
     </android.support.v4.widget.DrawerLayout>

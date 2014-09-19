@@ -46,6 +46,7 @@ public class MainActivity extends Activity{
     AQuery aq;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -282,9 +283,7 @@ public class MainActivity extends Activity{
 
     public void prepareListData() {
 
-
         aq.ajax(urlPath,
-                //aq.ajax("https://dl.dropboxusercontent.com/s/k9nxs7cb16luqe3/exp_android2.js",
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
                     @Override
@@ -368,8 +367,6 @@ public class MainActivity extends Activity{
 
 
     }
-
-
 
 
 
