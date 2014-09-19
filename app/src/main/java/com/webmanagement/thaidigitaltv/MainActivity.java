@@ -283,11 +283,6 @@ public class MainActivity extends Activity{
 
     public void prepareListData() {
 
-        aq.ajax("https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js",
-        //aq.ajax("https://dl.dropboxusercontent.com/u/40791893/pic_android/menu_items3.js",
-       // aq.ajax("https://dl.dropboxusercontent.com/s/yk30i4avjhxs6ue/exp_right.js",
-
-
         aq.ajax(urlPath,
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
