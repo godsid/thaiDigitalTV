@@ -13,9 +13,9 @@
 
         <ImageView
             android:id="@+id/ic_nav_top_left"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:src="@drawable/ic_drawer_l" />
 
         <TextView
@@ -31,9 +31,9 @@
 
         <ImageView
             android:id="@+id/ic_nav_top_right"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:src="@drawable/ic_drawer_exp_r" />
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:id="@+id/exp_right"
             android:layout_width="220dp"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_gravity="right"
             android:background="#FFFFFF"
             android:divider="#EEE"
             android:dividerHeight="2dp"
