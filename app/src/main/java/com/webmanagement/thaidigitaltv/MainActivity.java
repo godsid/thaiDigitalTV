@@ -211,7 +211,9 @@ public class MainActivity extends Activity{
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
 
-        int bg_tv_color,item_tv_color = Color.BLACK;
+        int bg_tv_color,item_tv_color = Color.rgb(90,90,90);
+        int tv_layout_height = 85;
+
         if ((i1 % 2) != 0)
             bg_tv_color = Color.rgb(252,236,232);
         else
@@ -231,7 +233,7 @@ public class MainActivity extends Activity{
         tv_col_1.setGravity(Gravity.CENTER);
         tv_col_1.setBackgroundColor(bg_tv_color);
         tv_col_1.setTextSize(tv_item_tb_size);
-
+        tv_col_1.setHeight(tv_layout_height);
 
         tb_row.addView(tv_col_1);
 
@@ -242,6 +244,7 @@ public class MainActivity extends Activity{
         tv_col_2.setGravity(Gravity.CENTER);
         tv_col_2.setBackgroundColor(bg_tv_color);
         tv_col_2.setTextSize(tv_item_tb_size);
+        tv_col_2.setHeight(tv_layout_height);
         tb_row.addView(tv_col_2);
 
         TextView tv_col_3 = new TextView(this);
@@ -251,6 +254,7 @@ public class MainActivity extends Activity{
         tv_col_3.setGravity(Gravity.CENTER);
         tv_col_3.setBackgroundColor(bg_tv_color);
         tv_col_3.setTextSize(tv_item_tb_size);
+        tv_col_3.setHeight(tv_layout_height);
         tb_row.addView(tv_col_3);
 
         TextView tv_col_4 = new TextView(this);
@@ -260,6 +264,7 @@ public class MainActivity extends Activity{
         tv_col_4.setGravity(Gravity.CENTER);
         tv_col_4.setBackgroundColor(bg_tv_color);
         tv_col_4.setTextSize(tv_item_tb_size);
+        tv_col_4.setHeight(tv_layout_height);
         tb_row.addView(tv_col_4);
 
         tb_row.setEnabled(true);

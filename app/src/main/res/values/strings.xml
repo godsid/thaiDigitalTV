@@ -18,6 +18,8 @@
     <string name="tb_header_program">รายการ</string>
     <string name="tb_header_time">เวลาออกอากาศ</string>
     <string name="tb_header_status">สถานะ</string>
-    <string name="tb_header_fav">รายการโปรด</string>
+    <string name="tb_header_fav">ชื่นชอบ</string>
+    <string name="tv_tip_1">ชื่นชอบ</string>
+
 
 </resources>
