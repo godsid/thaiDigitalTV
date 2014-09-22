@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:background="#FFFFFF"
-            android:divider="#EEE"
+            android:divider="#DDD"
             android:dividerHeight="2dp"
             android:choiceMode="singleChoice"
             android:groupIndicator="@drawable/group_indicator"/>

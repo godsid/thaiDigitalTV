@@ -249,28 +249,28 @@ public class MainActivity extends Activity{
 
         TextView tv_col_3 = new TextView(this);
         tv_col_3.setWidth(TV_header_status.getWidth());
-        tv_col_3.setText("comming"+"\n");
-        tv_col_3.setTextColor(item_tv_color);
+        tv_col_3.setText("\n");
         tv_col_3.setGravity(Gravity.CENTER);
-        tv_col_3.setBackgroundColor(bg_tv_color);
-        tv_col_3.setTextSize(tv_item_tb_size);
+        tv_col_3.setPadding(15,0,10,0);
         tv_col_3.setHeight(tv_layout_height);
+        tv_col_3.setBackgroundColor(bg_tv_color);
+        tv_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
         tb_row.addView(tv_col_3);
 
         TextView tv_col_4 = new TextView(this);
         tv_col_4.setWidth(TV_header_fav.getWidth());
-        tv_col_4.setText(" + "+"\n");
-        tv_col_4.setTextColor(item_tv_color);
+        tv_col_4.setText("\n");
         tv_col_4.setGravity(Gravity.CENTER);
-        tv_col_4.setBackgroundColor(bg_tv_color);
-        tv_col_4.setTextSize(tv_item_tb_size);
+        tv_col_4.setPadding(45,0,10,0);
         tv_col_4.setHeight(tv_layout_height);
-        tb_row.addView(tv_col_4);
-
-        tb_row.setEnabled(true);
+        tv_col_4.setBackgroundColor(bg_tv_color);
+        tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
         tb_row.setId(id);
 
-        tv_col_1.setOnClickListener(new View.OnClickListener() {
+        tb_row.addView(tv_col_4);
+
+
+        tv_col_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Click :"+tb_row.getId(),Toast.LENGTH_SHORT).show();
