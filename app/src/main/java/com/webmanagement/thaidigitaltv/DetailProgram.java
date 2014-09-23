@@ -8,6 +8,7 @@ public class DetailProgram{
     private String chan_name,chan_pic;
 
 
+
     public int getProg_id() {
         return prog_id;
     }

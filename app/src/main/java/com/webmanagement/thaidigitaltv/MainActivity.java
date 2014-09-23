@@ -1,6 +1,8 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +20,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -32,9 +36,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity{
-    ImageView IV_ic_nav_top_left,IV_ic_nav_top_right;
-    ExpandableListView EXP_exp_left,EXP_exp_right;
+public class MainActivity extends Activity {
+    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right;
+    ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram = new DetailProgram();
 
@@ -46,14 +50,14 @@ public class MainActivity extends Activity{
     Typeface TF_font;
     String frontPath = "fonts/RSU_BOLD.ttf";
 
-    TextView TV_header_program,TV_header_time,TV_header_status,TV_header_fav,TV_detail_list_title;
+    TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
 
     int tv_header_tb_size = 18;
     int tv_item_tb_size = 16;
 
 
-    AQuery aq;
 
+    AQuery aq;
 
 
     @Override
@@ -74,9 +78,10 @@ public class MainActivity extends Activity{
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
         prepareListData();
+
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +117,10 @@ public class MainActivity extends Activity{
             }
         });
 
-        LinearLayout hiddenLayout = (LinearLayout)findViewById(R.id.ll_detail_list);
-        if(hiddenLayout == null){
+        LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
+        if (hiddenLayout == null) {
 
-            FrameLayout myLayout = (FrameLayout)findViewById(R.id.content_frame);
+            FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
             View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
             myLayout.addView(hiddenInfo);
         }
@@ -136,50 +141,13 @@ public class MainActivity extends Activity{
         TV_header_fav.setTextSize(tv_header_tb_size);
 
 
-
-
-/*
-        EXP_exp_left.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                 Toast.makeText(getApplicationContext(),
-                "Group Clicked " + group_list.get(groupPosition),
-                 Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        // Listview Group expanded listener
-        EXP_exp_left.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),group_list.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Listview Group collasped listener
-        EXP_exp_left.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),group_list.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-*/
-        // Listview on child click listener
         EXP_exp_left.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 String get_channel_name = group_list.get(groupPosition).getItems().get(childPosition).getName();
                 int get_channel_id = group_list.get(groupPosition).getItems().get(childPosition).getId();
-                String  get_channel_pic = group_list.get(groupPosition).getItems().get(childPosition).getImage();
+                String get_channel_pic = group_list.get(groupPosition).getItems().get(childPosition).getImage();
                 //get position highlight
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
@@ -190,7 +158,7 @@ public class MainActivity extends Activity{
 
                 openProgramDetail();
 
-                Toast.makeText(getApplicationContext(),get_channel_id +" "+get_channel_name + "",
+                Toast.makeText(getApplicationContext(), get_channel_id + " " + get_channel_name + "",
                         Toast.LENGTH_SHORT).show();
 
                 DL_drawer_layout.closeDrawer(EXP_exp_left);
@@ -203,31 +171,38 @@ public class MainActivity extends Activity{
 
     }
 
-    public void setDataToTable (int id,String c1,String c2,String c3,boolean b1,int i1) {
+
+    public void showSettimeList() {
+
+        Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
+        startActivity(intent);
+    }
+
+    public void setDataToTable(int id, String c1, String c2, String c3, boolean b1, int i1) {
 
 
-        Log.d("logrun2",  c1.length()+"  : "+TV_header_program.getPivotY());
+        Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
 
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
 
-        int bg_tv_color,item_tv_color = Color.rgb(90,90,90);
+        int bg_tv_color, item_tv_color = Color.rgb(90, 90, 90);
         int tv_layout_height = 85;
 
         if ((i1 % 2) != 0)
-            bg_tv_color = Color.rgb(252,236,232);
+            bg_tv_color = Color.rgb(252, 236, 232);
         else
-            bg_tv_color = Color.rgb(228,216,205);
+            bg_tv_color = Color.rgb(228, 216, 205);
 
         final TableRow tb_row = new TableRow(this);
 
         TextView tv_col_1 = new TextView(this);
         tv_col_1.setWidth(TV_header_program.getWidth());
 
-       if (c1.length() <= 15)
-            tv_col_1.setText(c1+"\n");
+        if (c1.length() <= 15)
+            tv_col_1.setText(c1 + "\n");
         else
-           tv_col_1.setText(c1);
+            tv_col_1.setText(c1);
 
         tv_col_1.setTextColor(item_tv_color);
         tv_col_1.setGravity(Gravity.CENTER);
@@ -239,7 +214,7 @@ public class MainActivity extends Activity{
 
         TextView tv_col_2 = new TextView(this);
         tv_col_2.setWidth(TV_header_time.getWidth());
-        tv_col_2.setText(c2+"\n"+c3);
+        tv_col_2.setText(c2 + "\n" + c3);
         tv_col_2.setTextColor(item_tv_color);
         tv_col_2.setGravity(Gravity.CENTER);
         tv_col_2.setBackgroundColor(bg_tv_color);
@@ -251,7 +226,7 @@ public class MainActivity extends Activity{
         tv_col_3.setWidth(TV_header_status.getWidth());
         tv_col_3.setText("\n");
         tv_col_3.setGravity(Gravity.CENTER);
-        tv_col_3.setPadding(15,0,10,0);
+        tv_col_3.setPadding(15, 0, 10, 0);
         tv_col_3.setHeight(tv_layout_height);
         tv_col_3.setBackgroundColor(bg_tv_color);
         tv_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
@@ -261,7 +236,7 @@ public class MainActivity extends Activity{
         tv_col_4.setWidth(TV_header_fav.getWidth());
         tv_col_4.setText("\n");
         tv_col_4.setGravity(Gravity.CENTER);
-        tv_col_4.setPadding(45,0,10,0);
+        tv_col_4.setPadding(45, 0, 10, 0);
         tv_col_4.setHeight(tv_layout_height);
         tv_col_4.setBackgroundColor(bg_tv_color);
         tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
@@ -273,7 +248,10 @@ public class MainActivity extends Activity{
         tv_col_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Click :"+tb_row.getId(),Toast.LENGTH_SHORT).show();
+
+                showSettimeList();
+                Toast.makeText(getApplicationContext(), "Click :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
+
             }
         });
         TL_detail_list.addView(tb_row);
@@ -283,25 +261,26 @@ public class MainActivity extends Activity{
 
     }
 
+
+
+
+
+
+
     public void openProgramDetail() {
 
-     TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
-     ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
+        TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
+        ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
-        //TV_title_detail_list.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
         TV_title_detail_list.setText(detailProgram.getChan_name());
+
         aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
-        //IV_title_detail_list.setScaleY(1.5f);
-        //IV_title_detail_list.setScaleX(1.5f);
+        setDataToTable(0, "", "", "", false, 1);
 
-        setDataToTable (0,"","","",false,1);
-
-        aq.ajax(urlPath,
-                //aq.ajax("https://dl.dropboxusercontent.com/s/k9nxs7cb16luqe3/exp_android2.js",
-                JSONObject.class, new AjaxCallback<JSONObject>() {
+        aq.ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
-                    public void callback(String url, JSONObject object,AjaxStatus status) {
+                    public void callback(String url, JSONObject object, AjaxStatus status) {
 
                         if (object != null) {
 
@@ -309,53 +288,45 @@ public class MainActivity extends Activity{
                                 JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(2).getJSONArray("program_detail");
 
 
-                                    for (int j = 0; j < items_array_prog.length(); j++) {
+                                for (int j = 0; j < items_array_prog.length(); j++) {
 
-                                       int  prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
-                                       int  chan_id = items_array_prog.getJSONObject(j).getInt("chan_id");
-                                       String  prog_title = items_array_prog.getJSONObject(j).getString("prog_title");
-                                       String  prog_timestart = items_array_prog.getJSONObject(j).getString("prog_timestart");
-                                       String  prog_timeend = items_array_prog.getJSONObject(j).getString("prog_timeend");
+                                    int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
+                                    int chan_id = items_array_prog.getJSONObject(j).getInt("chan_id");
+                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_title");
+                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("prog_timestart");
+                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("prog_timeend");
 
 
-                                        if (detailProgram.getChan_id() == chan_id) {
-                                            setDataToTable (prog_id,prog_title,prog_timestart,prog_timeend,true,j);
-                                            // Log.d("logrun2", items_chan_id+"  "+items_cate_id_in_chan + " "+items_chan_title);
-                                        }
-                                        //arrayListData.add(new DataCustomListView(item.getString("cover"),item.getString("title"),item.getString("mask")));
-
+                                    if (detailProgram.getChan_id() == chan_id) {
+                                        setDataToTable(prog_id, prog_title, prog_timestart, prog_timeend, true, j);
 
                                     }
-                                Log.d("logrun2", group_list.size()+" ");
+                                }
+                                Log.d("logrun2", group_list.size() + " ");
 
                                 //ExpAdapter.notifyDataSetChanged();
 
-                            }  catch (JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                                 Log.d("logrun2", e.toString());
                             }
                         } else {
-                            Log.d("logrun2","Object is Null");
+                            Log.d("logrun2", "Object is Null");
                         }
 
                         // super.callback(url, object, status);
                     }
                 });
 
-        }
-
-
-
+    }
 
 
     public void prepareListData() {
-
         aq.ajax(urlPath,
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
                     @Override
-                    public void callback(String url, JSONObject object,AjaxStatus status) {
-
+                    public void callback(String url, JSONObject object, AjaxStatus status) {
 
 
                         if (object != null) {
@@ -365,8 +336,8 @@ public class MainActivity extends Activity{
                                 JSONArray items_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("category_list");
                                 JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("channel_list");
 
-                                String items_cate_title,items_cate_pic,items_chan_title,items_chan_pic;
-                                int items_cate_id,items_chan_id,items_cate_id_in_chan;
+                                String items_cate_title, items_cate_pic, items_chan_title, items_chan_pic;
+                                int items_cate_id, items_chan_id, items_cate_id_in_chan;
 
                                 group_list = new ArrayList<GroupExpLeft>();
 
@@ -376,7 +347,7 @@ public class MainActivity extends Activity{
                                     items_cate_pic = items_array_cate.getJSONObject(i).getString("cate_pic");
                                     items_cate_id = items_array_cate.getJSONObject(i).getInt("cate_id");
 
-                                     //Log.d("logrun2", items_cate_id+"  "+items_cate_title);
+                                    //Log.d("logrun2", items_cate_id+"  "+items_cate_title);
 
 
                                     GroupExpLeft gru = new GroupExpLeft();
@@ -398,12 +369,7 @@ public class MainActivity extends Activity{
                                             ch.setImage(items_chan_pic);
                                             ch.setId(items_chan_id);
                                             channel_list.add(ch);
-
-                                           // Log.d("logrun2", items_chan_id+"  "+items_cate_id_in_chan + " "+items_chan_title);
                                         }
-                                        //arrayListData.add(new DataCustomListView(item.getString("cover"),item.getString("title"),item.getString("mask")));
-
-
                                     }
                                     gru.setItems(channel_list);
                                     group_list.add(gru);
@@ -415,26 +381,22 @@ public class MainActivity extends Activity{
                                 EXP_exp_left.setAdapter(ExpAdapter);
 
 
-
-                                Log.d("logrun2", group_list.size()+" ");
+                                Log.d("logrun2", group_list.size() + " ");
 
                                 //ExpAdapter.notifyDataSetChanged();
 
-                            }  catch (JSONException e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                                 Log.d("logrun2", e.toString());
                             }
                         } else {
-                            Log.d("logrun2","Object is Null");
+                            Log.d("logrun2", "Object is Null");
                         }
 
-                        // super.callback(url, object, status);
                     }
                 });
 
-
     }
-
 
 
     @Override
@@ -443,7 +405,6 @@ public class MainActivity extends Activity{
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
 
 
     @Override
