@@ -72,18 +72,18 @@
         >
 
         <Button
-            android:id="@+id/button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="@string/t_btn_cancle"
-             />
+            android:id="@+id/bt_setttime_ok" />
+
 
         <Button
-            android:id="@+id/button2"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="@string/t_btn_save"
-             />
+            android:id="@+id/bt_settime_cancel" />
+
     </LinearLayout>
 </LinearLayout>
 </LinearLayout>
