@@ -37,7 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right;
+    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right;
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram;
@@ -74,6 +74,9 @@ public class MainActivity extends Activity {
         EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        IV_ic_fav_top_right = (ImageView) findViewById(R.id.ic_fav_top_right);
+
+
         TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
@@ -81,6 +84,13 @@ public class MainActivity extends Activity {
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
         prepareListData();
+
+        IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               gotoFavoriteList();
+            }
+        });
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +187,12 @@ public class MainActivity extends Activity {
     public void showSettimeList() {
 
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
+        startActivity(intent);
+    }
+
+    public void gotoFavoriteList() {
+
+        Intent intent = new Intent(MainActivity.this, FavoriteList.class);
         startActivity(intent);
     }
 
