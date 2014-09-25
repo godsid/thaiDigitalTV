@@ -31,7 +31,7 @@ package com.webmanagement.thaidigitaltv;
 
         ArrayList <DataCustomListView> arrayList = new ArrayList<DataCustomListView>();
         private LayoutInflater mInflater;
-        private int p;
+        private DetailProgram detailProgram;
 
 
         public ListFavoriteAdapter(Context context,ArrayList<DataCustomListView> arrayList){
@@ -57,7 +57,7 @@ package com.webmanagement.thaidigitaltv;
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            p = position;
+            detailProgram = new DetailProgram();
             if(convertView==null){
                 convertView = mInflater.inflate(R.layout.custom_favorite_list,null);
             }
@@ -74,19 +74,12 @@ package com.webmanagement.thaidigitaltv;
             TV_fav_time_show.setText(arrayList.get(position).time_show);
             TV_fav_cha_title.setText(arrayList.get(position).cha_title);
 
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("run",""+arrayList.get(p).list_id+","+arrayList.get(p).list_title+","+arrayList.get(p).cha_title);
-                }
-            });
+            detailProgram.setProg_id(arrayList.get(position).list_id);
+            detailProgram.setProg_name(arrayList.get(position).list_title);
 
             return convertView;
         }
 
-        public void testtost () {
-
-        }
 
     }
 

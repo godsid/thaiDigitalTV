@@ -25,4 +25,10 @@
     <string name="t_btn_cancle">ยกเลิก</string>
     <string name="title_activity_activity_favorite_list">activity_favorite_list</string>
 
+    <array name="dialog_menu_fav">
+        <item name="edit_label">แก้ไข</item>
+        <item name="delete_label">ลบ</item>
+        <item name="cancel_label">ยกเลิก</item>
+    </array>
+
 </resources>
