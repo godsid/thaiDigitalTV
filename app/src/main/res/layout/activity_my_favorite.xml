@@ -15,10 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_drawer_exp_l"
+            android:src="@drawable/ic_back"
             />
         <ImageView
-            android:id="@+id/iv_detail_list_title"
+            android:id="@+id/iv_fav_list_title"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -26,7 +26,7 @@
             android:src="@drawable/ic_launcher"
             />
         <TextView
-            android:id="@+id/tv_detail_list_title"
+            android:id="@+id/tv_fav_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_detail_list_title"
@@ -42,13 +42,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#bebebe"
         >
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/lv_fav"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:divider="#DDD"
+        android:dividerHeight="2dp"
         />
     </LinearLayout>
 </LinearLayout>

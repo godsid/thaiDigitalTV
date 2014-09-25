@@ -250,6 +250,8 @@ public class MainActivity extends Activity {
         detailProgram.setTime_start(c2);
         detailProgram.setType_name(c4);
 
+        
+
         tv_col_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,6 +262,7 @@ public class MainActivity extends Activity {
 
             }
         });
+
         TL_detail_list.addView(tb_row);
 
         if (b1 == false)
