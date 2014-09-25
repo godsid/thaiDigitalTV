@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
     ImageView IV_ic_nav_top_left, IV_ic_nav_top_right;
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
-    DetailProgram detailProgram = new DetailProgram();
+    DetailProgram detailProgram;
 
     private ExpandableListAdapter_Left ExpAdapter;
     static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
@@ -152,6 +152,7 @@ public class MainActivity extends Activity {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 //end
+                detailProgram = new DetailProgram();
                 detailProgram.setChan_id(get_channel_id);
                 detailProgram.setChan_name(get_channel_name);
                 detailProgram.setChan_pic(get_channel_pic);
@@ -178,7 +179,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void setDataToTable(int id, String c1, String c2, String c3, boolean b1, int i1) {
+    public void setDataToTable(int id, String c1, String c2, String c3,String c4, boolean b1,int c ,int i1) {
 
 
         Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
@@ -240,17 +241,22 @@ public class MainActivity extends Activity {
         tv_col_4.setHeight(tv_layout_height);
         tv_col_4.setBackgroundColor(bg_tv_color);
         tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-        tb_row.setId(id);
+        tb_row.setId(c);
 
         tb_row.addView(tv_col_4);
 
+        detailProgram.setProg_id(id);
+        detailProgram.setProg_name(c1);
+        detailProgram.setTime_start(c2);
+        detailProgram.setType_name(c4);
 
         tv_col_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                detailProgram.seItem_selected(tb_row.getId());
                 showSettimeList();
-                Toast.makeText(getApplicationContext(), "Click :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -276,7 +282,8 @@ public class MainActivity extends Activity {
         TV_title_detail_list.setText(detailProgram.getChan_name());
 
         aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
-        setDataToTable(0, "", "", "", false, 1);
+
+        setDataToTable(0, "", "", "","", false,0, 1);
 
         aq.ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
@@ -287,7 +294,7 @@ public class MainActivity extends Activity {
                             try {
                                 JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(2).getJSONArray("program_detail");
 
-
+                                int c = 0;
                                 for (int j = 0; j < items_array_prog.length(); j++) {
 
                                     int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
@@ -295,11 +302,12 @@ public class MainActivity extends Activity {
                                     String prog_title = items_array_prog.getJSONObject(j).getString("prog_title");
                                     String prog_timestart = items_array_prog.getJSONObject(j).getString("prog_timestart");
                                     String prog_timeend = items_array_prog.getJSONObject(j).getString("prog_timeend");
+                                    String prog_type = "test type";
 
 
                                     if (detailProgram.getChan_id() == chan_id) {
-                                        setDataToTable(prog_id, prog_title, prog_timestart, prog_timeend, true, j);
-
+                                        setDataToTable(prog_id, prog_title, prog_timestart, prog_timeend,prog_type, true, c,j);
+                                        c++;
                                     }
                                 }
                                 Log.d("logrun2", group_list.size() + " ");
