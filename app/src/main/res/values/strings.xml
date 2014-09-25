@@ -21,5 +21,7 @@
     <string name="title_activity_sccon">Sccon</string>
     <string name="title_activity_activity_setting_time_list">activity_setting_time_list</string>
     <string name="title_activity_list_item_setting_time">list_item_setting_time</string>
+    <string name="t_btn_save">บันทึก</string>
+    <string name="t_btn_cancle">ยกเลิก</string>
 
 </resources>

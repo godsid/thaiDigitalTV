@@ -6,10 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class SettingTimeList extends Activity {
-String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที","5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที","5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
+String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,12 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        // return false;
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 }
