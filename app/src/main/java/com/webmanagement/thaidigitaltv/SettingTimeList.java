@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 
 public class SettingTimeList extends Activity {
+
     private DatabaseAction dbAction;
 
 String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
@@ -22,7 +23,6 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
     String program_name,type_name,channel_name,time_before,time_start;
     int program_id;
 int select_item = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +99,12 @@ int select_item = 0;
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        // return false;
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 }

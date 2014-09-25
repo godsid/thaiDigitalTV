@@ -32,7 +32,6 @@
             android:id="@+id/tv_detail_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_toRightOf="@+id/iv_detail_list_title"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
@@ -47,42 +46,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        >
 
         <ListView
             android:id="@+id/lv_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:cacheColorHint="#f8f8ff"
-            android:divider="#000000"
+            android:cacheColorHint="#323232"
+            android:divider="#FFFFFF"
+            android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:choiceMode="singleChoice"
             android:fastScrollEnabled="true"
-            android:footerDividersEnabled="true"
-            android:textFilterEnabled="true"
-            android:textStyle="normal" />
-
+            android:background="#E0E0E0"
+            />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#323232"
         >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:text="@string/t_btn_cancle"
             android:id="@+id/bt_setttime_ok" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/bt_settime_cancel" />
-    </LinearLayout>
 
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="@string/t_btn_save"
+            android:id="@+id/bt_settime_cancel" />
+
+    </LinearLayout>
 </LinearLayout>
 </LinearLayout>
