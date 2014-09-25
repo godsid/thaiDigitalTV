@@ -55,7 +55,8 @@ int select_item = 0;
             public void onClick(View v) {
                 long idf = dbAction.addFavoriteProgram(program_id,program_name,type_name,channel_name,time_start,20);
 
-                Log.d("run2", "program_id,program_name,type_name,channel_name,time_start,20" + idf);
+                Toast.makeText(getApplicationContext(), "select_item at :" + select_item, Toast.LENGTH_SHORT).show();
+                Log.d("run2", program_id+","+program_name+","+type_name+","+channel_name+","+time_start+",20 : " + idf);
             }
         });
 
@@ -74,12 +75,12 @@ int select_item = 0;
         SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
 
         while (cur.isAfterLast() == false) {
-            Log.d("run","\nprogram_id: "+cur.getString(0)+"\n"+
-                    "program_name: "+cur.getString(1)+"\n"+
-                    "type_name: "+cur.getString(2)+"\n"+
-                    "channel_name: "+cur.getString(3)+"\n"+
-                    "time_start: "+cur.getString(4)+"\n"+
-                    "time_before: "+cur.getString(5)+"\n");
+            Log.d("run","\n program_id: "+cur.getString(1)+"\n"+
+                    "program_name: "+cur.getString(2)+"\n"+
+                    "type_name: "+cur.getString(3)+"\n"+
+                    "channel_name: "+cur.getString(4)+"\n"+
+                    "time_start: "+cur.getString(5)+"\n"+
+                    "time_before: "+cur.getString(6)+"\n");
             cur.moveToNext();
         }
         cur.close();
