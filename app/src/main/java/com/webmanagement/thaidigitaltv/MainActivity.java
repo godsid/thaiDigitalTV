@@ -200,7 +200,6 @@ public class MainActivity extends Activity {
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
 
-
         if (b1 == false) {
             TL_detail_list.removeAllViews();
         } else {

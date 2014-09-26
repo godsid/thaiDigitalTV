@@ -14,7 +14,6 @@
         android:text="ชื่อรายการ"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
         />
     <TextView
         android:id="@+id/tv_fav_time_show"
@@ -24,7 +23,6 @@
         android:layout_below="@id/tv_fav_list_title"
         android:textSize="17dp"
         android:layout_marginTop="1dip"
-        android:textColor="#FFFFFF"
         />
     <TextView
         android:id="@+id/tv_fav_cha_title"
@@ -33,9 +31,6 @@
         android:text="3 แฟมิลี่"
         android:layout_below="@id/tv_fav_time_show"
         android:layout_marginTop="5dp"
-        android:textColor="#FFFFFF"
         android:textSize="15dp"
         />
-
-
 </RelativeLayout>

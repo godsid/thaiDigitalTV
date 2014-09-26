@@ -5,14 +5,13 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:background="@drawable/bg_list_item"
     android:paddingTop="1dp"
-    android:paddingBottom="1dp"
     >
 
     <ImageView
         android:id="@+id/iv_list_group_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_camera"
+        android:src="@drawable/ic_cate"
         />
 
     <TextView

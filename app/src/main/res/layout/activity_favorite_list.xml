@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#323232"
+        android:background="#263238"
         android:orientation="horizontal" >
 
         <ImageView
@@ -15,18 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_delete_3"
+            android:src="@drawable/ic_back"
             />
         <ImageView
-            android:id="@+id/iv_detail_list_title"
+            android:id="@+id/iv_fav_list_title"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_launcher"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_favorite"
             />
         <TextView
-            android:id="@+id/tv_detail_list_title"
+            android:id="@+id/tv_fav_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_detail_list_title"
@@ -42,7 +42,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#cfd8dc"
         >
+
         <ListView
             android:id="@+id/lv_fav_show"
             android:layout_width="fill_parent"
@@ -51,7 +53,6 @@
             android:fadeScrollbars="true"
             android:fastScrollEnabled="true"
             />
-
         <TextView
             android:id="@+id/tv_fav_delete_all"
             android:layout_width="150dp"
@@ -62,8 +63,6 @@
             android:textColor="#EEE"
             android:textSize="25dp"
             android:text="Delete All"
-
             />
-
     </LinearLayout>
 </LinearLayout>

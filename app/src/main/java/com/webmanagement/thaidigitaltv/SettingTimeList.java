@@ -1,14 +1,18 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,12 +21,19 @@ public class SettingTimeList extends Activity {
 
     private DatabaseAction dbAction;
 
-String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
+    String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
     DetailProgram detailProgram;
+
+    Typeface TF_font;
+    String frontPath = "fonts/RSU_BOLD.ttf";
 
     String program_name,type_name,channel_name,time_before,time_start;
     int program_id;
+<<<<<<< HEAD
     int select_item;
+=======
+    int select_item = 0;
+>>>>>>> 9063cd75f88f3453df88106e24c36a888862e86f
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +62,9 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
             Log.d("run",select_item+" , "+program_id+" , "+ detailProgram.sizePro_id()+" : Error : "+e);
         }
 
-
         Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
         Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
+        ImageView iv_back = (ImageView)findViewById(R.id.iv_fav_back);
 
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +80,15 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
             @Override
             public void onClick(View v) {
                 showdata();
+            }
+        });
+
+        iv_back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(SettingTimeList.this,MainActivity.class);
+                Toast.makeText(getApplicationContext(), "back to main", Toast.LENGTH_SHORT).show();
+                startActivity(i);
             }
         });
 
@@ -112,4 +132,5 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
         return super.onOptionsItemSelected(item);
 
     }
+
 }
