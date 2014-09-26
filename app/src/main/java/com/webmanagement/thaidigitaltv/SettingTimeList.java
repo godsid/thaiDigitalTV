@@ -22,7 +22,7 @@ String[] time_list = new String[] {"5 นาที","10 นาที","20 นา
 
     String program_name,type_name,channel_name,time_before,time_start;
     int program_id;
-int select_item = 0;
+    int select_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,19 @@ int select_item = 0;
         dbAction = new DatabaseAction(this);
         detailProgram = new DetailProgram();
 
-        select_item = detailProgram.getItem_selected();
+        try {
 
-        program_id = detailProgram.getProg_id(select_item);
-        program_name = detailProgram.getProg_name(select_item);
-        type_name = detailProgram.getType_name(select_item);
-        channel_name = detailProgram.getChan_name();
-        time_start = detailProgram.getTime_start(select_item);
 
+            select_item = detailProgram.getItem_selected();
+            detailProgram.showp();
+            program_id = detailProgram.getProg_id(select_item);
+            program_name = detailProgram.getProg_name(select_item);
+            type_name = detailProgram.getType_name(select_item);
+            channel_name = detailProgram.getChan_name();
+            time_start = detailProgram.getTime_start(select_item);
+        } catch (Exception e){
+            Log.d("run",select_item+" , "+program_id+" , "+ detailProgram.sizePro_id()+" : Error : "+e);
+        }
 
 
         Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);

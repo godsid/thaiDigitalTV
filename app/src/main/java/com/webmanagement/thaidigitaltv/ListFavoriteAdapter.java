@@ -74,8 +74,8 @@ package com.webmanagement.thaidigitaltv;
             TV_fav_time_show.setText(arrayList.get(position).time_show);
             TV_fav_cha_title.setText(arrayList.get(position).cha_title);
 
-            detailProgram.setProg_id(arrayList.get(position).list_id);
-            detailProgram.setProg_name(arrayList.get(position).list_title);
+            detailProgram.setFavProg_id(arrayList.get(position).list_id);
+            detailProgram.setFavProg_name(arrayList.get(position).list_title);
 
             return convertView;
         }
@@ -97,37 +97,7 @@ package com.webmanagement.thaidigitaltv;
             this.time_show = time_show;
         }
 
-        public int getListId() {
-            return list_id;
-        }
 
-        public void setListId(int list_id) {
-            this.list_id = list_id;
-        }
-
-        public String getListTitle() {
-            return list_title;
-        }
-
-        public void setListTitle(String list_title) {
-            this.list_title = list_title;
-        }
-
-        public String getChaTitle() {
-            return cha_title;
-        }
-
-        public void setChaTitle(String cha_title) {
-            this.cha_title = cha_title;
-        }
-
-        public String getTimeShow() {
-            return time_show;
-        }
-
-        public void setTimeShow(String time_show) {
-            this.time_show = time_show;
-        }
     }
 
 

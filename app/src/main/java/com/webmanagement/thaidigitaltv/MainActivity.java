@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        detailProgram = new DetailProgram();
         aq = new AQuery(this);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
@@ -162,8 +162,8 @@ public class MainActivity extends Activity {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 //end
-                detailProgram = new DetailProgram();
-                detailProgram.clearAllArray();
+
+
                 detailProgram.setChan_id(get_channel_id);
                 detailProgram.setChan_name(get_channel_name);
                 detailProgram.setChan_pic(get_channel_pic);
@@ -301,7 +301,7 @@ public class MainActivity extends Activity {
         aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
 
         setDataToTable(0, "", "", "","", false,0, 1);
-
+        detailProgram.clearAllArray();
         aq.ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject object, AjaxStatus status) {

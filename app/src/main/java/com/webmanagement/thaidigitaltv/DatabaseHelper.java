@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "db_thaitvdigital";
     public static final String TB_NAME = "tb_list_favorite";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String TB_CREATE = "create table "+TB_NAME+
             " (list_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "program_id INTEGER," +
@@ -37,14 +37,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // Log.d("run2","old :"+oldVersion+" new :"+newVersion);
-      //  db.execSQL("DROP TABLE IF EXISTS tb_list_favorite");
-       // db.execSQL(TB_CREATE);
-        //onCreate(db);
+        Log.d("run2","old :"+oldVersion+" new :"+newVersion);
+       db.execSQL("DROP TABLE IF EXISTS tb_list_favorite");
+        db.execSQL(TB_CREATE);
+       // onCreate(db);
     }
 
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
+    }
+
+    @Override
+    public synchronized void close() {
+        super.close();
     }
 }

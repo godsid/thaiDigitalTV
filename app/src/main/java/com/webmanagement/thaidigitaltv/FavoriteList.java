@@ -58,7 +58,7 @@ ImageView IV_ic_back_to_main;
 
         listView.setAdapter(listFavoriteAdapter);
 
-        detailProgram.clearAllArray();
+        detailProgram.clearFavArray();
 
        // registerForContextMenu(listView);
 
@@ -88,15 +88,8 @@ ImageView IV_ic_back_to_main;
         TV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean resAction = dbAction.deleteAllFavoriteProgram();
-                if (resAction == true)
-                    Toast.makeText(getApplicationContext(),"Delete Complete",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getApplicationContext(),"Can't Delete",Toast.LENGTH_LONG).show();
 
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                menuActionDeleteAll();
             }
         });
 
@@ -106,7 +99,7 @@ ImageView IV_ic_back_to_main;
                 //int list_id = detailProgram.getFavPro_id(position);
                 setItemPosition(position);
                 //Toast.makeText(getApplicationContext(), "Prog id "+ list_id, Toast.LENGTH_SHORT).show();
-                openNewGameDialog();
+                showActionMenuDialog();
             }
 
         });
@@ -123,7 +116,7 @@ ImageView IV_ic_back_to_main;
         return this.itemPosition;
     }
 
-    private void openNewGameDialog()
+    private void showActionMenuDialog()
     {
         new AlertDialog.Builder(this)
                 .setTitle("เมนู")
@@ -148,13 +141,14 @@ ImageView IV_ic_back_to_main;
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(getItemPosition()));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getFavProg_name(getItemPosition()));
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(getItemPosition()));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getFavProg_id(getItemPosition()));
                         if (chkDeleted == true) {
-                            Toast.makeText(FavoriteList.this, "Delete Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FavoriteList.this, "Delete Complete", Toast.LENGTH_SHORT).show();
+
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -174,6 +168,37 @@ ImageView IV_ic_back_to_main;
 
     }
 
+
+    private void menuActionDeleteAll() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ยืนยันการลบ");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการทั้งหมดหรือไม่");
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean resAction = dbAction.deleteAllFavoriteProgram();
+                        if (resAction == true) {
+                            Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_LONG).show();
+                            detailProgram.clearFavArray();
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Can't Delete", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        builder.show();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

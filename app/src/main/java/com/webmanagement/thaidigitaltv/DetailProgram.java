@@ -1,5 +1,7 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -15,9 +17,10 @@ public class DetailProgram{
     private static ArrayList<String> arr_Time_start = new ArrayList<String>();
     private static ArrayList<String> arr_Time_end = new ArrayList<String>();
 
-    private static ArrayList<Integer> arr_Fav_pro_id = new ArrayList<Integer>();
+    private static ArrayList<Integer> arrFav_Pro_id = new ArrayList<Integer>();
+    private static ArrayList<String> arrFav_Pro_name = new ArrayList<String>();
 
-    private static int item_selected;
+    private static int item_selected,item_Fav_selected;
 
     public void clearAllArray() {
         arr_Pro_id.clear();
@@ -28,25 +31,55 @@ public class DetailProgram{
 
     }
 
-    public void clearFavPro_Id() {
-        arr_Fav_pro_id.clear();
+    public void clearFavArray() {
+        arrFav_Pro_id.clear();
+        arrFav_Pro_name.clear();
+
     }
 
-    public int getFavPro_id(int i) {
-        return this.arr_Fav_pro_id.get(i);
+
+    public String getFavProg_name(int i) {
+        return this.arrFav_Pro_name.get(i);
     }
-    public void setFavPro_id(int j) {
-        this.arr_Fav_pro_id.add(j);
+    public void setFavProg_name(String j) {
+        this.arrFav_Pro_name.add(j);
+    }
+
+    public int getFavProg_id(int i) {
+        return this.arrFav_Pro_id.get(i);
+    }
+    public void setFavProg_id(int j) {
+        this.arrFav_Pro_id.add(j);
     }
 
 
     public int getProg_id(int i) {
-        return this.arr_Pro_id.get(i);
+        try {
+            Log.d("run",i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size()+" try ");
+            return this.arr_Pro_id.get(i);
+        } catch (Exception e) {
+            Log.d("run","catch getProg_id "+i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size());
+            return this.arr_Pro_id.get(i);
+        }
+
     }
+
+    public void showp() {
+      for (int a = 0; a< arr_Pro_id.size();a++) {
+          Log.d("run","pos "+a+" , val  "+arr_Pro_id.get(a));
+      }
+
+
+
+    }
+
     public void setProg_id(int j) {
         this.arr_Pro_id.add(j);
     }
 
+    public int sizePro_id() {
+        return this.arr_Pro_id.size();
+    }
     public String getProg_name(int i) {
         return this.arr_Pro_name.get(i);
     }
