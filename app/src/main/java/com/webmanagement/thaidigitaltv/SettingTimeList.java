@@ -29,11 +29,8 @@ public class SettingTimeList extends Activity {
 
     String program_name,type_name,channel_name,time_before,time_start;
     int program_id;
-<<<<<<< HEAD
     int select_item;
-=======
-    int select_item = 0;
->>>>>>> 9063cd75f88f3453df88106e24c36a888862e86f
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,7 @@ public class SettingTimeList extends Activity {
 
         Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
         Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
-        ImageView iv_back = (ImageView)findViewById(R.id.iv_fav_back);
+        ImageView iv_back = (ImageView)findViewById(R.id.iv_alarm_back);
 
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +83,7 @@ public class SettingTimeList extends Activity {
         iv_back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent i = new Intent(SettingTimeList.this,MainActivity.class);
-                Toast.makeText(getApplicationContext(), "back to main", Toast.LENGTH_SHORT).show();
-                startActivity(i);
+                onBackPressed();
             }
         });
 

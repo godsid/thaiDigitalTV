@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         prepareListData();
 

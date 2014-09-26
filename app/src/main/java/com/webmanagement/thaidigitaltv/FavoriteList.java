@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,9 +54,11 @@ ImageView IV_ic_back_to_main;
 
         listView = (ListView)findViewById(R.id.lv_fav_show);
 
-        IV_ic_back_to_main = (ImageView)findViewById(R.id.ic_back_to_main);
-
         TextView  TV_fav_delete_all = (TextView)findViewById(R.id.tv_fav_delete_all);
+
+
+        IV_ic_back_to_main = (ImageView)findViewById(R.id.iv_fav2_back);
+
 
         listView.setAdapter(listFavoriteAdapter);
 
@@ -85,6 +89,7 @@ ImageView IV_ic_back_to_main;
 
         });
 
+
         TV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +108,10 @@ ImageView IV_ic_back_to_main;
             }
 
         });
+
+    }
+
+    private void userInputHandler(){
 
     }
 
