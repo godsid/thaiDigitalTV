@@ -26,6 +26,4 @@
         android:paddingBottom="5dp"
         android:paddingLeft="15dp"
         />
-        <!--android:layout_marginTop="12dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"-->
 </RelativeLayout>

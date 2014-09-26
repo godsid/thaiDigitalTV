@@ -3,8 +3,10 @@ package com.webmanagement.thaidigitaltv;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,9 @@ public class SettingTimeList extends Activity {
 
     String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
     DetailProgram detailProgram;
+
+    Typeface TF_font;
+    String frontPath = "fonts/RSU_BOLD.ttf";
 
     String program_name,type_name,channel_name,time_before,time_start;
     int program_id;
@@ -48,7 +53,6 @@ public class SettingTimeList extends Activity {
         time_start = detailProgram.getTime_start(select_item);
 
 
-
         Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
         Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
         ImageView iv_back = (ImageView)findViewById(R.id.iv_fav_back);
@@ -58,7 +62,8 @@ public class SettingTimeList extends Activity {
             public void onClick(View v) {
                 long idf = dbAction.addFavoriteProgram(program_id,program_name,type_name,channel_name,time_start,20);
 
-                Log.d("run2", "program_id,program_name,type_name,channel_name,time_start,20" + idf);
+                Toast.makeText(getApplicationContext(), "select_item at :" + select_item, Toast.LENGTH_SHORT).show();
+                Log.d("run2", program_id+","+program_name+","+type_name+","+channel_name+","+time_start+",20 : " + idf);
             }
         });
 
@@ -86,12 +91,12 @@ public class SettingTimeList extends Activity {
         SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
 
         while (cur.isAfterLast() == false) {
-            Log.d("run","\nprogram_id: "+cur.getString(0)+"\n"+
-                    "program_name: "+cur.getString(1)+"\n"+
-                    "type_name: "+cur.getString(2)+"\n"+
-                    "channel_name: "+cur.getString(3)+"\n"+
-                    "time_start: "+cur.getString(4)+"\n"+
-                    "time_before: "+cur.getString(5)+"\n");
+            Log.d("run","\n program_id: "+cur.getString(1)+"\n"+
+                    "program_name: "+cur.getString(2)+"\n"+
+                    "type_name: "+cur.getString(3)+"\n"+
+                    "channel_name: "+cur.getString(4)+"\n"+
+                    "time_start: "+cur.getString(5)+"\n"+
+                    "time_before: "+cur.getString(6)+"\n");
             cur.moveToNext();
         }
         cur.close();
@@ -118,4 +123,5 @@ public class SettingTimeList extends Activity {
         return super.onOptionsItemSelected(item);
 
     }
+
 }

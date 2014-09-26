@@ -69,6 +69,10 @@ public class DatabaseAction {
     }
 
 
+    public boolean deleteAllFavoriteProgram(){
+        return database.delete(TB_NAME,null,null) > 0;
+    }
+
 
 
 

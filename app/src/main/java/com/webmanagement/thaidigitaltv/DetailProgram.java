@@ -17,6 +17,15 @@ public class DetailProgram{
 
     private static int item_selected;
 
+    public void clearAllArray() {
+        arr_Pro_id.clear();
+        arr_Pro_name.clear();
+        arr_Type_name.clear();
+        arr_Time_start.clear();
+        arr_Time_end.clear();
+
+    }
+
 
     public int getProg_id(int i) {
         return this.arr_Pro_id.get(i);

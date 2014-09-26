@@ -37,9 +37,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("run2","old :"+oldVersion+" new :"+newVersion);
-        db.execSQL("DROP TABLE IF EXISTS tb_list_favorite");
-        db.execSQL(TB_CREATE);
+       // Log.d("run2","old :"+oldVersion+" new :"+newVersion);
+      //  db.execSQL("DROP TABLE IF EXISTS tb_list_favorite");
+       // db.execSQL(TB_CREATE);
         //onCreate(db);
     }
 
