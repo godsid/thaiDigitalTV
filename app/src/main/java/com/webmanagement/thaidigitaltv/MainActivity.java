@@ -274,7 +274,7 @@ public class MainActivity extends Activity {
 
                     detailProgram.seItem_selected(tb_row.getId());
                     showSettimeList();
-                    Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
 
                 }
             });

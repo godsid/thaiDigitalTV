@@ -53,6 +53,7 @@
             android:choiceMode="singleChoice"
             android:fastScrollEnabled="true"
             android:background="#cfd8dc"
+
             />
     <!-- android:cacheColorHint="#323232"-->
     <LinearLayout
@@ -61,21 +62,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#263238"
+        android:background="#111"
         >
 
         <Button
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/t_btn_cancle"
+            android:text="@string/t_btn_save"
             android:id="@+id/bt_setttime_ok"
+            android:background="#AAA"
+            android:layout_marginRight="15dp"
 
             />
         <Button
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="@string/t_btn_save"
+            android:text="@string/t_btn_cancel"
             android:id="@+id/bt_settime_cancel"
+            android:background="#AAA"
 
             />
 

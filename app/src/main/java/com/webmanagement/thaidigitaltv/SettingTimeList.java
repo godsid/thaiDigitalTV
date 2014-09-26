@@ -1,6 +1,8 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
 import android.graphics.Typeface;
@@ -10,26 +12,38 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class SettingTimeList extends Activity {
 
     private DatabaseAction dbAction;
 
-    String[] time_list = new String[] {"5 นาที","10 นาที","20 นาที","30 นาที","40 นาที","50 นาที","60 นาที"};
-    DetailProgram detailProgram;
+    private int[] time_value = new int[] {5,10,20,30,40,50,60};
+    private DetailProgram detailProgram;
 
-    Typeface TF_font;
-    String frontPath = "fonts/RSU_BOLD.ttf";
+
+    ArrayList<DataCustomSettingTime> dataCustomSettingTime = new ArrayList<DataCustomSettingTime>();
+
+    SettingTimeAdapter settingTimeAdapter ;
 
     String program_name,type_name,channel_name,time_before,time_start;
+<<<<<<< HEAD
     int program_id;
     int select_item;
+=======
+    private int program_id;
+    private ListView listView;
+    private int select_item;
+>>>>>>> 29877e56692e09ccbe9d68231f2b442c3c7e4be0
 
 
     @Override
@@ -37,16 +51,18 @@ public class SettingTimeList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_time_list);
 
-        ArrayAdapter ad=new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,time_list);
-        ListView list=(ListView)findViewById(R.id.lv_time);
+        settingTimeAdapter = new SettingTimeAdapter(getApplicationContext(),dataCustomSettingTime);
 
-        list.setAdapter(ad);
+        listView = (ListView)findViewById(R.id.lv_time);
+        listView.setAdapter(settingTimeAdapter);
+
+
+        setDataToListView();
 
         dbAction = new DatabaseAction(this);
         detailProgram = new DetailProgram();
 
         try {
-
 
             select_item = detailProgram.getItem_selected();
             detailProgram.showp();
@@ -66,17 +82,28 @@ public class SettingTimeList extends Activity {
         bt_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long idf = dbAction.addFavoriteProgram(program_id,program_name,type_name,channel_name,time_start,20);
 
-                Toast.makeText(getApplicationContext(), "select_item at :" + select_item, Toast.LENGTH_SHORT).show();
-                Log.d("run2", program_id+","+program_name+","+type_name+","+channel_name+","+time_start+",20 : " + idf);
+
+
+                    int time_selected = dataCustomSettingTime.get(settingTimeAdapter.getSelectedPosition()).time_val;
+                    long resAdd = dbAction.addFavoriteProgram(program_id, program_name, type_name, channel_name, time_start, time_selected);
+                    if (resAdd > 0) {
+                        Toast.makeText(getApplicationContext(), "Add Complete", Toast.LENGTH_LONG).show();
+                        Log.d("run2", program_id + "," + program_name + "," + type_name + "," + channel_name + "," + time_start + " , " + time_selected + " : " + resAdd);
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Can't Add", Toast.LENGTH_LONG).show();
+                    }
+
             }
+
         });
 
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showdata();
+
+                onBackPressed();
             }
         });
 
@@ -87,9 +114,21 @@ public class SettingTimeList extends Activity {
             }
         });
 
+
+
     }
 
 
+    public void setDataToListView() {
+
+        for (int i = 0; i< time_value.length ; i++){
+            dataCustomSettingTime.add(new DataCustomSettingTime(time_value[i],i));
+        }
+
+    }
+
+
+    /*
     public void showdata(){ // ดึงข้อมูลมาแสดง
 
         SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
@@ -105,6 +144,21 @@ public class SettingTimeList extends Activity {
         }
         cur.close();
     }
+*/
+
+    public void showAlertWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("คำเตือน");
+        builder.setMessage("กรุณาเลือกเวลาการแจ้งเตือนล่วงหน้า");
+        builder.setPositiveButton("ตกลง",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        builder.show();
+    }
+
 
 
     @Override

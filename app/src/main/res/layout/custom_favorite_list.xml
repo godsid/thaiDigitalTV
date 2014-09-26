@@ -14,7 +14,11 @@
         android:text="ชื่อรายการ"
         android:textSize="20dp"
         android:textStyle="bold"
+<<<<<<< HEAD
         android:textColor="#000000"
+=======
+        android:textColor="#000"
+>>>>>>> 29877e56692e09ccbe9d68231f2b442c3c7e4be0
         />
     <TextView
         android:id="@+id/tv_fav_time_show"
@@ -23,6 +27,7 @@
         android:text="09:00-10:00"
         android:layout_below="@id/tv_fav_list_title"
         android:textSize="17dp"
+        android:textColor="#000"
         android:layout_marginTop="1dip"
         android:textColor="#000000"
         />
@@ -34,6 +39,10 @@
         android:layout_below="@id/tv_fav_time_show"
         android:layout_marginTop="5dp"
         android:textSize="15dp"
+<<<<<<< HEAD
         android:textColor="#000000"
+=======
+        android:textColor="#000"
+>>>>>>> 29877e56692e09ccbe9d68231f2b442c3c7e4be0
         />
 </RelativeLayout>
