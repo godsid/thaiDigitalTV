@@ -1,8 +1,11 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteCursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -41,11 +44,16 @@ public class MainActivity extends Activity {
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram;
+    private DatabaseAction dbAction;
 
     private ExpandableListAdapter_Left ExpAdapter;
     static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
+    private int postion_for_delete;
+    private ArrayList<Integer> arrProgram_id = new ArrayList<Integer>();
+    private ArrayList<String> arrDelorAdd = new ArrayList<String>();
+
 
     Typeface TF_font;
     String frontPath = "fonts/RSU_BOLD.ttf";
@@ -66,6 +74,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         detailProgram = new DetailProgram();
+        dbAction = new DatabaseAction(this);
         aq = new AQuery(this);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
@@ -83,6 +92,7 @@ public class MainActivity extends Activity {
         TV_detail_list_title.setTypeface(TF_font);
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
+        setArrProgram_id();
         prepareListData();
 
         IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +194,53 @@ public class MainActivity extends Activity {
     }
 
 
+    private void menuActionDelete() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ยืนยันการลบ");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(postion_for_delete));
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(postion_for_delete));
+                        if (chkDeleted == true) {
+                            Toast.makeText(MainActivity.this, "Delete Complete", Toast.LENGTH_SHORT).show();
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(MainActivity.this, "Can't Delete ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        builder.show();
+
+    }
+
+
+    public void setArrProgram_id() {
+        SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
+
+        while (cur.isAfterLast() == false) {
+
+            arrProgram_id.add(Integer.parseInt(cur.getString(1)));
+            cur.moveToNext();
+
+        }
+
+        cur.close();
+
+    }
+
+
+
     public void showSettimeList() {
 
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
@@ -257,7 +314,13 @@ public class MainActivity extends Activity {
             tv_col_4.setPadding(45, 0, 10, 0);
             tv_col_4.setHeight(tv_layout_height);
             tv_col_4.setBackgroundColor(bg_tv_color);
-            tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
+            if (arrProgram_id.contains(id) == true) {
+                tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
+                arrDelorAdd.add("delete");
+            } else {
+                tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
+                arrDelorAdd.add("add");
+            }
 
             tb_row.setId(c);
 
@@ -273,7 +336,13 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
 
                     detailProgram.seItem_selected(tb_row.getId());
-                    showSettimeList();
+                    if (arrDelorAdd.get(tb_row.getId()).equals("add")) {
+                        showSettimeList();
+                    } else if(arrDelorAdd.get(tb_row.getId()).equals("delete")){
+                        postion_for_delete = tb_row.getId();
+                        menuActionDelete();
+                    }
+
                     //Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
 
                 }
