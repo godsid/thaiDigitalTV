@@ -15,6 +15,8 @@ public class DetailProgram{
     private static ArrayList<String> arr_Time_start = new ArrayList<String>();
     private static ArrayList<String> arr_Time_end = new ArrayList<String>();
 
+    private static ArrayList<Integer> arr_Fav_pro_id = new ArrayList<Integer>();
+
     private static int item_selected;
 
     public void clearAllArray() {
@@ -24,6 +26,17 @@ public class DetailProgram{
         arr_Time_start.clear();
         arr_Time_end.clear();
 
+    }
+
+    public void clearFavPro_Id() {
+        arr_Fav_pro_id.clear();
+    }
+
+    public int getFavPro_id(int i) {
+        return this.arr_Fav_pro_id.get(i);
+    }
+    public void setFavPro_id(int j) {
+        this.arr_Fav_pro_id.add(j);
     }
 
 

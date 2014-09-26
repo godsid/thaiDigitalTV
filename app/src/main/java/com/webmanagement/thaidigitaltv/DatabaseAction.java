@@ -64,8 +64,8 @@ public class DatabaseAction {
         return database.update(TB_NAME,values,C_list_id+"=?",new String[] {lid});
     }
 
-    public boolean deleteFavoriteProgram(String i){
-        return database.delete(TB_NAME,C_list_id+"="+i,null) > 0;
+    public boolean deleteFavoriteProgram(int i){
+        return database.delete(TB_NAME,C_program_id+"="+i,null) > 0;
     }
 
 
