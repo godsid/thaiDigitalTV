@@ -36,14 +36,10 @@ public class SettingTimeList extends Activity {
     SettingTimeAdapter settingTimeAdapter ;
 
     String program_name,type_name,channel_name,time_before,time_start;
-<<<<<<< HEAD
-    int program_id;
-    int select_item;
-=======
+
     private int program_id;
     private ListView listView;
     private int select_item;
->>>>>>> 29877e56692e09ccbe9d68231f2b442c3c7e4be0
 
 
     @Override
@@ -75,8 +71,10 @@ public class SettingTimeList extends Activity {
             Log.d("run",select_item+" , "+program_id+" , "+ detailProgram.sizePro_id()+" : Error : "+e);
         }
 
-        Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
-        Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
+        //Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
+        //Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
+        ImageView bt_ok = (ImageView)findViewById(R.id.bt_setttime_ok);
+        //ImageView bt_cancel = (ImageView)findViewById(R.id.bt_settime_cancel);
         ImageView iv_back = (ImageView)findViewById(R.id.iv_alarm_back);
 
         bt_ok.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +97,13 @@ public class SettingTimeList extends Activity {
 
         });
 
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
+        /*bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 onBackPressed();
             }
-        });
+        });*/
 
         iv_back.setOnClickListener(new View.OnClickListener(){
             @Override
