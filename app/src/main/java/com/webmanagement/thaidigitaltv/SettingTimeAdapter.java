@@ -60,10 +60,6 @@ private int bg_color_rl;
         RadioButton RB_settime_line = (RadioButton) convertView.findViewById(R.id.rb_settime_line);
         RelativeLayout RL_custom_settime = (RelativeLayout) convertView.findViewById(R.id.rl_custom_settime);
         RB_settime_line.setEnabled(false);
-        if ((arraySettingTime.get(position).chk_color_val % 2) != 0)
-            bg_color_rl = Color.rgb(252, 236, 232);
-        else
-            bg_color_rl = Color.rgb(228, 216, 205);
 
         //  convertView.setTag(objectView);
 

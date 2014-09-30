@@ -39,6 +39,7 @@ public class SettingTimeList extends Activity {
     private int program_id;
     private ListView listView;
     private int select_item;
+    private MainActivity mainActivity;
 
 
     @Override
@@ -56,6 +57,7 @@ public class SettingTimeList extends Activity {
 
         dbAction = new DatabaseAction(this);
         detailProgram = new DetailProgram();
+        mainActivity = new MainActivity();
 
         try {
 
@@ -84,6 +86,9 @@ public class SettingTimeList extends Activity {
                     long resAdd = dbAction.addFavoriteProgram(program_id, program_name, type_name, channel_name, time_start, time_selected);
                     if (resAdd > 0) {
                         Toast.makeText(getApplicationContext(), "Add Complete", Toast.LENGTH_LONG).show();
+
+                       // mainActivity.setEexpLeftChildSelected();
+
                         Log.d("run2", program_id + "," + program_name + "," + type_name + "," + channel_name + "," + time_start + " , " + time_selected + " : " + resAdd);
                         onBackPressed();
                     } else {

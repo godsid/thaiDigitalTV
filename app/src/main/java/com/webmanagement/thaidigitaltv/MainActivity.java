@@ -19,11 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -51,9 +53,12 @@ public class MainActivity extends Activity {
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
     private int postion_for_delete;
-    private ArrayList<Integer> arrProgram_id = new ArrayList<Integer>();
+    private ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
     private ArrayList<String> arrDelorAdd = new ArrayList<String>();
 
+    private  boolean stateOK = false;
+
+    private int exp_left_group_pos,exp_left_child_pos;
 
     Typeface TF_font;
     String frontPath = "fonts/RSU_BOLD.ttf";
@@ -63,7 +68,7 @@ public class MainActivity extends Activity {
     int tv_header_tb_size = 18;
     int tv_item_tb_size = 16;
 
-
+    //ProgressDialog mDialog;
 
     AQuery aq;
 
@@ -71,11 +76,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         detailProgram = new DetailProgram();
         dbAction = new DatabaseAction(this);
         aq = new AQuery(this);
+
+        findViewById(R.id.pgb).setVisibility(View.GONE);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
         IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
@@ -85,20 +93,23 @@ public class MainActivity extends Activity {
 
         IV_ic_fav_top_right = (ImageView) findViewById(R.id.ic_fav_top_right);
 
-
         TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
-        setArrProgram_id();
+
+
+        setHoldArrProg_idFromDB();
         prepareListData();
+
+
 
         IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               gotoFavoriteList();
+                gotoFavoriteList();
             }
         });
 
@@ -172,7 +183,8 @@ public class MainActivity extends Activity {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 //end
-
+                exp_left_group_pos = groupPosition;
+                exp_left_child_pos = childPosition;
 
                 detailProgram.setChan_id(get_channel_id);
                 detailProgram.setChan_name(get_channel_name);
@@ -193,21 +205,54 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+
+        if (stateOK)
+            setEexpLeftChildSelected();
+
+        Log.d("run","onResume");
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+
+        Log.d("run","onPause");
+        super.onPause();
+    }
+
+    public void setEexpLeftChildSelected() {
+        int child_pos = 0;
+        try {
+            if (exp_left_group_pos == 0)
+                child_pos = exp_left_group_pos + 1;
+            else
+                child_pos = exp_left_group_pos - 1;
+
+            EXP_exp_left.setSelectedChild(exp_left_group_pos,child_pos,true);
+            openProgramDetail();
+        } catch (Exception e) {
+            EXP_exp_left.setSelectedChild(exp_left_group_pos,(exp_left_child_pos),true);
+            openProgramDetail();
+        }
+
+    }
+
 
     private void menuActionDelete() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(postion_for_delete));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(postion_for_delete) + " ออกจากรายการโปรดหรือไม่");
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(postion_for_delete));
-                        if (chkDeleted == true) {
+                        if (chkDeleted) {
                             Toast.makeText(MainActivity.this, "Delete Complete", Toast.LENGTH_SHORT).show();
-                            Intent intent = getIntent();
-                            finish();
-                            startActivity(intent);
+                            setEexpLeftChildSelected();
                         }else {
                             Toast.makeText(MainActivity.this, "Can't Delete ", Toast.LENGTH_SHORT).show();
                         }
@@ -216,7 +261,7 @@ public class MainActivity extends Activity {
         builder.setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -225,12 +270,12 @@ public class MainActivity extends Activity {
     }
 
 
-    public void setArrProgram_id() {
+    public void setHoldArrProg_idFromDB() {
         SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
 
-        while (cur.isAfterLast() == false) {
+        while (!cur.isAfterLast()) {
 
-            arrProgram_id.add(Integer.parseInt(cur.getString(1)));
+            arrHoldProg_idDB.add(Integer.parseInt(cur.getString(1)));
             cur.moveToNext();
 
         }
@@ -241,14 +286,14 @@ public class MainActivity extends Activity {
 
 
 
-    public void showSettimeList() {
+    public void goSettimeList() {
 
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
         startActivity(intent);
     }
 
     public void gotoFavoriteList() {
-
+        stateOK = false;
         Intent intent = new Intent(MainActivity.this, FavoriteList.class);
         startActivity(intent);
     }
@@ -257,10 +302,10 @@ public class MainActivity extends Activity {
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
 
-        if (b1 == false) {
+        if (!b1) {
             TL_detail_list.removeAllViews();
         } else {
-            Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
+            //Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
             int bg_tv_color, item_tv_color = Color.rgb(90, 90, 90);
             int tv_layout_height = 85;
 
@@ -314,10 +359,12 @@ public class MainActivity extends Activity {
             tv_col_4.setPadding(45, 0, 10, 0);
             tv_col_4.setHeight(tv_layout_height);
             tv_col_4.setBackgroundColor(bg_tv_color);
-            if (arrProgram_id.contains(id) == true) {
+            if (arrHoldProg_idDB.contains(id)) {
+                Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
                 arrDelorAdd.add("delete");
             } else {
+                Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
                 arrDelorAdd.add("add");
             }
@@ -336,11 +383,20 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
 
                     detailProgram.seItem_selected(tb_row.getId());
+
                     if (arrDelorAdd.get(tb_row.getId()).equals("add")) {
-                        showSettimeList();
+
+                        //Log.d("run","if add "+arrDelorAdd.get(tv_col_4.getId())+" , "+tv_col_4.getId());
+                        Log.d("run","EXP IF");
+                        stateOK =true;
+                        goSettimeList();
                     } else if(arrDelorAdd.get(tb_row.getId()).equals("delete")){
+                        //Log.d("run","else delete "+arrDelorAdd.get(tv_col_4.getId())+" , "+tv_col_4.getId());
                         postion_for_delete = tb_row.getId();
+                        stateOK =true;
                         menuActionDelete();
+                        //setEexpLeftChildSelected(2);
+                        Log.d("run","EXP EL");
                     }
 
                     //Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
@@ -360,18 +416,25 @@ public class MainActivity extends Activity {
 
     public void openProgramDetail() {
 
+        arrDelorAdd.clear();
+        arrHoldProg_idDB.clear();
+        detailProgram.clearAllArray();
+        setHoldArrProg_idFromDB();
 
         TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
         ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
 
         TV_title_detail_list.setText(detailProgram.getChan_name());
 
-        aq.id(IV_title_detail_list).image(detailProgram.getChan_pic());
-
         setDataToTable(0, "", "", "","", false,0, 1);
-        detailProgram.clearAllArray();
-        aq.ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
-                    @Override
+
+        aq.id(IV_title_detail_list).image(detailProgram.getChan_pic())
+
+
+
+        .progress(R.id.pgb).ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
+
+            @Override
                     public void callback(String url, JSONObject object, AjaxStatus status) {
 
                         if (object != null) {
@@ -409,7 +472,7 @@ public class MainActivity extends Activity {
 
                         // super.callback(url, object, status);
                     }
-                });
+                });//.image(detailProgram.getChan_pic(), false, false);
 
     }
 
