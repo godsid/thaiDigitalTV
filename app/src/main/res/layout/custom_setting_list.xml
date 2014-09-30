@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:layout_width="fill_parent"
-    android:background="#CCC"
     android:id="@+id/rl_custom_settime"
-    android:layout_height="40dp">
-
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:background="#37474f"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    >
     <TextView
-        android:layout_width="45dp"
+        android:id="@+id/tv_settime_timeval"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="#333"
         android:text="60"
-        android:gravity="center|center_vertical"
-        android:id="@+id/tv_settime_timeval" />
-
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        />
     <TextView
-        android:textColor="#333"
-        android:layout_width="55dp"
-        android:layout_height="fill_parent"
-        android:text="นาที"
-        android:gravity="center|center_vertical"
         android:id="@+id/tv_settime_min"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="นาที"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:gravity="center"
         android:layout_toRightOf="@+id/tv_settime_timeval"
-        android:layout_gravity="center_horizontal" />
-
+        android:layout_marginLeft="15dp"
+        />
     <RadioButton
+        android:id="@+id/rb_settime_line"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="5dp"
         android:layout_alignParentRight="true"
-        android:id="@+id/rb_settime_line"
-        android:gravity="center" />
+        android:gravity="center"
+        />
 </RelativeLayout>

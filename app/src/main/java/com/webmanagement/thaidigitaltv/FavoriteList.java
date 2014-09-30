@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FavoriteList extends Activity {
@@ -42,6 +45,9 @@ ImageView IV_ic_back_to_main;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
+
+        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
+
         dbAction = new DatabaseAction(this);
 
         detailProgram = new DetailProgram();
@@ -52,9 +58,12 @@ ImageView IV_ic_back_to_main;
 
         listView = (ListView)findViewById(R.id.lv_fav_show);
 
-        IV_ic_back_to_main = (ImageView)findViewById(R.id.ic_back_to_main);
+        //TextView  TV_fav_delete_all = (TextView)findViewById(R.id.tv_fav_delete_all);
+        ImageView  IV_fav_delete_all = (ImageView)findViewById(R.id.iv_fav_delete_all);
 
-        TextView  TV_fav_delete_all = (TextView)findViewById(R.id.tv_fav_delete_all);
+
+        IV_ic_back_to_main = (ImageView)findViewById(R.id.iv_fav2_back);
+
 
         listView.setAdapter(listFavoriteAdapter);
 
@@ -85,7 +94,8 @@ ImageView IV_ic_back_to_main;
 
         });
 
-        TV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
+
+        IV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -93,16 +103,22 @@ ImageView IV_ic_back_to_main;
             }
         });
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg)   {
                 //int list_id = detailProgram.getFavPro_id(position);
+                view.startAnimation(animAlpha);
                 setItemPosition(position);
                 //Toast.makeText(getApplicationContext(), "Prog id "+ list_id, Toast.LENGTH_SHORT).show();
                 showActionMenuDialog();
             }
 
         });
+
+    }
+
+    private void userInputHandler(){
 
     }
 

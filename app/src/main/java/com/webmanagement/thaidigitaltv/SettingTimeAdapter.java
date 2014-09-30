@@ -59,7 +59,9 @@ private int bg_color_rl;
         TextView TV_settime_min = (TextView) convertView.findViewById(R.id.tv_settime_min);
         RadioButton RB_settime_line = (RadioButton) convertView.findViewById(R.id.rb_settime_line);
         RelativeLayout RL_custom_settime = (RelativeLayout) convertView.findViewById(R.id.rl_custom_settime);
+
         RB_settime_line.setEnabled(false);
+
 
         //  convertView.setTag(objectView);
 
@@ -67,7 +69,7 @@ private int bg_color_rl;
         TV_settime_min.setText("นาที");
 
         RB_settime_line.setChecked(position == getSelectedPosition());
-        RL_custom_settime.setBackgroundColor(bg_color_rl);
+        //RL_custom_settime.setBackgroundColor(bg_color_rl);
         RL_custom_settime.setTag(position);
 
         RL_custom_settime.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +104,7 @@ class DataCustomSettingTime{
     int chk_color_val;
 
     public DataCustomSettingTime(int time_val,int chk_color_val){
+
         this.time_val = time_val;
         this.chk_color_val = chk_color_val;
     }
