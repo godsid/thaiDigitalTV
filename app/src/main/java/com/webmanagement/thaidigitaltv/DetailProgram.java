@@ -21,6 +21,7 @@ public class DetailProgram{
     private static ArrayList<String> arrFav_Pro_name = new ArrayList<String>();
 
     private static int item_selected,item_Fav_selected;
+    private static int item_day_id;
 
     public void clearAllArray() {
         arr_Pro_id.clear();
@@ -45,6 +46,13 @@ public class DetailProgram{
         this.arrFav_Pro_name.add(j);
     }
 
+    public int getDay_id() {
+        return this.item_day_id;
+    }
+    public void setDay_id(int j) {
+        this.item_day_id = j;
+    }
+
     public int getFavProg_id(int i) {
         return this.arrFav_Pro_id.get(i);
     }
@@ -52,26 +60,20 @@ public class DetailProgram{
         this.arrFav_Pro_id.add(j);
     }
 
-
     public int getProg_id(int i) {
         try {
-            Log.d("run",i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size()+" try ");
+           // Log.d("run",i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size()+" try ");
             return this.arr_Pro_id.get(i);
         } catch (Exception e) {
-            Log.d("run","catch getProg_id "+i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size());
+            //Log.d("run","catch getProg_id "+i+" : "+this.arr_Pro_id.get(i)+" : "+this.arr_Pro_id.size());
             return this.arr_Pro_id.get(i);
         }
 
     }
 
-    public void showp() {
-      for (int a = 0; a< arr_Pro_id.size();a++) {
-          Log.d("run","pos "+a+" , val  "+arr_Pro_id.get(a));
-      }
 
 
 
-    }
 
     public void setProg_id(int j) {
         this.arr_Pro_id.add(j);

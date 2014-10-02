@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:id="@+id/tv_col_1"
+            android:layout_width="130dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/tb_header_program"
+            android:textColor="#EEEEEE"
+            android:textSize="16dp"
+            android:textStyle="normal|bold"></TextView>
+
+        <TextView
+            android:id="@+id/tv_col_2"
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center|center_vertical|center_horizontal"
+
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/tb_header_time"
+            android:textColor="#EEEEEE"
+            android:textSize="16dp"
+            android:textStyle="normal|bold"></TextView>
+
+        <TextView
+            android:id="@+id/tv_col_3"
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/tv_header_time"
+            android:gravity="center"
+            android:text="@string/tb_header_status"
+            android:textColor="#EEEEEE"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center|center_vertical|center_horizontal"
+            android:textStyle="normal|bold"></TextView>
+
+        <TextView
+            android:id="@+id/tv_col_4"
+            android:layout_width="90dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="@string/tb_header_fav"
+            android:layout_gravity="center|center_vertical|center_horizontal"
+            android:textColor="#EEEEEE"
+            android:textSize="16dp"
+            android:paddingLeft="20dp"
+            android:textStyle="normal|bold"></TextView>
+    </LinearLayout>
+</LinearLayout>

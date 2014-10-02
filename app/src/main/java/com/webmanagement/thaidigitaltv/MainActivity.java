@@ -2,6 +2,7 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,13 +20,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -34,29 +38,38 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.androidquery.util.Progress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends Activity {
-    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right;
+    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right,IV_detail_today,IV_detail_list_title;
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram;
     private DatabaseAction dbAction;
 
     private ExpandableListAdapter_Left ExpAdapter;
-    static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
+    //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
+    static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     ArrayList<GroupExpLeft> group_list;
     ArrayList<ItemExpLeft> channel_list;
-    private int postion_for_delete;
-    private ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    private ArrayList<String> arrDelorAdd = new ArrayList<String>();
 
-    private  boolean stateOK = false;
+    ListProgramDetailAdapter listProgramDetailAdapter;
+    ArrayList<DataCustomProgramDetail> dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
+    ListView listView;
+
+    private static  boolean stateOK = false;
+    private int position_for_delete;
 
     private int exp_left_group_pos,exp_left_child_pos;
 
@@ -65,10 +78,21 @@ public class MainActivity extends Activity {
 
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
 
+    private SeekBar SB_detail_date = null;
     int tv_header_tb_size = 18;
     int tv_item_tb_size = 16;
 
-    //ProgressDialog mDialog;
+    TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
+    Calendar calendar;
+    Date date;
+    String[] arr_day = new String[] {"อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"};
+    String[] arr_month = new String[] {"มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
+            "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"  };
+    int g_current_day,g_current_date,g_current_month,g_current_year;
+    int g_change_day;
+    ProgressDialog progressDialog;
+
+    SimpleDateFormat simpleDateFormat;
 
     AQuery aq;
 
@@ -81,9 +105,24 @@ public class MainActivity extends Activity {
 
         detailProgram = new DetailProgram();
         dbAction = new DatabaseAction(this);
+        calendar = Calendar.getInstance();
+        date = new Date();
         aq = new AQuery(this);
 
-        findViewById(R.id.pgb).setVisibility(View.GONE);
+        LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
+        if (hiddenLayout == null) {
+
+            FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
+            View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
+            myLayout.addView(hiddenInfo);
+        }
+
+
+        listProgramDetailAdapter = new ListProgramDetailAdapter(getApplicationContext(),dataCustomProgramDetail);
+        listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(listProgramDetailAdapter);
+
+
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
         IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
@@ -93,16 +132,68 @@ public class MainActivity extends Activity {
 
         IV_ic_fav_top_right = (ImageView) findViewById(R.id.ic_fav_top_right);
 
+        IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
+
         TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
+        IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
+
+        TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
+        TV_detail_date = (TextView) findViewById(R.id.tv_detail_date);
+        TV_detail_month = (TextView) findViewById(R.id.tv_detail_month);
+        TV_detail_year = (TextView) findViewById(R.id.tv_detail_year);
+
+        SB_detail_date = (SeekBar) findViewById(R.id.sb_detail_date);
+
+        TV_header_program = (TextView) findViewById(R.id.tv_header_program);
+        TV_header_time = (TextView) findViewById(R.id.tv_header_time);
+        TV_header_status = (TextView) findViewById(R.id.tv_header_status);
+        TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
+
+        g_current_day = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        g_current_date = calendar.get(Calendar.DAY_OF_MONTH);
+        g_current_month = calendar.get(Calendar.MONTH);
+        g_current_year = calendar.get(Calendar.YEAR)+543;
+
+        setChangeDay(g_current_day);
 
 
-        setHoldArrProg_idFromDB();
-        prepareListData();
+
+        SB_detail_date.setMax(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        SB_detail_date.setProgress(g_current_date);
+
+
+        TV_detail_day.setTypeface(TF_font);
+        TV_detail_date.setTypeface(TF_font);
+        TV_detail_month.setTypeface(TF_font);
+        TV_detail_year.setTypeface(TF_font);
+
+        TV_detail_day.setText(arr_day[g_current_day]);
+        TV_detail_date.setText(Integer.toString(g_current_date));
+        TV_detail_month.setText(arr_month[g_current_month]);
+        TV_detail_year.setText(Integer.toString(g_current_year));
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("กำลังโหลดข้อมูล...");
+        progressDialog.setTitle("กรุณารอสักครู่");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+
+
+       prepareMenuLeft();
+
+
+        // aq.id(IV_title_detail_list)
+        //       .image(detailProgram.getChan_pic())
+
+
+        openFirstProgramDetail();
+
 
 
 
@@ -148,18 +239,9 @@ public class MainActivity extends Activity {
             }
         });
 
-        LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
-        if (hiddenLayout == null) {
 
-            FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
-            View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
-            myLayout.addView(hiddenInfo);
-        }
 
-        TV_header_program = (TextView) findViewById(R.id.tv_header_program);
-        TV_header_time = (TextView) findViewById(R.id.tv_header_time);
-        TV_header_status = (TextView) findViewById(R.id.tv_header_status);
-        TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
+
 
         TV_header_program.setTypeface(TF_font);
         TV_header_time.setTypeface(TF_font);
@@ -170,6 +252,7 @@ public class MainActivity extends Activity {
         TV_header_time.setTextSize(tv_header_tb_size);
         TV_header_status.setTextSize(tv_header_tb_size);
         TV_header_fav.setTextSize(tv_header_tb_size);
+
 
 
         EXP_exp_left.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -203,8 +286,83 @@ public class MainActivity extends Activity {
         });
 
 
+        SB_detail_date.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+
+                if (progress <= 0)
+                    progress = 1;
+
+                calendar.set(Calendar.DATE,progress);
+                int c_day = calendar.get(Calendar.DAY_OF_WEEK)-1;
+                TV_detail_day.setText(arr_day[c_day]);
+
+                setChangeDay(c_day);
+
+                TV_detail_date.setText(Integer.toString(progress));
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                openProgramDetail();
+            }
+        });
+
+
+        IV_detail_today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDefaultToday();
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                detailProgram.seItem_selected(position);
+
+                detailProgram.setProg_id(dataCustomProgramDetail.get(position).id);
+                detailProgram.setProg_name(dataCustomProgramDetail.get(position).col_1);
+                detailProgram.setTime_start(dataCustomProgramDetail.get(position).col_2);
+
+                detailProgram.setType_name("TypeTEST");
+
+                if (listProgramDetailAdapter.getArrDelorAdd(position).equals("add")) {
+                    goSettimeList();
+                    Log.d("run","IF"+listProgramDetailAdapter.getArrDelorAdd(position)+","+position);
+                } else if(listProgramDetailAdapter.getArrDelorAdd(position).equals("delete")){
+                    position_for_delete = position;
+                    menuActionDelete();
+                    //setEexpLeftChildSelected(2);
+                    Log.d("run","EL"+listProgramDetailAdapter.getArrDelorAdd(position)+","+position);
+                }
+
+
+                Log.d("run","Selcet List Position "+position);
+            }
+        });
+
+
     }
 
+    public void setChangeDay(int day) {
+        g_change_day = day;
+    }
+
+
+    public void setDefaultToday() {
+        setChangeDay(g_current_day);
+        SB_detail_date.setProgress(g_current_date);
+        TV_detail_day.setText(arr_day[g_current_day]);
+        openProgramDetail();
+
+    }
+
+    public static boolean setStateOK(boolean b) {
+        return stateOK = b;
+    }
     @Override
     protected void onResume() {
 
@@ -221,6 +379,12 @@ public class MainActivity extends Activity {
 
         Log.d("run","onPause");
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("run","onDestroy");
+        super.onDestroy();
     }
 
     public void setEexpLeftChildSelected() {
@@ -241,15 +405,15 @@ public class MainActivity extends Activity {
     }
 
 
-    private void menuActionDelete() {
+    public void menuActionDelete() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(postion_for_delete) + " ออกจากรายการโปรดหรือไม่");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(postion_for_delete));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(position_for_delete));
                         if (chkDeleted) {
                             Toast.makeText(MainActivity.this, "Delete Complete", Toast.LENGTH_SHORT).show();
                             setEexpLeftChildSelected();
@@ -270,21 +434,6 @@ public class MainActivity extends Activity {
     }
 
 
-    public void setHoldArrProg_idFromDB() {
-        SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
-
-        while (!cur.isAfterLast()) {
-
-            arrHoldProg_idDB.add(Integer.parseInt(cur.getString(1)));
-            cur.moveToNext();
-
-        }
-
-        cur.close();
-
-    }
-
-
 
     public void goSettimeList() {
 
@@ -298,169 +447,82 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void setDataToTable(int id, String c1, String c2, String c3,String c4, boolean b1,int c ,int i1) {
 
-        TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
+    public void openFirstProgramDetail() {
 
-        if (!b1) {
-            TL_detail_list.removeAllViews();
-        } else {
-            //Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
-            int bg_tv_color, item_tv_color = Color.rgb(90, 90, 90);
-            int tv_layout_height = 85;
-
-            if ((i1 % 2) != 0)
-                bg_tv_color = Color.rgb(252, 236, 232);
-            else
-                bg_tv_color = Color.rgb(228, 216, 205);
-
-            final TableRow tb_row = new TableRow(this);
-
-            TextView tv_col_1 = new TextView(this);
-            tv_col_1.setWidth(TV_header_program.getWidth());
-
-            if (c1.length() <= 15)
-                tv_col_1.setText(c1 + "\n");
-            else
-                tv_col_1.setText(c1);
-
-            tv_col_1.setTextColor(item_tv_color);
-            tv_col_1.setGravity(Gravity.CENTER);
-            tv_col_1.setBackgroundColor(bg_tv_color);
-            tv_col_1.setTextSize(tv_item_tb_size);
-            tv_col_1.setHeight(tv_layout_height);
-
-            tb_row.addView(tv_col_1);
-
-            TextView tv_col_2 = new TextView(this);
-            tv_col_2.setWidth(TV_header_time.getWidth());
-            tv_col_2.setText(c2 + "\n" + c3);
-            tv_col_2.setTextColor(item_tv_color);
-            tv_col_2.setGravity(Gravity.CENTER);
-            tv_col_2.setBackgroundColor(bg_tv_color);
-            tv_col_2.setTextSize(tv_item_tb_size);
-            tv_col_2.setHeight(tv_layout_height);
-            tb_row.addView(tv_col_2);
-
-            TextView tv_col_3 = new TextView(this);
-            tv_col_3.setWidth(TV_header_status.getWidth());
-            tv_col_3.setText("\n");
-            tv_col_3.setGravity(Gravity.CENTER);
-            tv_col_3.setPadding(15, 0, 10, 0);
-            tv_col_3.setHeight(tv_layout_height);
-            tv_col_3.setBackgroundColor(bg_tv_color);
-            tv_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
-            tb_row.addView(tv_col_3);
-
-            TextView tv_col_4 = new TextView(this);
-            tv_col_4.setWidth(TV_header_fav.getWidth());
-            tv_col_4.setText("\n");
-            tv_col_4.setGravity(Gravity.CENTER);
-            tv_col_4.setPadding(45, 0, 10, 0);
-            tv_col_4.setHeight(tv_layout_height);
-            tv_col_4.setBackgroundColor(bg_tv_color);
-            if (arrHoldProg_idDB.contains(id)) {
-                Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-                tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
-                arrDelorAdd.add("delete");
-            } else {
-                Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-                tv_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-                arrDelorAdd.add("add");
-            }
-
-            tb_row.setId(c);
-
-            tb_row.addView(tv_col_4);
-
-            detailProgram.setProg_id(id);
-            detailProgram.setProg_name(c1);
-            detailProgram.setTime_start(c2);
-            detailProgram.setType_name(c4);
-
-            tv_col_4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    detailProgram.seItem_selected(tb_row.getId());
-
-                    if (arrDelorAdd.get(tb_row.getId()).equals("add")) {
-
-                        //Log.d("run","if add "+arrDelorAdd.get(tv_col_4.getId())+" , "+tv_col_4.getId());
-                        Log.d("run","EXP IF");
-                        stateOK =true;
-                        goSettimeList();
-                    } else if(arrDelorAdd.get(tb_row.getId()).equals("delete")){
-                        //Log.d("run","else delete "+arrDelorAdd.get(tv_col_4.getId())+" , "+tv_col_4.getId());
-                        postion_for_delete = tb_row.getId();
-                        stateOK =true;
-                        menuActionDelete();
-                        //setEexpLeftChildSelected(2);
-                        Log.d("run","EXP EL");
-                    }
-
-                    //Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            TL_detail_list.addView(tb_row);
-        }
-
-    }
-
-
-
-
-
-
-
-    public void openProgramDetail() {
-
-        arrDelorAdd.clear();
-        arrHoldProg_idDB.clear();
+        listProgramDetailAdapter.clearArrDelOrAdd();
+        listProgramDetailAdapter.clearHoldArrProg_IdFromDB();
+        listProgramDetailAdapter.arrayProgramDetail.clear();
         detailProgram.clearAllArray();
-        setHoldArrProg_idFromDB();
 
-        TextView TV_title_detail_list = (TextView) findViewById(R.id.tv_detail_list_title);
-        ImageView IV_title_detail_list = (ImageView) findViewById(R.id.iv_detail_list_title);
+        listProgramDetailAdapter.setHoldArrProg_idFromDB();
 
-        TV_title_detail_list.setText(detailProgram.getChan_name());
+        detailProgram.setDay_id(g_change_day);
 
-        setDataToTable(0, "", "", "","", false,0, 1);
+        aq.progress(progressDialog)
+                .ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
 
-        aq.id(IV_title_detail_list).image(detailProgram.getChan_pic())
-
-
-
-        .progress(R.id.pgb).ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-            @Override
+                    @Override
                     public void callback(String url, JSONObject object, AjaxStatus status) {
 
                         if (object != null) {
 
                             try {
-                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(2).getJSONArray("program_detail");
+                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
+                                JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
 
+                                String items_chan_title, items_chan_pic;
+                                int items_chan_id;
+
+                                items_chan_title = items_array_chan.getJSONObject(0).getString("channel_name");
+                                items_chan_pic = items_array_chan.getJSONObject(0).getString("channel_pic");
+                                items_chan_id = items_array_chan.getJSONObject(0).getInt("channel_id");
+
+
+                                detailProgram.setChan_id(items_chan_id);
+                                detailProgram.setChan_name(items_chan_title);
+                                detailProgram.setChan_pic(items_chan_pic);
+
+                                TV_detail_list_title.setText(items_chan_title);
+                                aq.id(IV_detail_list_title).image(items_chan_pic);
                                 int c = 0;
                                 for (int j = 0; j < items_array_prog.length(); j++) {
 
                                     int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
-                                    int chan_id = items_array_prog.getJSONObject(j).getInt("chan_id");
-                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_title");
-                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("prog_timestart");
-                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("prog_timeend");
+                                    int chan_id = items_array_prog.getJSONObject(j).getInt("channel_id");
+                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_name");
+                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("time_start");
+                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("time_end");
                                     String prog_type = "test type";
+                                    String p_time = prog_timestart + "\n" + prog_timeend;
+                                    int day_id = items_array_prog.getJSONObject(j).getInt("day_id");
+
+                                    if (detailProgram.getChan_id() == chan_id && detailProgram.getDay_id() == day_id) {
+
+                                        simpleDateFormat = new SimpleDateFormat("HH:mm");
 
 
-                                    if (detailProgram.getChan_id() == chan_id) {
-                                        setDataToTable(prog_id, prog_title, prog_timestart, prog_timeend,prog_type, true, c,j);
+
+                                        if (prog_timestart.compareTo(prog_timeend) < 0) {
+                                            System.out.println("date1 is before date2");
+                                        } else if (date1.compareTo(date2) > 0) {
+                                            System.out.println("date1 is after date2");
+                                        } else {
+                                            System.out.println("date1 is equal to date2");
+                                        }
+
+                                        dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, true, c));
+
+                                        //Log.d("logrun2", "prog_id,prog_title " + prog_id + "," + prog_title);
+                                        detailProgram.setProg_id(prog_id);
+                                        detailProgram.setProg_name(prog_title);
+                                        detailProgram.setTime_start(prog_timestart);
+                                        detailProgram.setType_name("TypeTEST");
                                         c++;
                                     }
                                 }
-                                Log.d("logrun2", group_list.size() + " ");
 
-                                //ExpAdapter.notifyDataSetChanged();
+                                listProgramDetailAdapter.notifyDataSetChanged();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -472,12 +534,85 @@ public class MainActivity extends Activity {
 
                         // super.callback(url, object, status);
                     }
-                });//.image(detailProgram.getChan_pic(), false, false);
+                });
+
+        Log.d("run","C "+detailProgram.getChan_pic() );
 
     }
 
 
-    public void prepareListData() {
+
+    public void openProgramDetail() {
+
+        listProgramDetailAdapter.clearArrDelOrAdd();
+        listProgramDetailAdapter.clearHoldArrProg_IdFromDB();
+        listProgramDetailAdapter.arrayProgramDetail.clear();
+        detailProgram.clearAllArray();
+
+        listProgramDetailAdapter.setHoldArrProg_idFromDB();
+
+        detailProgram.setDay_id(g_change_day);
+
+        aq.id(IV_detail_list_title).image(detailProgram.getChan_pic());
+        TV_detail_list_title.setText(detailProgram.getChan_name());
+
+        aq.progress(progressDialog)
+                .ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
+
+                    @Override
+                    public void callback(String url, JSONObject object, AjaxStatus status) {
+
+                        if (object != null) {
+
+                            try {
+                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
+
+                                int c = 0;
+                                for (int j = 0; j < items_array_prog.length(); j++) {
+
+                                    int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
+                                    int chan_id = items_array_prog.getJSONObject(j).getInt("channel_id");
+                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_name");
+                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("time_start");
+                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("time_end");
+                                    String prog_type = "test type";
+                                    String p_time = prog_timestart + "\n" + prog_timeend;
+                                    int day_id = items_array_prog.getJSONObject(j).getInt("day_id");
+
+
+                                    if (detailProgram.getChan_id() == chan_id && detailProgram.getDay_id() == day_id) {
+
+                                        detailProgram.setProg_id(prog_id);
+                                        detailProgram.setProg_name(prog_title);
+                                        detailProgram.setTime_start(prog_timestart);
+
+                                        detailProgram.setType_name("TypeTEST");
+
+                                        dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, true, c));
+                                        c++;
+
+                                    }
+                                }
+
+
+                                listProgramDetailAdapter.notifyDataSetChanged();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.d("logrun2", e.toString());
+                            }
+                        } else {
+                            Log.d("logrun2", "Object is Null");
+                        }
+
+                        // super.callback(url, object, status);
+                    }
+                });
+
+    }
+
+
+    public void prepareMenuLeft() {
         aq.ajax(urlPath,
                 JSONObject.class, new AjaxCallback<JSONObject>() {
 
@@ -489,8 +624,8 @@ public class MainActivity extends Activity {
 
                             try {
 
-                                JSONArray items_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("category_list");
-                                JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("channel_list");
+                                JSONArray items_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
+                                JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
 
                                 String items_cate_title, items_cate_pic, items_chan_title, items_chan_pic;
                                 int items_cate_id, items_chan_id, items_cate_id_in_chan;
@@ -499,9 +634,9 @@ public class MainActivity extends Activity {
 
                                 for (int i = 0; i < items_array_cate.length(); i++) {
 
-                                    items_cate_title = items_array_cate.getJSONObject(i).getString("cate_title");
-                                    items_cate_pic = items_array_cate.getJSONObject(i).getString("cate_pic");
-                                    items_cate_id = items_array_cate.getJSONObject(i).getInt("cate_id");
+                                    items_cate_title = items_array_cate.getJSONObject(i).getString("category_name");
+                                    items_cate_pic = items_array_cate.getJSONObject(i).getString("category_pic");
+                                    items_cate_id = items_array_cate.getJSONObject(i).getInt("category_id");
 
                                     //Log.d("logrun2", items_cate_id+"  "+items_cate_title);
 
@@ -513,10 +648,10 @@ public class MainActivity extends Activity {
                                     channel_list = new ArrayList<ItemExpLeft>();
 
                                     for (int j = 0; j < items_array_chan.length(); j++) {
-                                        items_chan_title = items_array_chan.getJSONObject(j).getString("chan_title");
-                                        items_chan_pic = items_array_chan.getJSONObject(j).getString("chan_pic");
-                                        items_cate_id_in_chan = items_array_chan.getJSONObject(j).getInt("cate_id");
-                                        items_chan_id = items_array_chan.getJSONObject(j).getInt("chan_id");
+                                        items_chan_title = items_array_chan.getJSONObject(j).getString("channel_name");
+                                        items_chan_pic = items_array_chan.getJSONObject(j).getString("channel_pic");
+                                        items_cate_id_in_chan = items_array_chan.getJSONObject(j).getInt("category_id");
+                                        items_chan_id = items_array_chan.getJSONObject(j).getInt("channel_id");
 
                                         if (items_cate_id == items_cate_id_in_chan) {
 
@@ -537,7 +672,7 @@ public class MainActivity extends Activity {
                                 EXP_exp_left.setAdapter(ExpAdapter);
 
 
-                                Log.d("logrun2", group_list.size() + " ");
+                                Log.d("logrun2", "Prepare List  = "+group_list.size() + " ");
 
                                 //ExpAdapter.notifyDataSetChanged();
 
@@ -551,6 +686,7 @@ public class MainActivity extends Activity {
 
                     }
                 });
+
 
     }
 

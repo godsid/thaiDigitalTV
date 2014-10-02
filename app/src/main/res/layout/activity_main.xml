@@ -73,12 +73,7 @@
             android:scrollbars="vertical">
 
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pgb"
-                android:layout_gravity="center" />
+
         </FrameLayout>
 
         <ExpandableListView
@@ -90,7 +85,9 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="2dp"
             android:choiceMode="singleChoice"
-            android:groupIndicator="@drawable/group_indicator"/>
+            android:groupIndicator="@drawable/group_indicator">
+
+            </ExpandableListView>
 
         <ExpandableListView
             android:id="@+id/exp_right"

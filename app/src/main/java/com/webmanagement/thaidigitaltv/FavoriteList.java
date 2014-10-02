@@ -49,42 +49,21 @@ ImageView IV_ic_back_to_main;
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
 
         dbAction = new DatabaseAction(this);
-
         detailProgram = new DetailProgram();
 
-        SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
+
 
         listFavoriteAdapter = new ListFavoriteAdapter(getApplicationContext(),arrayListData);
 
         listView = (ListView)findViewById(R.id.lv_fav_show);
 
-        //TextView  TV_fav_delete_all = (TextView)findViewById(R.id.tv_fav_delete_all);
         ImageView  IV_fav_delete_all = (ImageView)findViewById(R.id.iv_fav_delete_all);
-
 
         IV_ic_back_to_main = (ImageView)findViewById(R.id.iv_fav2_back);
 
-
         listView.setAdapter(listFavoriteAdapter);
+        prepareDataToList();
 
-        detailProgram.clearFavArray();
-
-       // registerForContextMenu(listView);
-
-        while (cur.isAfterLast() == false) {
-            int prog_id = Integer.parseInt(cur.getString(1));
-            String prog_name = cur.getString(2);
-            String chan_name = cur.getString(4);
-            String time_start = cur.getString(5);
-            String time_before = cur.getString(6);
-            String time_sb = "แจ้งเตือน "+time_before+" นาที ก่อนออกอากาศเวลา "+time_start;
-
-            arrayListData.add(new DataCustomListView(prog_id,prog_name,chan_name,time_sb));
-            cur.moveToNext();
-        }
-        cur.close();
-
-        listFavoriteAdapter.notifyDataSetChanged();
 
         IV_ic_back_to_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +73,9 @@ ImageView IV_ic_back_to_main;
 
         });
 
-
         IV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 menuActionDeleteAll();
             }
         });
@@ -107,7 +84,6 @@ ImageView IV_ic_back_to_main;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg)   {
-                //int list_id = detailProgram.getFavPro_id(position);
                 view.startAnimation(animAlpha);
                 setItemPosition(position);
                 //Toast.makeText(getApplicationContext(), "Prog id "+ list_id, Toast.LENGTH_SHORT).show();
@@ -122,6 +98,27 @@ ImageView IV_ic_back_to_main;
 
     }
 
+private void prepareDataToList() {
+
+    detailProgram.clearFavArray();
+    arrayListData.clear();
+
+    SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
+    while (!cur.isAfterLast()) {
+        int prog_id = Integer.parseInt(cur.getString(1));
+        String prog_name = cur.getString(2);
+        String chan_name = cur.getString(4);
+        String time_start = cur.getString(5);
+        String time_before = cur.getString(6);
+        String time_sb = "แจ้งเตือน "+time_before+" นาที ก่อนออกอากาศเวลา "+time_start;
+
+        arrayListData.add(new DataCustomListView(prog_id,prog_name,chan_name,time_sb));
+        cur.moveToNext();
+    }
+    cur.close();
+
+    listFavoriteAdapter.notifyDataSetChanged();
+}
 
     public void setItemPosition(int i) {
         this.itemPosition = i;
@@ -164,10 +161,8 @@ ImageView IV_ic_back_to_main;
                         boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getFavProg_id(getItemPosition()));
                         if (chkDeleted == true) {
                             Toast.makeText(FavoriteList.this, "Delete Complete", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = getIntent();
-                            finish();
-                            startActivity(intent);
+                            MainActivity.setStateOK(true);
+                            prepareDataToList();
                         }else {
                             Toast.makeText(FavoriteList.this, "Can't Delete ", Toast.LENGTH_SHORT).show();
                         }
@@ -195,10 +190,8 @@ ImageView IV_ic_back_to_main;
                         boolean resAction = dbAction.deleteAllFavoriteProgram();
                         if (resAction == true) {
                             Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_LONG).show();
-                            detailProgram.clearFavArray();
-                            Intent intent = getIntent();
-                            finish();
-                            startActivity(intent);
+                            MainActivity.setStateOK(true);
+                            prepareDataToList();
                         } else {
                             Toast.makeText(getApplicationContext(), "Can't Delete", Toast.LENGTH_LONG).show();
                         }

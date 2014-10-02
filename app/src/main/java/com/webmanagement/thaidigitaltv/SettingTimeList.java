@@ -63,7 +63,7 @@ public class SettingTimeList extends Activity {
         try {
 
             select_item = detailProgram.getItem_selected();
-            detailProgram.showp();
+
             program_id = detailProgram.getProg_id(select_item);
             program_name = detailProgram.getProg_name(select_item);
             type_name = detailProgram.getType_name(select_item);
@@ -89,7 +89,7 @@ public class SettingTimeList extends Activity {
                     long resAdd = dbAction.addFavoriteProgram(program_id, program_name, type_name, channel_name, time_start, time_selected);
                     if (resAdd > 0) {
                         Toast.makeText(getApplicationContext(), "Add Complete", Toast.LENGTH_LONG).show();
-
+                        MainActivity.setStateOK(true);
                        // mainActivity.setEexpLeftChildSelected();
 
                         Log.d("run2", program_id + "," + program_name + "," + type_name + "," + channel_name + "," + time_start + " , " + time_selected + " : " + resAdd);
