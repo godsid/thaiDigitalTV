@@ -105,6 +105,7 @@ class DataCustomSettingTime{
 
     public DataCustomSettingTime(int time_val,int chk_color_val){
 
+
         this.time_val = time_val;
         this.chk_color_val = chk_color_val;
     }

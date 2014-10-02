@@ -1,6 +1,8 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,9 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
     private ArrayList<GroupExpLeft> groups;
 
     AQuery aq;
+
+    Typeface TF_font;
+    String frontPath = "fonts/RSU_BOLD.ttf";
 
     public ExpandableListAdapter_Left(Context context, ArrayList<GroupExpLeft> groups) {
         this.context = context;
