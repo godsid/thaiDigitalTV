@@ -42,11 +42,15 @@ public class SettingTimeList extends Activity {
     private int select_item;
     private MainActivity mainActivity;
 
+    TextView TV_settime_timeval,TV_settime_min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_time_list);
+
+
+
 
         settingTimeAdapter = new SettingTimeAdapter(getApplicationContext(),dataCustomSettingTime);
 
@@ -73,10 +77,7 @@ public class SettingTimeList extends Activity {
             Log.d("run",select_item+" , "+program_id+" , "+ detailProgram.sizePro_id()+" : Error : "+e);
         }
 
-        //Button bt_ok = (Button)findViewById(R.id.bt_setttime_ok);
-        //Button bt_cancel = (Button)findViewById(R.id.bt_settime_cancel);
         ImageView bt_ok = (ImageView)findViewById(R.id.bt_setttime_ok);
-        //ImageView bt_cancel = (ImageView)findViewById(R.id.bt_settime_cancel);
         ImageView iv_back = (ImageView)findViewById(R.id.iv_alarm_back);
 
         bt_ok.setOnClickListener(new View.OnClickListener() {
@@ -102,22 +103,12 @@ public class SettingTimeList extends Activity {
 
         });
 
-        /*bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });*/
-
         iv_back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 onBackPressed();
             }
         });
-
-
 
     }
 

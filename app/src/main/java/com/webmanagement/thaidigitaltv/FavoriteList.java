@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -28,7 +29,7 @@ import java.util.List;
 public class FavoriteList extends Activity {
 ImageView IV_ic_back_to_main;
 
-    TextView TV_fav_delete_all;
+    TextView TV_fav_list_title;
     ListView listView;
 
     ArrayList<DataCustomListView> arrayListData = new ArrayList<DataCustomListView>();
@@ -38,13 +39,17 @@ ImageView IV_ic_back_to_main;
     private DetailProgram detailProgram;
     private int itemPosition;
 
-
+    Typeface TF_font;
+    String frontPath = "fonts/RSU_BOLD.ttf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
+        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+        TV_fav_list_title = (TextView) findViewById(R.id.tv_fav_list_title);
+        TV_fav_list_title.setTypeface(TF_font);
 
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
 

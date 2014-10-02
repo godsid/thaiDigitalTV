@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ll_settime_list"
-    android:weightSum="1">
-    <LinearLayout
+    android:weightSum="1"
+    >
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#263238"
@@ -21,13 +22,13 @@
             />
         <ImageView
             android:id="@+id/bt_setttime_ok"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="265dp"
+            android:layout_alignParentRight="true"
             android:src="@drawable/save"
             />
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="35dp"
@@ -48,24 +49,118 @@
     </LinearLayout>
     <View
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#263238"
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="380dp"
         android:background="#37474f"
         >
         <ListView
             android:id="@+id/lv_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="#263238"
-            android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:choiceMode="singleChoice"
-            android:background="#cfd8dc"
             />
-    </LinearLayout>9
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#263238"
+        android:paddingTop="10dp"
+        android:paddingLeft="12dp"
+        >
+
+        <ToggleButton
+            android:id="@+id/toggle_1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle1"
+            android:layout_marginLeft="3dp"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle2"
+            android:layout_toRightOf="@id/toggle_1"
+            android:layout_marginLeft="3dp"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_3"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle3"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/toggle_2"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_4"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle4"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/toggle_3"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_5"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle4"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/toggle_4"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_6"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle6"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/toggle_5"
+            />
+        <ToggleButton
+            android:id="@+id/toggle_7"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/toggle7"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/toggle_6"
+            />
+        <TextView
+            android:id="@+id/tv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ทำซ้ำทุกสัปดาห์"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="168dp"
+            />
+        <CheckBox
+            android:layout_marginTop="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/tv_check"
+            android:button="@drawable/checkbox"
+            />
+    </RelativeLayout>
+
 </LinearLayout>

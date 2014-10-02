@@ -97,14 +97,9 @@ public class MainActivity extends Activity {
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-
-
 
         setHoldArrProg_idFromDB();
         prepareListData();
-
-
 
         IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +107,6 @@ public class MainActivity extends Activity {
                 gotoFavoriteList();
             }
         });
-
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,15 +116,12 @@ public class MainActivity extends Activity {
                 } else {
                     DL_drawer_layout.openDrawer(EXP_exp_left);
                 }
-
                 if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
                     DL_drawer_layout.closeDrawer(EXP_exp_right);
                     DL_drawer_layout.openDrawer(EXP_exp_left);
                 }
-
             }
         });
-
 
         IV_ic_nav_top_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +131,6 @@ public class MainActivity extends Activity {
                 } else {
                     DL_drawer_layout.openDrawer(EXP_exp_right);
                 }
-
                 if (DL_drawer_layout.isDrawerOpen(EXP_exp_left)) {
                     DL_drawer_layout.closeDrawer(EXP_exp_left);
                     DL_drawer_layout.openDrawer(EXP_exp_right);
@@ -150,12 +140,10 @@ public class MainActivity extends Activity {
 
         LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
         if (hiddenLayout == null) {
-
             FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
             View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
             myLayout.addView(hiddenInfo);
         }
-
         TV_header_program = (TextView) findViewById(R.id.tv_header_program);
         TV_header_time = (TextView) findViewById(R.id.tv_header_time);
         TV_header_status = (TextView) findViewById(R.id.tv_header_status);
@@ -198,19 +186,14 @@ public class MainActivity extends Activity {
                 DL_drawer_layout.closeDrawer(EXP_exp_left);
 
                 return false;
-
             }
         });
-
-
     }
 
     @Override
     protected void onResume() {
-
         if (stateOK)
             setEexpLeftChildSelected();
-
         Log.d("run","onResume");
         super.onResume();
     }
@@ -218,7 +201,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-
         Log.d("run","onPause");
         super.onPause();
     }
@@ -237,12 +219,10 @@ public class MainActivity extends Activity {
             EXP_exp_left.setSelectedChild(exp_left_group_pos,(exp_left_child_pos),true);
             openProgramDetail();
         }
-
     }
 
 
     private void menuActionDelete() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
         builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(postion_for_delete) + " ออกจากรายการโปรดหรือไม่");
@@ -261,33 +241,25 @@ public class MainActivity extends Activity {
         builder.setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
                     }
                 });
-
         builder.show();
-
     }
 
 
     public void setHoldArrProg_idFromDB() {
         SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
-
         while (!cur.isAfterLast()) {
 
             arrHoldProg_idDB.add(Integer.parseInt(cur.getString(1)));
             cur.moveToNext();
-
         }
-
         cur.close();
-
     }
 
 
 
     public void goSettimeList() {
-
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
         startActivity(intent);
     }
@@ -301,7 +273,6 @@ public class MainActivity extends Activity {
     public void setDataToTable(int id, String c1, String c2, String c3,String c4, boolean b1,int c ,int i1) {
 
         TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
-
         if (!b1) {
             TL_detail_list.removeAllViews();
         } else {
