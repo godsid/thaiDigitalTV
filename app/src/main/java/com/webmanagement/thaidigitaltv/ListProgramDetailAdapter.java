@@ -1,18 +1,14 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteCursor;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,49 +18,38 @@ import java.util.ArrayList;
 public class ListProgramDetailAdapter extends BaseAdapter {
 
     ArrayList<DataCustomProgramDetail> arrayProgramDetail = new ArrayList<DataCustomProgramDetail>();
+
     private LayoutInflater mInflater;
+
+    getObject getObject;
 
 
     private int bg_color_rl;
     private int selectedPosition = 0;
-    DatabaseAction dbAction;
-    private ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    private ArrayList<String> arrDelorAdd = new ArrayList<String>();
-    TextView TV_col_1,TV_col_2,TV_col_3,TV_col_4;
+    DetailProgram detailProgram;
+    ArrayList<Integer> arrHoldProg_idDB = ListProgram.arrHoldProg_idDB;
 
 
 
-    public ListProgramDetailAdapter(Context context, ArrayList<DataCustomProgramDetail> arrayList){
+
+    int p;
+
+
+    public ListProgramDetailAdapter(Context context, ArrayList<DataCustomProgramDetail> arrayList) {
+        detailProgram = new DetailProgram();
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
-        dbAction = new DatabaseAction(context);
+
+       //  dbAction = new DatabaseAction(context);
     }
 
-    public String getArrDelorAdd(int s) {
-        return arrDelorAdd.get(s);
-    }
 
-    public void clearHoldArrProg_IdFromDB() {
-        arrHoldProg_idDB.clear();
-    }
 
-    public void clearArrDelOrAdd() {
-        arrDelorAdd.clear();
-    }
-    public void  setHoldArrProg_idFromDB() {
 
-            SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
 
-            while (!cur.isAfterLast()) {
 
-                arrHoldProg_idDB.add(Integer.parseInt(cur.getString(1)));
-                cur.moveToNext();
 
-            }
 
-            cur.close();
-
-    }
 
 
     @Override
@@ -85,85 +70,63 @@ public class ListProgramDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if(convertView==null){
-            convertView = mInflater.inflate(R.layout.custom_program_detail,null);
-        }
-
-        TV_col_1 = (TextView) convertView.findViewById(R.id.tv_col_1);
-        TV_col_2 = (TextView) convertView.findViewById(R.id.tv_col_2);
-        TV_col_3 = (TextView) convertView.findViewById(R.id.tv_col_3);
-        TV_col_4 = (TextView) convertView.findViewById(R.id.tv_col_4);
+        try {
 
 
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.item_program_detail, null);
+
+                getObject = new getObject();
+                getObject.TV_col_1 = (TextView) convertView.findViewById(R.id.tv_col_1);
+                getObject.TV_col_2 = (TextView) convertView.findViewById(R.id.tv_col_2);
+                getObject.TV_col_3 = (TextView) convertView.findViewById(R.id.tv_col_3);
+                getObject.TV_col_4 = (TextView) convertView.findViewById(R.id.tv_col_4);
+                convertView.setTag(getObject);
+            } else {
+                getObject = (getObject) convertView.getTag();
+            }
 
 
-        //  convertView.setTag(objectView);
+            //  convertView.setTag(objectView);
 
-        TV_col_1.setText(arrayProgramDetail.get(position).col_1);
-        TV_col_2.setText(arrayProgramDetail.get(position).col_2);
+            getObject.TV_col_1.setText(arrayProgramDetail.get(position).col_1);
+            getObject.TV_col_2.setText(arrayProgramDetail.get(position).col_2);
 
-        TV_col_4.setText("");
-        if (arrHoldProg_idDB.contains(arrayProgramDetail.get(position).id)) {
-            //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-            TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
-            arrDelorAdd.add("delete");
-        } else {
-           // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-            TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-            arrDelorAdd.add("add");
-        }
+            getObject.TV_col_4.setText("");
+            if (arrHoldProg_idDB.contains(arrayProgramDetail.get(position).id)) {
+                //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
+                getObject.TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
+                detailProgram.arrDelOrAdd.add("delete");
+            } else {
+                // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
+                getObject.TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
+                detailProgram.arrDelOrAdd.add("add");
+            }
 
-        TV_col_3.setText("");
-        if (arrayProgramDetail.get(position).st) {
-            //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-            TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
-        } else {
-            // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-            //TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-        }
+            getObject.TV_col_3.setText("");
+            if (arrayProgramDetail.get(position).st) {
+               // Log.d("run", "st i : " + arrayProgramDetail.get(position).st);
+                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
+            } else {
+               // Log.d("run", "st e : " + arrayProgramDetail.get(position).st);
+                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_null, 0, 0, 0);
+            }
 /*
-        TV_col_4.setOnClickListener(new View.OnClickListener() {
+        getObject.TV_col_4.setId(arrayProgramDetail.get(position).count);
+
+        getObject.TV_col_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                detailProgram.seItem_selected(TV_col_4.getId());
-
-                if (arrDelorAdd.get(TV_col_4.getId()).equals("add")) {
-
-                    //Log.d("run","if add "+arrDelorAdd.get(tv_col_4.getId())+" , "+tv_col_4.getId());
-                   // Log.d("run","EXP IF");
-
-                    extendsMain.gotoSetTimeList();
-                } else if(arrDelorAdd.get(TV_col_4.getId()).equals("delete")){
-
-                    extendsMain.gotoMenuActionDelete(TV_col_4.getId());
-
-                    //setEexpLeftChildSelected(2);
-                    Log.d("run","EXP EL");
-                }
-
-                //Toast.makeText(getApplicationContext(), "Click row at :" + tb_row.getId(), Toast.LENGTH_SHORT).show();
-
+                Log.d("run", "Clicked " + getItem(p).toString());
             }
         });
+        */
 
-
-
-/*
-        TV_col_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSelectedPosition((Integer) v.getTag());
-                notifyDataSetInvalidated();
-                Log.d("run", "CLICK : " + getSelectedPosition());
-            }
-        });
-
-*/
+        } catch (Exception e) {
+            Log.d("run", "Exception : " + e);
+        }
         return convertView;
     }
-
 
 
     public int getSelectedPosition() {
@@ -178,13 +141,14 @@ public class ListProgramDetailAdapter extends BaseAdapter {
 }
 
 
-class DataCustomProgramDetail{
+class DataCustomProgramDetail {
     int id;
-    String col_1,col_2,col_3;
+    String col_1, col_2, col_3;
     boolean st;
 
     int count;
-    public DataCustomProgramDetail(int dis,String col_1,String col_2,boolean st,int count){
+
+    public DataCustomProgramDetail(int dis, String col_1, String col_2, boolean st, int count) {
 
         this.id = dis;
         this.col_1 = col_1;
@@ -193,8 +157,10 @@ class DataCustomProgramDetail{
         this.st = st;
         this.count = count;
     }
+}
 
-
+class getObject {
+    TextView TV_col_1, TV_col_2, TV_col_3, TV_col_4;
 }
 
 

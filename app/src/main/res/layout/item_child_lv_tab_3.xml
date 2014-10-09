@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/list_selecter"
+    android:orientation="vertical" >
+
+
+
+    <TextView
+        android:id="@+id/tv_child_lv_tab3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dip"
+        android:textColor="#008000"
+        android:paddingTop="13dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/iv_child_lv_tab3"
+        android:layout_toLeftOf="@+id/iv_child_lv_tab3" />
+    <ImageView
+    android:id="@+id/iv_child_lv_tab3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

@@ -3,7 +3,7 @@
     android:id="@+id/ll_detail_list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-<<<<<<< HEAD
+    android:background="#BBB"
     android:orientation="vertical">
 
     <LinearLayout
@@ -70,7 +70,7 @@
                     android:layout_marginRight="15dp"
                     android:text="DATE"
                     android:textSize="20dp"
-                    android:textColor="#EEE" />
+                    android:textColor="#AFA" />
                 <TextView
                     android:id="@+id/tv_detail_month"
                     android:layout_width="wrap_content"
@@ -79,14 +79,14 @@
                     android:textSize="20dp"
 
                     android:text="MONTH"
-                    android:textColor="#EEE" />
+                    android:textColor="#AFA" />
                 <TextView
                     android:id="@+id/tv_detail_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:text="YEAR"
-                    android:textColor="#EEE" />
+                    android:textColor="#AFA" />
                     </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -109,22 +109,18 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-
         android:baselineAligned="false"
         android:background="@drawable/container_dropshadow"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingBottom="10dp"
+        >
 
-        <RelativeLayout
-            android:id="@+id/rl_country_heading"
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/tv_header_program"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_program"
                 android:textColor="#FFFFFF"
@@ -134,8 +130,7 @@
             <TextView
                 android:id="@+id/tv_header_time"
                 android:layout_width="90dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@+id/tv_header_program"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -147,9 +142,7 @@
             <TextView
                 android:id="@+id/tv_header_status"
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/tv_header_time"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_status"
                 android:textColor="#FFFFFF"
@@ -159,104 +152,29 @@
             <TextView
                 android:id="@+id/tv_header_fav"
                 android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/tv_header_status"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_fav"
                 android:textColor="#FFFFFF"
                 android:textSize="16dp"
                 android:textStyle="bold"></TextView>
-        </RelativeLayout>
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
 
-            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/tb_detail_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#FCECE8"
-                android:stretchColumns="0,1"></TableLayout>
-=======
-    android:id="@+id/ll_detail_list"
-    >
-        <RelativeLayout android:id="@+id/rl_country_heading"
-            android:layout_width="fill_parent"
-            android:layout_height="55dp"
-            android:background="#37474f"
-            >
-        <TextView android:id="@+id/tv_header_program"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_program"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:layout_marginTop="15dp"
-            />
-        <TextView android:id="@+id/tv_header_time"
-            android:layout_width="90dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="@string/tb_header_time"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
-            android:layout_toRightOf="@+id/tv_header_program"
-            />
-        <TextView android:id="@+id/tv_header_status"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_status"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:layout_toRightOf="@+id/tv_header_time"
-            android:layout_marginTop="15dp"
-            />
-        <TextView android:id="@+id/tv_header_fav"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_fav"
-            android:textStyle="normal|bold"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:layout_toRightOf="@+id/tv_header_status"
-            android:layout_marginTop="15dp"
-            />
-    </RelativeLayout>
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FCECE8"
-                    android:stretchColumns="0,1"
-                    android:id="@+id/tb_detail_list"
-                   />
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
-        </ScrollView>
+
+
+
     </LinearLayout>
 
-<<<<<<< HEAD
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listView"
+        android:id="@+id/lv_program_detail"
         android:background="#BBB"
-        android:paddingBottom="10dp"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="5dp"
         android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
-=======
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
+

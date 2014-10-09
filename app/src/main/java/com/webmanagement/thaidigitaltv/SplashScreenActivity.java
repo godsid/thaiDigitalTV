@@ -12,6 +12,7 @@ public class SplashScreenActivity extends Activity {
 
     Handler handler;
     Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
