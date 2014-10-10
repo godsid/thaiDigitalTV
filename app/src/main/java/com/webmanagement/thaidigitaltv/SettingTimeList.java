@@ -112,31 +112,31 @@ public class SettingTimeList {
 
         if (!arrTempDay.contains(0)) {  //TGB0.setVisibility(View.VISIBLE);
             TGB0.setEnabled(false);
-            TGB0.setBackgroundResource(R.drawable.back_favorite);
+            TGB0.setBackgroundResource(R.drawable.tg_3_dis);
          }
         if (!arrTempDay.contains(1)) {
             TGB1.setEnabled(false);
-            TGB1.setBackgroundResource(R.drawable.back_favorite);
+            TGB1.setBackgroundResource(R.drawable.tg_2_dis);
         }
         if (!arrTempDay.contains(2)) {
             TGB2.setEnabled(false);
-            TGB2.setBackgroundResource(R.drawable.back_favorite);
+            TGB2.setBackgroundResource(R.drawable.tg_3_dis);
         }
         if (!arrTempDay.contains(3)) {
             TGB3.setEnabled(false);
-            TGB3.setBackgroundResource(R.drawable.back_favorite);
+            TGB3.setBackgroundResource(R.drawable.tg_4_dis);
         }
         if (!arrTempDay.contains(4)) {
             TGB4.setEnabled(false);
-            TGB4.setBackgroundResource(R.drawable.back_favorite);
+            TGB4.setBackgroundResource(R.drawable.tg_4_dis);
         }
         if (!arrTempDay.contains(5)) {
             TGB5.setEnabled(false);
-            TGB5.setBackgroundResource(R.drawable.back_favorite);
+            TGB5.setBackgroundResource(R.drawable.tg_5_dis);
         }
         if (!arrTempDay.contains(6)) {
             TGB6.setEnabled(false);
-            TGB6.setBackgroundResource(R.drawable.back_favorite);
+            TGB6.setBackgroundResource(R.drawable.tg_6_dis);
         }
 
 
