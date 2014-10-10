@@ -30,10 +30,12 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -52,6 +54,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class MainActivity extends Activity {
+
+
     ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right,IV_detail_today,IV_detail_list_title;
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
@@ -82,6 +86,7 @@ public class MainActivity extends Activity {
     int tv_header_tb_size = 18;
     int tv_item_tb_size = 16;
 
+    ToggleButton toggleButton;
     TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
     Calendar calendar;
     Date date;
@@ -109,6 +114,7 @@ public class MainActivity extends Activity {
         date = new Date();
         aq = new AQuery(this);
 
+
         LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
         if (hiddenLayout == null) {
 
@@ -118,6 +124,9 @@ public class MainActivity extends Activity {
         }
 
 
+
+
+
         listProgramDetailAdapter = new ListProgramDetailAdapter(getApplicationContext(),dataCustomProgramDetail);
         listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(listProgramDetailAdapter);
@@ -125,9 +134,9 @@ public class MainActivity extends Activity {
 
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
-        IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
+        //IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
         EXP_exp_left = (ExpandableListView) findViewById(R.id.exp_left);
-        EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
+        //EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         IV_ic_fav_top_right = (ImageView) findViewById(R.id.ic_fav_top_right);
@@ -138,7 +147,6 @@ public class MainActivity extends Activity {
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
-<<<<<<< HEAD
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
@@ -178,6 +186,7 @@ public class MainActivity extends Activity {
         TV_detail_month.setText(arr_month[g_current_month]);
         TV_detail_year.setText(Integer.toString(g_current_year));
 
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMax(100);
         progressDialog.setMessage("กำลังโหลดข้อมูล...");
@@ -194,8 +203,7 @@ public class MainActivity extends Activity {
 
 
         openFirstProgramDetail();
-=======
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
+
 
 
         IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
@@ -213,44 +221,13 @@ public class MainActivity extends Activity {
                 } else {
                     DL_drawer_layout.openDrawer(EXP_exp_left);
                 }
-                if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
+                /*if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
                     DL_drawer_layout.closeDrawer(EXP_exp_right);
                     DL_drawer_layout.openDrawer(EXP_exp_left);
-                }
+                }*/
             }
         });
 
-        IV_ic_nav_top_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
-                    DL_drawer_layout.closeDrawer(EXP_exp_right);
-                } else {
-                    DL_drawer_layout.openDrawer(EXP_exp_right);
-                }
-                if (DL_drawer_layout.isDrawerOpen(EXP_exp_left)) {
-                    DL_drawer_layout.closeDrawer(EXP_exp_left);
-                    DL_drawer_layout.openDrawer(EXP_exp_right);
-                }
-            }
-        });
-
-<<<<<<< HEAD
-
-
-
-=======
-        LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
-        if (hiddenLayout == null) {
-            FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
-            View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
-            myLayout.addView(hiddenInfo);
-        }
-        TV_header_program = (TextView) findViewById(R.id.tv_header_program);
-        TV_header_time = (TextView) findViewById(R.id.tv_header_time);
-        TV_header_status = (TextView) findViewById(R.id.tv_header_status);
-        TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
 
         TV_header_program.setTypeface(TF_font);
         TV_header_time.setTypeface(TF_font);
@@ -292,7 +269,7 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
-<<<<<<< HEAD
+
 
 
         SB_detail_date.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -367,8 +344,6 @@ public class MainActivity extends Activity {
         TV_detail_day.setText(arr_day[g_current_day]);
         openProgramDetail();
 
-=======
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
     }
 
     public static boolean setStateOK(boolean b) {
@@ -412,12 +387,7 @@ public class MainActivity extends Activity {
     }
 
 
-<<<<<<< HEAD
-    public void menuActionDelete() {
-
-=======
     private void menuActionDelete() {
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
         builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
@@ -442,21 +412,6 @@ public class MainActivity extends Activity {
     }
 
 
-<<<<<<< HEAD
-=======
-    public void setHoldArrProg_idFromDB() {
-        SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
-        while (!cur.isAfterLast()) {
-
-            arrHoldProg_idDB.add(Integer.parseInt(cur.getString(1)));
-            cur.moveToNext();
-        }
-        cur.close();
-    }
-
-
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
-
     public void goSettimeList() {
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
         startActivity(intent);
@@ -469,22 +424,14 @@ public class MainActivity extends Activity {
     }
 
 
-<<<<<<< HEAD
     public void openFirstProgramDetail() {
 
         listProgramDetailAdapter.clearArrDelOrAdd();
         listProgramDetailAdapter.clearHoldArrProg_IdFromDB();
         listProgramDetailAdapter.arrayProgramDetail.clear();
         detailProgram.clearAllArray();
-=======
-        TableLayout TL_detail_list = (TableLayout) findViewById(R.id.tb_detail_list);
-        if (!b1) {
-            TL_detail_list.removeAllViews();
-        } else {
-            //Log.d("logrun2", c1.length() + "  : " + TV_header_program.getPivotY());
-            int bg_tv_color, item_tv_color = Color.rgb(90, 90, 90);
-            int tv_layout_height = 85;
->>>>>>> fec146c241bf7faeb96dd4a2fac56c288b5c85cb
+
+
 
         listProgramDetailAdapter.setHoldArrProg_idFromDB();
 
@@ -534,13 +481,7 @@ public class MainActivity extends Activity {
 
 
 
-                                        if (prog_timestart.compareTo(prog_timeend) < 0) {
-                                            System.out.println("date1 is before date2");
-                                        } else if (date1.compareTo(date2) > 0) {
-                                            System.out.println("date1 is after date2");
-                                        } else {
-                                            System.out.println("date1 is equal to date2");
-                                        }
+
 
                                         dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, true, c));
 
@@ -724,7 +665,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -736,4 +677,5 @@ public class MainActivity extends Activity {
         // ActionBarDrawerToggle will take care of this.
         return false;
     }
+
 }

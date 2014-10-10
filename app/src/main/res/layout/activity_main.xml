@@ -42,16 +42,8 @@
             android:id="@+id/ic_fav_top_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ic_nav_top_right"
-            android:src="@drawable/favorite"
-            />
-        <ImageView
-            android:id="@+id/ic_nav_top_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_drawer_exp_r"
+            android:src="@drawable/allshare"
             />
     </RelativeLayout>
 
@@ -72,8 +64,6 @@
             android:background="#cfd8dc"
             android:scrollbars="vertical">
 
-
-
         </FrameLayout>
 
         <ExpandableListView
@@ -89,16 +79,6 @@
 
             </ExpandableListView>
 
-        <ExpandableListView
-            android:id="@+id/exp_right"
-            android:layout_width="220dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="#FFFFFF"
-            android:divider="#EEE"
-            android:dividerHeight="2dp"
-            android:choiceMode="singleChoice"
-            android:groupIndicator="@drawable/group_indicator"/>
 
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
