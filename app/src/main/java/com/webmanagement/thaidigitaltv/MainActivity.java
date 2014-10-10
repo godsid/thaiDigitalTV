@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,11 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TabHost;
-<<<<<<< HEAD
-import android.widget.TableLayout;
-import android.widget.TableRow;
-=======
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -48,16 +45,10 @@ import java.util.Date;
 
 public class MainActivity extends Activity {
 
-<<<<<<< HEAD
 
-    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right,IV_detail_today,IV_detail_list_title;
-    ExpandableListView EXP_exp_left, EXP_exp_right;
-    DrawerLayout DL_drawer_layout;
-    DetailProgram detailProgram;
-=======
     //////////////////// Global variable ////////////
     private DetailProgram detailProgram;
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
     private DatabaseAction dbAction;
     public static Typeface TF_font;
     public String frontPath = "fonts/RSU_BOLD.ttf";
@@ -127,7 +118,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         detailProgram = new DetailProgram();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
@@ -135,50 +126,18 @@ public class MainActivity extends Activity {
         aq = new AQuery(this);
 
 
-        LinearLayout hiddenLayout = (LinearLayout) findViewById(R.id.ll_detail_list);
-        if (hiddenLayout == null) {
-
-            FrameLayout myLayout = (FrameLayout) findViewById(R.id.content_frame);
-            View hiddenInfo = getLayoutInflater().inflate(R.layout.activity_detail_list, myLayout, false);
-            myLayout.addView(hiddenInfo);
-        }
-
-
-
-
-
-        listProgramDetailAdapter = new ListProgramDetailAdapter(getApplicationContext(),dataCustomProgramDetail);
-        listView = (ListView)findViewById(R.id.listView);
-        listView.setAdapter(listProgramDetailAdapter);
-
-
-
-        IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
-        //IV_ic_nav_top_right = (ImageView) findViewById(R.id.ic_nav_top_right);
-        EXP_exp_left = (ExpandableListView) findViewById(R.id.exp_left);
-        //EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
-        DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
-=======
-
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
-
-
-        detailProgram = new DetailProgram();
-        dbAction = new DatabaseAction(this);
-        aq = new AQuery(this);
         TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
-<<<<<<< HEAD
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
-=======
+
         ContentFrame = (FrameLayout) findViewById(R.id.content_frame);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 
 
 
@@ -203,26 +162,7 @@ public class MainActivity extends Activity {
         prepareMenuLeft();
         loadToDataStore();
 
-<<<<<<< HEAD
-       prepareMenuLeft();
 
-
-        // aq.id(IV_title_detail_list)
-        //       .image(detailProgram.getChan_pic())
-
-
-        openFirstProgramDetail();
-
-
-
-        IV_ic_fav_top_right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoFavoriteList();
-            }
-        });
-=======
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,86 +170,20 @@ public class MainActivity extends Activity {
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
                 } else {
-<<<<<<< HEAD
-                    DL_drawer_layout.openDrawer(EXP_exp_left);
-                }
-                /*if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
-                    DL_drawer_layout.closeDrawer(EXP_exp_right);
-                    DL_drawer_layout.openDrawer(EXP_exp_left);
-                }*/
-            }
-        });
 
-
-        TV_header_program.setTypeface(TF_font);
-        TV_header_time.setTypeface(TF_font);
-        TV_header_status.setTypeface(TF_font);
-        TV_header_fav.setTypeface(TF_font);
-
-        TV_header_program.setTextSize(tv_header_tb_size);
-        TV_header_time.setTextSize(tv_header_tb_size);
-        TV_header_status.setTextSize(tv_header_tb_size);
-        TV_header_fav.setTextSize(tv_header_tb_size);
-
-
-
-        EXP_exp_left.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                String get_channel_name = group_list.get(groupPosition).getItems().get(childPosition).getName();
-                int get_channel_id = group_list.get(groupPosition).getItems().get(childPosition).getId();
-                String get_channel_pic = group_list.get(groupPosition).getItems().get(childPosition).getImage();
-                //get position highlight
-                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
-                parent.setItemChecked(index, true);
-                //end
-                exp_left_group_pos = groupPosition;
-                exp_left_child_pos = childPosition;
-
-                detailProgram.setChan_id(get_channel_id);
-                detailProgram.setChan_name(get_channel_name);
-                detailProgram.setChan_pic(get_channel_pic);
-
-                openProgramDetail();
-
-                Toast.makeText(getApplicationContext(), get_channel_id + " " + get_channel_name + "",
-                        Toast.LENGTH_SHORT).show();
-
-                DL_drawer_layout.closeDrawer(EXP_exp_left);
-
-                return false;
-            }
-        });
-
-
-
-        SB_detail_date.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-
-                if (progress <= 0)
-                    progress = 1;
-
-                calendar.set(Calendar.DATE,progress);
-                int c_day = calendar.get(Calendar.DAY_OF_WEEK)-1;
-                TV_detail_day.setText(arr_day[c_day]);
-
-                setChangeDay(c_day);
-
-                TV_detail_date.setText(Integer.toString(progress));
-            }
-=======
                     DL_drawer_layout.openDrawer(LV_menu_left);
                 }
 
             }
         });
 
+
+
+
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
 
                     ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
@@ -332,109 +206,16 @@ public class MainActivity extends Activity {
         });
 
 
-<<<<<<< HEAD
-    }
-
-    public void setChangeDay(int day) {
-        g_change_day = day;
-    }
-
-
-    public void setDefaultToday() {
-        setChangeDay(g_current_day);
-        SB_detail_date.setProgress(g_current_date);
-        TV_detail_day.setText(arr_day[g_current_day]);
-        openProgramDetail();
 
     }
 
-    public static boolean setStateOK(boolean b) {
-        return stateOK = b;
-    }
-    @Override
-    protected void onResume() {
-        if (stateOK)
-            setEexpLeftChildSelected();
-        Log.d("run","onResume");
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onPause() {
-        Log.d("run","onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d("run","onDestroy");
-        super.onDestroy();
-    }
-=======
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
-
-    }
-
-
-<<<<<<< HEAD
-    private void menuActionDelete() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
-        builder.setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(position_for_delete));
-                        if (chkDeleted) {
-                            Toast.makeText(MainActivity.this, "Delete Complete", Toast.LENGTH_SHORT).show();
-                            setEexpLeftChildSelected();
-                        }else {
-                            Toast.makeText(MainActivity.this, "Can't Delete ", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-        builder.setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-        builder.show();
-    }
-=======
     public void prepareMenuLeft() {
         int[] g_pic = new int[]{R.drawable.toggle1, R.drawable.toggle2};
         String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 
         for (int i = 0; i < g_pic.length; i++) {
 
-<<<<<<< HEAD
-    public void goSettimeList() {
-        Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
-        startActivity(intent);
-    }
-
-    public void gotoFavoriteList() {
-        stateOK = false;
-        Intent intent = new Intent(MainActivity.this, FavoriteList.class);
-        startActivity(intent);
-    }
-
-
-    public void openFirstProgramDetail() {
-
-        listProgramDetailAdapter.clearArrDelOrAdd();
-        listProgramDetailAdapter.clearHoldArrProg_IdFromDB();
-        listProgramDetailAdapter.arrayProgramDetail.clear();
-        detailProgram.clearAllArray();
-
-
-
-        listProgramDetailAdapter.setHoldArrProg_idFromDB();
-
-        detailProgram.setDay_id(g_change_day);
-=======
             dataCustomMenuLeft.add(new DataCustomMenuLeft(g_title[i], g_pic[i]));
 
         }
@@ -445,7 +226,7 @@ public class MainActivity extends Activity {
     }
 
 
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 
 
 
@@ -459,11 +240,9 @@ public class MainActivity extends Activity {
 
                 if (object != null) {
 
-<<<<<<< HEAD
 
-=======
                     try {
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 
                         JSONArray item_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
                         JSONArray item_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
@@ -549,8 +328,7 @@ public class MainActivity extends Activity {
         return false;
     }
 
-<<<<<<< HEAD
-=======
+
     @Override
     protected void onResume() {
         //if (stateOK)
@@ -571,5 +349,5 @@ public class MainActivity extends Activity {
         Log.d("run", "onDestroy");
         super.onDestroy();
     }
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
 }

@@ -242,21 +242,7 @@ public class SettingTimeList {
 
 
 
-<<<<<<< HEAD
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        // return false;
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
 
-    }*/
-=======
     public void setDataToListView() {
 
         for (int i = 0; i < time_value.length; i++) {
@@ -264,7 +250,6 @@ public class SettingTimeList {
         }
         settingTimeAdapter.notifyDataSetChanged();
     }
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
 
 

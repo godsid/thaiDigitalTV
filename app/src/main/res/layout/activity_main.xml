@@ -44,15 +44,10 @@
             android:id="@+id/tv_settime_title_prog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:layout_alignParentRight="true"
             android:src="@drawable/allshare"
             />
-=======
-            android:src="@drawable/favorite"
-            android:layout_alignTop="@+id/iv_detail_list_title"
-            android:layout_alignParentRight="true" />
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
     </RelativeLayout>
 
 
@@ -72,10 +67,6 @@
             android:background="#cfd8dc"
             android:scrollbars="vertical">
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
         </FrameLayout>
 
         <ListView

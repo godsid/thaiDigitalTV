@@ -18,51 +18,14 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:layout_gravity="center"
-            android:src="@drawable/back_alarm"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="ช่วงเวลาเตือนก่อนออกอากาศ"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            />
-=======
             android:layout_gravity="center_vertical"
             android:text="เตือนก่อนออกอากาศ"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold"
-
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true" />
 
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_settime_save"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-<<<<<<< HEAD
-            android:src="@drawable/save"
-            />
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:background="#888"
-        >
-=======
-            android:src="@drawable/ic_save" />
-
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
         <TextView
             android:textColor="#AAA"
             android:layout_width="wrap_content"
@@ -73,14 +36,24 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_settime_save"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/save"
+            />
     </RelativeLayout>
+
+
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:background="#263238"
         />
-<<<<<<< HEAD
+
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="380dp"
@@ -103,7 +76,7 @@
            android:paddingTop="10dp"
            android:paddingBottom="10dp">
            <ToggleButton
-               android:id="@+id/toggle_1"
+               android:id="@+id/tgb_0"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -112,7 +85,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_2"
+               android:id="@+id/tgb_1"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -121,7 +94,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_3"
+               android:id="@+id/tgb_2"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -130,7 +103,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_4"
+               android:id="@+id/tgb_3"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -139,7 +112,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_5"
+               android:id="@+id/tgb_4"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -148,7 +121,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_6"
+               android:id="@+id/tgb_5"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -157,7 +130,7 @@
                android:layout_marginLeft="3dp"
                />
            <ToggleButton
-               android:id="@+id/toggle_7"
+               android:id="@+id/tgb_6"
                android:layout_width="45dp"
                android:layout_height="45dp"
                android:textOff=""
@@ -186,121 +159,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:id="@+id/cb_settime_repeat"
                 android:button="@drawable/checkbox"
                 />
         </LinearLayout>
-=======
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:background="#37474f"
-        >
-        <ListView
-            android:id="@+id/lv_time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:fadeScrollbars="true"
-            android:choiceMode="singleChoice"
-            />
-    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="#263238"
-        android:paddingTop="10dp"
-        android:paddingLeft="12dp"
-        >
-
-        <ToggleButton
-            android:id="@+id/tgb_0"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle1"
-            android:layout_marginLeft="3dp"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_1"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle2"
-            android:layout_toRightOf="@id/tgb_0"
-            android:layout_marginLeft="3dp"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle3"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tgb_1"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_3"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle4"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tgb_2"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_4"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle4"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tgb_3"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_5"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle6"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tgb_4"
-            />
-        <ToggleButton
-            android:id="@+id/tgb_6"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/toggle7"
-            android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@id/tgb_5"
-            />
-        <TextView
-            android:id="@+id/tv_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ทำซ้ำทุกสัปดาห์"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="60dp"
-            android:layout_marginLeft="168dp"
-            />
-        <CheckBox
-            android:id="@+id/cb_settime_repeat"
-            android:layout_marginTop="60dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/tv_check"
-            android:button="@drawable/checkbox"
-            />
-    </RelativeLayout>
-
->>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 </LinearLayout>
