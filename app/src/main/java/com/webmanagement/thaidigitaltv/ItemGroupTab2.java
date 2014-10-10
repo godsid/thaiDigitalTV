@@ -5,10 +5,10 @@ import java.util.ArrayList;
 /**
  * Created by SystemDLL on 15/9/2557.
  */
-public class GroupExpLeft {
+public class ItemGroupTab2 {
 
     private String Name, Image;
-    private ArrayList<ItemExpLeft> Items;
+    private ArrayList<ItemChildTab2> Items;
 
     public String getName() {
         return Name;
@@ -18,11 +18,11 @@ public class GroupExpLeft {
         this.Name = name;
     }
 
-    public ArrayList<ItemExpLeft> getItems() {
+    public ArrayList<ItemChildTab2> getItems() {
         return Items;
     }
 
-    public void setItems(ArrayList<ItemExpLeft> Items) {
+    public void setItems(ArrayList<ItemChildTab2> Items) {
         this.Items = Items;
     }
 

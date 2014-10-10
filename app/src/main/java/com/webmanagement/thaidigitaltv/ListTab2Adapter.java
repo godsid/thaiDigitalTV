@@ -2,16 +2,12 @@ package com.webmanagement.thaidigitaltv;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -21,17 +17,17 @@ import java.util.ArrayList;
  * Created by SystemDLL on 12/9/2557.
  */
 
-public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
+public class ListTab2Adapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private ArrayList<GroupExpLeft> groups;
+    private ArrayList<ItemGroupTab2> groups;
 
     AQuery aq;
 
     Typeface TF_font;
     String frontPath = "fonts/RSU_BOLD.ttf";
 
-    public ExpandableListAdapter_Left(Context context, ArrayList<GroupExpLeft> groups) {
+    public ListTab2Adapter(Context context, ArrayList<ItemGroupTab2> groups) {
         this.context = context;
         this.groups = groups;
         aq = new AQuery(context);
@@ -39,7 +35,7 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<ItemExpLeft> chList = groups.get(groupPosition).getItems();
+        ArrayList<ItemChildTab2> chList = groups.get(groupPosition).getItems();
         return chList.get(childPosition);
     }
 
@@ -52,13 +48,13 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        ItemExpLeft child = (ItemExpLeft) getChild(groupPosition, childPosition);
+        ItemChildTab2 child = (ItemChildTab2) getChild(groupPosition, childPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.exp_left_list_item, null);
+            convertView = infalInflater.inflate(R.layout.item_child_lv_tab_2, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.tv_list_item_left);
-        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_list_item_left);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_child_lv_tab2);
+        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_child_lv_tab2);
 
 
         tv.setText(child.getName().toString());
@@ -72,7 +68,7 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        ArrayList<ItemExpLeft> chList = groups.get(groupPosition).getItems();
+        ArrayList<ItemChildTab2> chList = groups.get(groupPosition).getItems();
         return chList.size();
     }
 
@@ -96,13 +92,13 @@ public class ExpandableListAdapter_Left extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
 
 
-        GroupExpLeft group = (GroupExpLeft)getGroup(groupPosition);
+        ItemGroupTab2 group = (ItemGroupTab2) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = inf.inflate(R.layout.exp_left_list_group, null);
+            convertView = inf.inflate(R.layout.item_group_lv_tab_2, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.tv_list_group_left);
-        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_list_group_left);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_iv_group_lv_tab2);
+        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_iv_group_lv_tab2);
 
 
         tv.setText(group.getName());

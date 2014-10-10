@@ -1,7 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,11 +21,11 @@ public class SettingTimeAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
 
-private int bg_color_rl;
+    private int bg_color_rl;
     private int selectedPosition = 0;
 
 
-    public SettingTimeAdapter(Context context, ArrayList<DataCustomSettingTime> arrayList){
+    public SettingTimeAdapter(Context context, ArrayList<DataCustomSettingTime> arrayList) {
         this.arraySettingTime = arrayList;
         mInflater = LayoutInflater.from(context);
     }
@@ -51,8 +49,8 @@ private int bg_color_rl;
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView==null){
-            convertView = mInflater.inflate(R.layout.custom_setting_list,null);
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.item_setting_list, null);
         }
 
         TextView TV_settime_timeval = (TextView) convertView.findViewById(R.id.tv_settime_timeval);
@@ -86,7 +84,6 @@ private int bg_color_rl;
     }
 
 
-
     public int getSelectedPosition() {
         return selectedPosition;
     }
@@ -99,11 +96,11 @@ private int bg_color_rl;
 }
 
 
-class DataCustomSettingTime{
+class DataCustomSettingTime {
     int time_val;
     int chk_color_val;
 
-    public DataCustomSettingTime(int time_val,int chk_color_val){
+    public DataCustomSettingTime(int time_val, int chk_color_val) {
 
 
         this.time_val = time_val;

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+=======
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_favorite_list"
+    >
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -12,24 +19,7 @@
         android:orientation="horizontal"
         >
 
-        <ImageView
-            android:id="@+id/iv_fav2_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/back_favorite"
-            />
-        <TextView
-            android:id="@+id/tv_fav_list_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_fav2_back"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="รายการที่ชื่นชอบ"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            />
+
         <ImageView
             android:id="@+id/iv_fav_delete_all"
             android:layout_width="wrap_content"

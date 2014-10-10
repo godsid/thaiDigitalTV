@@ -2,37 +2,33 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-import android.view.ViewGroup;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TabHost;
+<<<<<<< HEAD
 import android.widget.TableLayout;
 import android.widget.TableRow;
+=======
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -40,45 +36,62 @@ import android.widget.ToggleButton;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.androidquery.util.Progress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MainActivity extends Activity {
 
+<<<<<<< HEAD
 
     ImageView IV_ic_nav_top_left, IV_ic_nav_top_right,IV_ic_fav_top_right,IV_detail_today,IV_detail_list_title;
     ExpandableListView EXP_exp_left, EXP_exp_right;
     DrawerLayout DL_drawer_layout;
     DetailProgram detailProgram;
+=======
+    //////////////////// Global variable ////////////
+    private DetailProgram detailProgram;
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
     private DatabaseAction dbAction;
-
-    private ExpandableListAdapter_Left ExpAdapter;
-    //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
+    public static Typeface TF_font;
+    public String frontPath = "fonts/RSU_BOLD.ttf";
     static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-    ArrayList<GroupExpLeft> group_list;
-    ArrayList<ItemExpLeft> channel_list;
 
-    ListProgramDetailAdapter listProgramDetailAdapter;
-    ArrayList<DataCustomProgramDetail> dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
-    ListView listView;
+    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
 
-    private static  boolean stateOK = false;
-    private int position_for_delete;
+    DrawerLayout DL_drawer_layout;
 
-    private int exp_left_group_pos,exp_left_child_pos;
+    FrameLayout ContentFrame;
+    View ViewFavoriteList, ViewMainMenu, ViewProgramDetail;
 
-    Typeface TF_font;
-    String frontPath = "fonts/RSU_BOLD.ttf";
+    //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
+
+    public static ArrayList<DataStore_Category> arrDataStore_category = new ArrayList<DataStore_Category>();
+    public static ArrayList<DataStore_Channel> arrDataStore_channel = new ArrayList<DataStore_Channel>();
+    public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
+    public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
+
+
+
+
+
+    ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
+    MenuLeftAdapter menuLeftAdapter;
+
+
+    ListView LV_menu_left;
+
+    private static boolean stateOK = false;
+
+
+
+
 
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
 
@@ -90,24 +103,31 @@ public class MainActivity extends Activity {
     TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
     Calendar calendar;
     Date date;
-    String[] arr_day = new String[] {"อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"};
-    String[] arr_month = new String[] {"มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม",
-            "สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"  };
-    int g_current_day,g_current_date,g_current_month,g_current_year;
+    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+    String[] arr_month = new String[]{"มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม",
+            "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"};
+    int g_current_day, g_current_date, g_current_month, g_current_year;
     int g_change_day;
     ProgressDialog progressDialog;
 
-    SimpleDateFormat simpleDateFormat;
+
 
     AQuery aq;
+
+
+    LinearLayout llFavoriteList;
+    LinearLayout llMainMenu;
+    FavoriteList favoriteList;
+    MainMenuTab mainMenuTab;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         detailProgram = new DetailProgram();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
@@ -138,53 +158,39 @@ public class MainActivity extends Activity {
         EXP_exp_left = (ExpandableListView) findViewById(R.id.exp_left);
         //EXP_exp_right = (ExpandableListView) findViewById(R.id.exp_right);
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+=======
 
-        IV_ic_fav_top_right = (ImageView) findViewById(R.id.ic_fav_top_right);
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
-        IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
 
+        detailProgram = new DetailProgram();
+        dbAction = new DatabaseAction(this);
+        aq = new AQuery(this);
         TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
+<<<<<<< HEAD
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
-
-        TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
-        TV_detail_date = (TextView) findViewById(R.id.tv_detail_date);
-        TV_detail_month = (TextView) findViewById(R.id.tv_detail_month);
-        TV_detail_year = (TextView) findViewById(R.id.tv_detail_year);
-
-        SB_detail_date = (SeekBar) findViewById(R.id.sb_detail_date);
-
-        TV_header_program = (TextView) findViewById(R.id.tv_header_program);
-        TV_header_time = (TextView) findViewById(R.id.tv_header_time);
-        TV_header_status = (TextView) findViewById(R.id.tv_header_status);
-        TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
-
-        g_current_day = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        g_current_date = calendar.get(Calendar.DAY_OF_MONTH);
-        g_current_month = calendar.get(Calendar.MONTH);
-        g_current_year = calendar.get(Calendar.YEAR)+543;
-
-        setChangeDay(g_current_day);
+=======
+        ContentFrame = (FrameLayout) findViewById(R.id.content_frame);
+        llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
+        llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
 
 
-        SB_detail_date.setMax(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        SB_detail_date.setProgress(g_current_date);
 
 
-        TV_detail_day.setTypeface(TF_font);
-        TV_detail_date.setTypeface(TF_font);
-        TV_detail_month.setTypeface(TF_font);
-        TV_detail_year.setTypeface(TF_font);
 
-        TV_detail_day.setText(arr_day[g_current_day]);
-        TV_detail_date.setText(Integer.toString(g_current_date));
-        TV_detail_month.setText(arr_month[g_current_month]);
-        TV_detail_year.setText(Integer.toString(g_current_year));
+        LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
+
+        IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
+
+        DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 
 
         progressDialog = new ProgressDialog(this);
@@ -194,7 +200,10 @@ public class MainActivity extends Activity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
+        prepareMenuLeft();
+        loadToDataStore();
 
+<<<<<<< HEAD
        prepareMenuLeft();
 
 
@@ -212,13 +221,16 @@ public class MainActivity extends Activity {
                 gotoFavoriteList();
             }
         });
+=======
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DL_drawer_layout.isDrawerOpen(EXP_exp_left)) {
-                    DL_drawer_layout.closeDrawer(EXP_exp_left);
+                if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
+                    DL_drawer_layout.closeDrawer(LV_menu_left);
                 } else {
+<<<<<<< HEAD
                     DL_drawer_layout.openDrawer(EXP_exp_left);
                 }
                 /*if (DL_drawer_layout.isDrawerOpen(EXP_exp_right)) {
@@ -286,51 +298,41 @@ public class MainActivity extends Activity {
 
                 TV_detail_date.setText(Integer.toString(progress));
             }
+=======
+                    DL_drawer_layout.openDrawer(LV_menu_left);
+                }
 
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                openProgramDetail();
             }
         });
 
-
-        IV_detail_today.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDefaultToday();
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                detailProgram.seItem_selected(position);
+                if (position == 0) {
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
-                detailProgram.setProg_id(dataCustomProgramDetail.get(position).id);
-                detailProgram.setProg_name(dataCustomProgramDetail.get(position).col_1);
-                detailProgram.setTime_start(dataCustomProgramDetail.get(position).col_2);
 
-                detailProgram.setType_name("TypeTEST");
+                    ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
+                    ContentFrame.removeAllViews();
+                    mainMenuTab = new MainMenuTab(ViewMainMenu);
+                    ContentFrame.addView(ViewMainMenu);
 
-                if (listProgramDetailAdapter.getArrDelorAdd(position).equals("add")) {
-                    goSettimeList();
-                    Log.d("run","IF"+listProgramDetailAdapter.getArrDelorAdd(position)+","+position);
-                } else if(listProgramDetailAdapter.getArrDelorAdd(position).equals("delete")){
-                    position_for_delete = position;
-                    menuActionDelete();
-                    //setEexpLeftChildSelected(2);
-                    Log.d("run","EL"+listProgramDetailAdapter.getArrDelorAdd(position)+","+position);
+
+                } else if (position == 1) {
+
+                    ViewFavoriteList = getLayoutInflater().inflate(R.layout.activity_favorite_list, ContentFrame, false);
+                    ContentFrame.removeAllViews();
+                    favoriteList = new FavoriteList(ViewFavoriteList);
+                    ContentFrame.addView(ViewFavoriteList);
                 }
 
 
-                Log.d("run","Selcet List Position "+position);
+                DL_drawer_layout.closeDrawer(LV_menu_left);
             }
         });
 
 
+<<<<<<< HEAD
     }
 
     public void setChangeDay(int day) {
@@ -369,24 +371,13 @@ public class MainActivity extends Activity {
         Log.d("run","onDestroy");
         super.onDestroy();
     }
+=======
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
-    public void setEexpLeftChildSelected() {
-        int child_pos = 0;
-        try {
-            if (exp_left_group_pos == 0)
-                child_pos = exp_left_group_pos + 1;
-            else
-                child_pos = exp_left_group_pos - 1;
-
-            EXP_exp_left.setSelectedChild(exp_left_group_pos,child_pos,true);
-            openProgramDetail();
-        } catch (Exception e) {
-            EXP_exp_left.setSelectedChild(exp_left_group_pos,(exp_left_child_pos),true);
-            openProgramDetail();
-        }
     }
 
 
+<<<<<<< HEAD
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
@@ -410,8 +401,15 @@ public class MainActivity extends Activity {
                 });
         builder.show();
     }
+=======
+    public void prepareMenuLeft() {
+        int[] g_pic = new int[]{R.drawable.toggle1, R.drawable.toggle2};
+        String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
+        for (int i = 0; i < g_pic.length; i++) {
 
+<<<<<<< HEAD
     public void goSettimeList() {
         Intent intent = new Intent(MainActivity.this, SettingTimeList.class);
         startActivity(intent);
@@ -436,228 +434,101 @@ public class MainActivity extends Activity {
         listProgramDetailAdapter.setHoldArrProg_idFromDB();
 
         detailProgram.setDay_id(g_change_day);
+=======
+            dataCustomMenuLeft.add(new DataCustomMenuLeft(g_title[i], g_pic[i]));
 
-        aq.progress(progressDialog)
-                .ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-                    @Override
-                    public void callback(String url, JSONObject object, AjaxStatus status) {
-
-                        if (object != null) {
-
-                            try {
-                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
-                                JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
-
-                                String items_chan_title, items_chan_pic;
-                                int items_chan_id;
-
-                                items_chan_title = items_array_chan.getJSONObject(0).getString("channel_name");
-                                items_chan_pic = items_array_chan.getJSONObject(0).getString("channel_pic");
-                                items_chan_id = items_array_chan.getJSONObject(0).getInt("channel_id");
-
-
-                                detailProgram.setChan_id(items_chan_id);
-                                detailProgram.setChan_name(items_chan_title);
-                                detailProgram.setChan_pic(items_chan_pic);
-
-                                TV_detail_list_title.setText(items_chan_title);
-                                aq.id(IV_detail_list_title).image(items_chan_pic);
-                                int c = 0;
-                                for (int j = 0; j < items_array_prog.length(); j++) {
-
-                                    int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
-                                    int chan_id = items_array_prog.getJSONObject(j).getInt("channel_id");
-                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_name");
-                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("time_start");
-                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("time_end");
-                                    String prog_type = "test type";
-                                    String p_time = prog_timestart + "\n" + prog_timeend;
-                                    int day_id = items_array_prog.getJSONObject(j).getInt("day_id");
-
-                                    if (detailProgram.getChan_id() == chan_id && detailProgram.getDay_id() == day_id) {
-
-                                        simpleDateFormat = new SimpleDateFormat("HH:mm");
-
-
-
-
-
-                                        dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, true, c));
-
-                                        //Log.d("logrun2", "prog_id,prog_title " + prog_id + "," + prog_title);
-                                        detailProgram.setProg_id(prog_id);
-                                        detailProgram.setProg_name(prog_title);
-                                        detailProgram.setTime_start(prog_timestart);
-                                        detailProgram.setType_name("TypeTEST");
-                                        c++;
-                                    }
-                                }
-
-                                listProgramDetailAdapter.notifyDataSetChanged();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("logrun2", e.toString());
-                            }
-                        } else {
-                            Log.d("logrun2", "Object is Null");
-                        }
-
-                        // super.callback(url, object, status);
-                    }
-                });
-
-        Log.d("run","C "+detailProgram.getChan_pic() );
+        }
+        menuLeftAdapter = new MenuLeftAdapter(getApplicationContext(), dataCustomMenuLeft);
+        LV_menu_left.setAdapter(menuLeftAdapter);
+        menuLeftAdapter.notifyDataSetChanged();
 
     }
 
 
-
-    public void openProgramDetail() {
-
-        listProgramDetailAdapter.clearArrDelOrAdd();
-        listProgramDetailAdapter.clearHoldArrProg_IdFromDB();
-        listProgramDetailAdapter.arrayProgramDetail.clear();
-        detailProgram.clearAllArray();
-
-        listProgramDetailAdapter.setHoldArrProg_idFromDB();
-
-        detailProgram.setDay_id(g_change_day);
-
-        aq.id(IV_detail_list_title).image(detailProgram.getChan_pic());
-        TV_detail_list_title.setText(detailProgram.getChan_name());
-
-        aq.progress(progressDialog)
-                .ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-                    @Override
-                    public void callback(String url, JSONObject object, AjaxStatus status) {
-
-                        if (object != null) {
-
-                            try {
-                                JSONArray items_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
-
-                                int c = 0;
-                                for (int j = 0; j < items_array_prog.length(); j++) {
-
-                                    int prog_id = items_array_prog.getJSONObject(j).getInt("prog_id");
-                                    int chan_id = items_array_prog.getJSONObject(j).getInt("channel_id");
-                                    String prog_title = items_array_prog.getJSONObject(j).getString("prog_name");
-                                    String prog_timestart = items_array_prog.getJSONObject(j).getString("time_start");
-                                    String prog_timeend = items_array_prog.getJSONObject(j).getString("time_end");
-                                    String prog_type = "test type";
-                                    String p_time = prog_timestart + "\n" + prog_timeend;
-                                    int day_id = items_array_prog.getJSONObject(j).getInt("day_id");
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 
 
-                                    if (detailProgram.getChan_id() == chan_id && detailProgram.getDay_id() == day_id) {
-
-                                        detailProgram.setProg_id(prog_id);
-                                        detailProgram.setProg_name(prog_title);
-                                        detailProgram.setTime_start(prog_timestart);
-
-                                        detailProgram.setType_name("TypeTEST");
-
-                                        dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, true, c));
-                                        c++;
-
-                                    }
-                                }
 
 
-                                listProgramDetailAdapter.notifyDataSetChanged();
+    public void loadToDataStore() {
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("logrun2", e.toString());
-                            }
-                        } else {
-                            Log.d("logrun2", "Object is Null");
+        aq.progress(progressDialog).ajax(urlPath, JSONObject.class, new AjaxCallback<JSONObject>() {
+
+            @Override
+            public void callback(String url, JSONObject object, AjaxStatus status) {
+
+                if (object != null) {
+
+<<<<<<< HEAD
+
+=======
+                    try {
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
+                        JSONArray item_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
+                        JSONArray item_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
+                        JSONArray item_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
+                        JSONArray item_array_type = object.getJSONArray("allitems").getJSONObject(4).getJSONArray("tb_type");
+
+
+                        for (int j = 0; j < item_array_cate.length(); j++) {
+                            DataStore_Category dataStore_category = new DataStore_Category();
+                            dataStore_category.setCate_id(item_array_cate.getJSONObject(j).getInt("category_id"));
+                            dataStore_category.setCate_title(item_array_cate.getJSONObject(j).getString("category_name"));
+                            dataStore_category.setCate_pic(item_array_cate.getJSONObject(j).getString("category_pic"));
+                            arrDataStore_category.add(dataStore_category);
+
+                        }
+                        //Log.d("run", "dataStore_category  " + arrDataStore_category.size());
+
+                        for (int i = 0; i < item_array_chan.length(); i++) {
+
+                            DataStore_Channel dataStore_channel = new DataStore_Channel();
+                            dataStore_channel.setChan_id(item_array_chan.getJSONObject(i).getInt("channel_id"));
+                            dataStore_channel.setChan_name(item_array_chan.getJSONObject(i).getString("channel_name"));
+                            dataStore_channel.setChan_pic(item_array_chan.getJSONObject(i).getString("channel_pic"));
+                            dataStore_channel.setFr_cate_id(item_array_chan.getJSONObject(i).getInt("category_id"));
+                            arrDataStore_channel.add(dataStore_channel);
+                        }
+                        //Log.d("run", "dataStore_channel  " + arrDataStore_channel.size());
+
+                        for (int i = 0; i < item_array_type.length(); i++) {
+                            DataStore_Type dataStore_type = new DataStore_Type();
+                            dataStore_type.setType_id(item_array_type.getJSONObject(i).getInt("type_id"));
+                            dataStore_type.setType_name(item_array_type.getJSONObject(i).getString("type_name"));
+                            arrDataStore_type.add(dataStore_type);
                         }
 
-                        // super.callback(url, object, status);
-                    }
-                });
+                        for (int j = 0; j < item_array_prog.length(); j++) {
 
-    }
+                            DataStore_Program dataStore_program = new DataStore_Program();
+                            dataStore_program.setProg_id(item_array_prog.getJSONObject(j).getInt("prog_id"));
+                            dataStore_program.setProg_name(item_array_prog.getJSONObject(j).getString("prog_name"));
+                            dataStore_program.setProg_timeend(item_array_prog.getJSONObject(j).getString("time_end").replace(".", ":"));
+                            dataStore_program.setProg_timestart(item_array_prog.getJSONObject(j).getString("time_start").replace(".", ":"));
+                            dataStore_program.setFr_channel_id(item_array_prog.getJSONObject(j).getInt("channel_id"));
+                            dataStore_program.setFr_day_id(item_array_prog.getJSONObject(j).getInt("day_id"));
+                            dataStore_program.setFr_type_id(item_array_prog.getJSONObject(j).getInt("type_id"));
+                            arrDataStore_program.add(dataStore_program);
 
-
-    public void prepareMenuLeft() {
-        aq.ajax(urlPath,
-                JSONObject.class, new AjaxCallback<JSONObject>() {
-
-                    @Override
-                    public void callback(String url, JSONObject object, AjaxStatus status) {
-
-
-                        if (object != null) {
-
-                            try {
-
-                                JSONArray items_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
-                                JSONArray items_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
-
-                                String items_cate_title, items_cate_pic, items_chan_title, items_chan_pic;
-                                int items_cate_id, items_chan_id, items_cate_id_in_chan;
-
-                                group_list = new ArrayList<GroupExpLeft>();
-
-                                for (int i = 0; i < items_array_cate.length(); i++) {
-
-                                    items_cate_title = items_array_cate.getJSONObject(i).getString("category_name");
-                                    items_cate_pic = items_array_cate.getJSONObject(i).getString("category_pic");
-                                    items_cate_id = items_array_cate.getJSONObject(i).getInt("category_id");
-
-                                    //Log.d("logrun2", items_cate_id+"  "+items_cate_title);
-
-
-                                    GroupExpLeft gru = new GroupExpLeft();
-                                    gru.setName(items_cate_title);
-                                    gru.setImage(items_cate_pic);
-
-                                    channel_list = new ArrayList<ItemExpLeft>();
-
-                                    for (int j = 0; j < items_array_chan.length(); j++) {
-                                        items_chan_title = items_array_chan.getJSONObject(j).getString("channel_name");
-                                        items_chan_pic = items_array_chan.getJSONObject(j).getString("channel_pic");
-                                        items_cate_id_in_chan = items_array_chan.getJSONObject(j).getInt("category_id");
-                                        items_chan_id = items_array_chan.getJSONObject(j).getInt("channel_id");
-
-                                        if (items_cate_id == items_cate_id_in_chan) {
-
-                                            ItemExpLeft ch = new ItemExpLeft();
-                                            ch.setName(items_chan_title);
-                                            ch.setImage(items_chan_pic);
-                                            ch.setId(items_chan_id);
-                                            channel_list.add(ch);
-                                        }
-                                    }
-                                    gru.setItems(channel_list);
-                                    group_list.add(gru);
-
-                                }
-
-
-                                ExpAdapter = new ExpandableListAdapter_Left(MainActivity.this, group_list);
-                                EXP_exp_left.setAdapter(ExpAdapter);
-
-
-                                Log.d("logrun2", "Prepare List  = "+group_list.size() + " ");
-
-                                //ExpAdapter.notifyDataSetChanged();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("logrun2", e.toString());
-                            }
-                        } else {
-                            Log.d("logrun2", "Object is Null");
                         }
 
+                        ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
+                        ContentFrame.removeAllViews();
+                        mainMenuTab = new MainMenuTab(ViewMainMenu);
+                        ContentFrame.addView(ViewMainMenu);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.d("logrun2", e.toString());
                     }
-                });
+                } else {
+                    Log.d("logrun2", "Object is Null");
+                }
+
+            }
+        });
 
 
     }
@@ -678,4 +549,27 @@ public class MainActivity extends Activity {
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    protected void onResume() {
+        //if (stateOK)
+        //setEexpLeftChildSelected();
+        Log.d("run", "onResume");
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        Log.d("run", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("run", "onDestroy");
+        super.onDestroy();
+    }
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
 }

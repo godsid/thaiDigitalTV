@@ -1,9 +1,9 @@
 package com.webmanagement.thaidigitaltv;
 
 /**
- * Created by SystemDLL on 15/9/2557.
+ * Created by SystemDLL on 6/10/2557.
  */
-public class ItemExpLeft {
+class ItemChildTab2 {
     private String Name;
     private String Image;
     private int Id;

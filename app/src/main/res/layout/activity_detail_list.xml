@@ -3,6 +3,10 @@
     android:id="@+id/ll_detail_list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+<<<<<<< HEAD
+=======
+    android:background="#BBB"
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
     android:orientation="vertical">
     <!--new-->
     <LinearLayout
@@ -55,6 +59,7 @@
                     android:layout_marginRight="30dp"
                     android:gravity="right"
                     android:orientation="horizontal">
+<<<<<<< HEAD
                     <TextView
                         android:id="@+id/tv_detail_date"
                         android:layout_width="wrap_content"
@@ -79,6 +84,33 @@
                         android:text="2557"
                         android:textColor="#EEE" />
                 </LinearLayout>
+=======
+                <TextView
+                    android:id="@+id/tv_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:text="DATE"
+                    android:textSize="20dp"
+                    android:textColor="#AFA" />
+                <TextView
+                    android:id="@+id/tv_detail_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:textSize="20dp"
+
+                    android:text="MONTH"
+                    android:textColor="#AFA" />
+                <TextView
+                    android:id="@+id/tv_detail_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="YEAR"
+                    android:textColor="#AFA" />
+                    </LinearLayout>
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
             </LinearLayout>
 
                 <SeekBar
@@ -99,6 +131,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
+<<<<<<< HEAD
         android:background="#006064"
         android:orientation="vertical">
 
@@ -107,11 +140,19 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_marginBottom="10dp">
+=======
+        android:background="@drawable/container_dropshadow"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingBottom="10dp"
+        >
+
+
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
             <TextView
                 android:id="@+id/tv_header_program"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_program"
                 android:textColor="#FFFFFF"
@@ -121,8 +162,7 @@
             <TextView
                 android:id="@+id/tv_header_time"
                 android:layout_width="90dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@+id/tv_header_program"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -134,9 +174,7 @@
             <TextView
                 android:id="@+id/tv_header_status"
                 android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/tv_header_time"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_status"
                 android:textColor="#FFFFFF"
@@ -146,13 +184,12 @@
             <TextView
                 android:id="@+id/tv_header_fav"
                 android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/tv_header_status"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/tb_header_fav"
                 android:textColor="#FFFFFF"
                 android:textSize="16dp"
+<<<<<<< HEAD
                 android:textStyle="bold">
             </TextView>
         </RelativeLayout>
@@ -170,3 +207,26 @@
                 />
         </LinearLayout>
 </LinearLayout>
+=======
+                android:textStyle="bold"></TextView>
+
+
+
+
+
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_program_detail"
+        android:background="#BBB"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
+
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab

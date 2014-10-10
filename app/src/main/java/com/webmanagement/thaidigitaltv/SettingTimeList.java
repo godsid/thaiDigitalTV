@@ -2,6 +2,7 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
@@ -9,159 +10,239 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import com.androidquery.AQuery;
 
 import java.util.ArrayList;
 
 
-public class SettingTimeList extends Activity {
+public class SettingTimeList {
+
+    View rootView;
+    Context context;
+    Activity activity;
+    AQuery aq;
+    FrameLayout ContentFrame;
+    View  ViewProgramDetail;
+    LayoutInflater inflater;
+    ListProgram listProgram;
 
     private DatabaseAction dbAction;
-
-    private int[] time_value = new int[] {5,10,20,30,40,50,60};
+    private int[] time_value = new int[]{5, 10, 20, 30, 40, 50, 60};
     private DetailProgram detailProgram;
-
-
     ArrayList<DataCustomSettingTime> dataCustomSettingTime = new ArrayList<DataCustomSettingTime>();
+    SettingTimeAdapter settingTimeAdapter;
 
-    SettingTimeAdapter settingTimeAdapter ;
+    String program_name, type_name, channel_name, time_before, time_start;
+    ToggleButton TGB0,TGB1,TGB2,TGB3,TGB4,TGB5,TGB6;
+    CheckBox CB_settime_repeat;
+    int program_id;
+    ListView LV_Time;
+    int select_item;
+    boolean addSuccess = false;
 
-    String program_name,type_name,channel_name,time_before,time_start;
-
-    private int program_id;
-    private ListView listView;
-    private int select_item;
-    private MainActivity mainActivity;
-
-    TextView TV_settime_timeval,TV_settime_min;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_time_list);
+    ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
+    ArrayList<Integer> arrTempDay = new ArrayList<Integer>();
+    ArrayList<Integer> arrTempId = new ArrayList<Integer>();
 
 
+    public SettingTimeList(View view) {
+        this.rootView = view;
+        this.context = rootView.getContext();
+        this.activity = (Activity) context;
+        aq = new AQuery(context);
+
+        dbAction = new DatabaseAction(context);
+        detailProgram = new DetailProgram();
+        arrTempDay.clear();
+        arrTempId.clear();
+
+        ContentFrame = (FrameLayout) activity.findViewById(R.id.content_frame);
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE );
 
 
-        settingTimeAdapter = new SettingTimeAdapter(getApplicationContext(),dataCustomSettingTime);
+        settingTimeAdapter = new SettingTimeAdapter(context, dataCustomSettingTime);
 
-        listView = (ListView)findViewById(R.id.lv_time);
-        listView.setAdapter(settingTimeAdapter);
+        LV_Time = (ListView) rootView.findViewById(R.id.lv_time);
+        LV_Time.setAdapter(settingTimeAdapter);
 
+        select_item = detailProgram.getItem_selected();
+        program_id = detailProgram.getProg_id(select_item);
+        program_name = detailProgram.getProg_name(select_item);
+        channel_name = detailProgram.getChan_name();
+        time_start = detailProgram.getTime_start(select_item);
 
         setDataToListView();
 
-        dbAction = new DatabaseAction(this);
-        detailProgram = new DetailProgram();
-        mainActivity = new MainActivity();
+        ImageView IV_settime_save = (ImageView) rootView.findViewById(R.id.iv_settime_save);
+        TextView TV_settime_title_prog = (TextView)rootView.findViewById(R.id.tv_settime_title_prog);
 
-        try {
+        TGB0 = (ToggleButton)rootView.findViewById(R.id.tgb_0);
+        TGB1 = (ToggleButton)rootView.findViewById(R.id.tgb_1);
+        TGB2 = (ToggleButton)rootView.findViewById(R.id.tgb_2);
+        TGB3 = (ToggleButton)rootView.findViewById(R.id.tgb_3);
+        TGB4 = (ToggleButton)rootView.findViewById(R.id.tgb_4);
+        TGB5 = (ToggleButton)rootView.findViewById(R.id.tgb_5);
+        TGB6 = (ToggleButton)rootView.findViewById(R.id.tgb_6);
+        CB_settime_repeat = (CheckBox)rootView.findViewById(R.id.cb_settime_repeat);
 
-            select_item = detailProgram.getItem_selected();
-
-            program_id = detailProgram.getProg_id(select_item);
-            program_name = detailProgram.getProg_name(select_item);
-            type_name = detailProgram.getType_name(select_item);
-            channel_name = detailProgram.getChan_name();
-            time_start = detailProgram.getTime_start(select_item);
-        } catch (Exception e){
-            Log.d("run",select_item+" , "+program_id+" , "+ detailProgram.sizePro_id()+" : Error : "+e);
+        for (int i = 0;i<arrDataStore_program.size();i++) {
+            if (arrDataStore_program.get(i).getProg_name().equals(program_name)) {
+                arrTempDay.add(arrDataStore_program.get(i).getFr_day_id());
+                arrTempId.add(arrDataStore_program.get(i).getProg_id());
+            }
         }
 
-        ImageView bt_ok = (ImageView)findViewById(R.id.bt_setttime_ok);
-        ImageView iv_back = (ImageView)findViewById(R.id.iv_alarm_back);
 
-        bt_ok.setOnClickListener(new View.OnClickListener() {
+
+        if (!arrTempDay.contains(0)) {  //TGB0.setVisibility(View.VISIBLE);
+            TGB0.setEnabled(false);
+            TGB0.setBackgroundResource(R.drawable.back_favorite);
+         }
+        if (!arrTempDay.contains(1)) {
+            TGB1.setEnabled(false);
+            TGB1.setBackgroundResource(R.drawable.back_favorite);
+        }
+        if (!arrTempDay.contains(2)) {
+            TGB2.setEnabled(false);
+            TGB2.setBackgroundResource(R.drawable.back_favorite);
+        }
+        if (!arrTempDay.contains(3)) {
+            TGB3.setEnabled(false);
+            TGB3.setBackgroundResource(R.drawable.back_favorite);
+        }
+        if (!arrTempDay.contains(4)) {
+            TGB4.setEnabled(false);
+            TGB4.setBackgroundResource(R.drawable.back_favorite);
+        }
+        if (!arrTempDay.contains(5)) {
+            TGB5.setEnabled(false);
+            TGB5.setBackgroundResource(R.drawable.back_favorite);
+        }
+        if (!arrTempDay.contains(6)) {
+            TGB6.setEnabled(false);
+            TGB6.setBackgroundResource(R.drawable.back_favorite);
+        }
+
+
+
+
+
+        TV_settime_title_prog.setText("รายการ "+program_name);
+
+
+
+        IV_settime_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int time_selected = dataCustomSettingTime.get(settingTimeAdapter.getSelectedPosition()).time_val;
+                for (int i = 0;i < arrTempDay.size();i++) {
+                    if (arrTempDay.get(i) == 0 && TGB0.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
 
+                    } else if(arrTempDay.get(i) == 1 && TGB1.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
 
+                    } else if(arrTempDay.get(i) == 2 && TGB2.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
 
-                    int time_selected = dataCustomSettingTime.get(settingTimeAdapter.getSelectedPosition()).time_val;
-                    long resAdd = dbAction.addFavoriteProgram(program_id, program_name, type_name, channel_name, time_start, time_selected);
-                    if (resAdd > 0) {
-                        Toast.makeText(getApplicationContext(), "Add Complete", Toast.LENGTH_LONG).show();
-                        MainActivity.setStateOK(true);
-                       // mainActivity.setEexpLeftChildSelected();
+                    } else if(arrTempDay.get(i) == 3 && TGB3.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
 
-                        Log.d("run2", program_id + "," + program_name + "," + type_name + "," + channel_name + "," + time_start + " , " + time_selected + " : " + resAdd);
-                        onBackPressed();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Can't Add", Toast.LENGTH_LONG).show();
+                    } else if(arrTempDay.get(i) == 4 && TGB4.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
+
+                    } else if(arrTempDay.get(i) == 5 && TGB5.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
+
+                    } else if(arrTempDay.get(i) == 6 && TGB6.isChecked()) {
+                        long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), 0);
+                        if (resAdd > 0)
+                            addSuccess = true;
+                        else {
+                            addSuccess = false;
+                            break;
+                        }
+
                     }
 
-            }
+                }
+
+               if (addSuccess) {
+                   Toast.makeText(context, "Add Complete", Toast.LENGTH_LONG).show();
+                   ViewProgramDetail = activity.getLayoutInflater().inflate(R.layout.activity_detail_list, ContentFrame, false);
+                   ContentFrame.removeAllViews();
+                   listProgram = new ListProgram(ViewProgramDetail);
+                   ContentFrame.addView(ViewProgramDetail);
+
+               } else {
+                   Toast.makeText(context, "Can't Add", Toast.LENGTH_LONG).show();
+               }
+
+
+
+                }
+
 
         });
-
-        iv_back.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                onBackPressed();
-            }
-        });
-
-    }
-
-
-    public void setDataToListView() {
-
-        for (int i = 0; i< time_value.length ; i++){
-            dataCustomSettingTime.add(new DataCustomSettingTime(time_value[i],i));
-        }
-
-    }
-
-
-    /*
-    public void showdata(){ // ดึงข้อมูลมาแสดง
-
-        SQLiteCursor cur = (SQLiteCursor)dbAction.readAllFavoriteProgram();
-
-        while (cur.isAfterLast() == false) {
-            Log.d("run","\n program_id: "+cur.getString(1)+"\n"+
-                    "program_name: "+cur.getString(2)+"\n"+
-                    "type_name: "+cur.getString(3)+"\n"+
-                    "channel_name: "+cur.getString(4)+"\n"+
-                    "time_start: "+cur.getString(5)+"\n"+
-                    "time_before: "+cur.getString(6)+"\n");
-            cur.moveToNext();
-        }
-        cur.close();
-    }
-*/
-
-    public void showAlertWarning() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("คำเตือน");
-        builder.setMessage("กรุณาเลือกเวลาการแจ้งเตือนล่วงหน้า");
-        builder.setPositiveButton("ตกลง",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        return;
-                    }
-                });
-        builder.show();
+//Log.d("run2", program_id + "," + program_name + "," + type_name + "," + channel_name + "," + time_start + " , " + time_selected + " : " + resAdd);
     }
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_setting_time_list, menu);
-        return true;
-    }
 
+<<<<<<< HEAD
     /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -175,5 +256,16 @@ public class SettingTimeList extends Activity {
         return super.onOptionsItemSelected(item);
 
     }*/
+=======
+    public void setDataToListView() {
+
+        for (int i = 0; i < time_value.length; i++) {
+            dataCustomSettingTime.add(new DataCustomSettingTime(time_value[i], i));
+        }
+        settingTimeAdapter.notifyDataSetChanged();
+    }
+>>>>>>> 94ca065c8035c58b5f54d3c240db0b713e50f0ab
+
+
 
 }
