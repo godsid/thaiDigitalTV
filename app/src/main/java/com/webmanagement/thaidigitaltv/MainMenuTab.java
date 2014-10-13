@@ -2,6 +2,7 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,9 +71,9 @@ public class MainMenuTab {
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
         mTabHost.setup();
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("TAB 1").setContent(R.id.ll_tab_1));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("TAB 2").setContent(R.id.ll_tab_2));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("TAB 3").setContent(R.id.ll_tab_3));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("ช่องทีวีดิจิตอล").setContent(R.id.ll_tab_1));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("หมวดหมู่").setContent(R.id.ll_tab_2));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("ประเภทรายการ").setContent(R.id.ll_tab_3));
         mTabHost.setCurrentTab(0);
 
         LV_tab_1 = (ListView) rootView.findViewById(R.id.lv_tab_1);

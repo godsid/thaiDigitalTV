@@ -95,7 +95,7 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
             convertView = inf.inflate(R.layout.item_group_lv_tab_3, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.tv_group_lv_tab3);
-        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_group_lv_tab3);
+        //ImageView iv = (ImageView) convertView.findViewById(R.id.iv_group_lv_tab3);
 
 
         tv.setText(group.getTypeName());

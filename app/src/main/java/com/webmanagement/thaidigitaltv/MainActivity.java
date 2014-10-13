@@ -183,8 +183,9 @@ public class MainActivity extends Activity {
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.getFocusables(position);
+                view.setSelected(true);
                 if (position == 0) {
-
 
                     ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                     ContentFrame.removeAllViews();
@@ -210,7 +211,7 @@ public class MainActivity extends Activity {
     }
 
     public void prepareMenuLeft() {
-        int[] g_pic = new int[]{R.drawable.toggle1, R.drawable.toggle2};
+        int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
         String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
 
 

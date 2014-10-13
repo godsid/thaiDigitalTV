@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
 
     <ImageView
+        android:id="@+id/iv_channel_lv_tab_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_channel_lv_tab_1" />
+        android:src="@drawable/ic_launcher"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_title_lv_tab_1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/tv_title_lv_tab_1" />
-</LinearLayout>
+        android:textSize="15dip"
+        android:paddingLeft="15dp"
+        android:text="new text"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/iv_channel_lv_tab_1"
+        />
+</RelativeLayout>

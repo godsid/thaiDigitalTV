@@ -4,21 +4,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ll_tab_2">
-
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New  2"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal" />
+-->
     <ExpandableListView
         android:id="@+id/exp_tab_2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:background="#eceff1"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="2dp"
+
         android:choiceMode="singleChoice"
         android:groupIndicator="@drawable/group_indicator">
 

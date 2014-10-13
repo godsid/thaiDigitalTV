@@ -31,4 +31,12 @@
         <item name="cancel_label">ยกเลิก</item>
     </array>
 
+    <!--
+    <string name="action_search">Search</string>
+    <string name="action_record">Record Video</string>
+    <string name="action_save">Save</string>
+    <string name="action_label">Add Label</string>
+    <string name="action_play">Play Video</string>
+    -->
+
 </resources>
