@@ -31,4 +31,11 @@
         <item name="cancel_label">ยกเลิก</item>
     </array>
 
+    <string name="title_activity_display_alert_time">DisplayAlertTime</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_main_menu_tab_2">MainMenuTab_2</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
 </resources>

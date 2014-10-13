@@ -2,25 +2,17 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -41,7 +33,7 @@ public class MainMenuTab {
     AQuery aq;
 
     DetailProgram detailProgram;
-    ListProgram listProgram;
+
     private int exp_left_group_pos, exp_left_child_pos;
 
     ListTab1Adapter listTab1Adapter;
@@ -62,6 +54,7 @@ public class MainMenuTab {
 
 
     public MainMenuTab(View view) {
+
 
         this.rootView = view;
         this.context = rootView.getContext();
@@ -264,10 +257,9 @@ public class MainMenuTab {
 
     private void openDetailProgram() {
 
-        ViewProgramDetail = activity.getLayoutInflater().inflate(R.layout.activity_detail_list, ContentFrame, false);
-        ContentFrame.removeAllViews();
-        listProgram = new ListProgram(ViewProgramDetail);
-        ContentFrame.addView(ViewProgramDetail);
+        Intent intent = new Intent(activity.getApplicationContext(), ProgramDetail.class);
+        activity.startActivity(intent);
+
     }
 }
 

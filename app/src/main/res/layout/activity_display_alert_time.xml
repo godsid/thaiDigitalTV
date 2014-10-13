@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="25dp"
+    android:layout_marginTop="30dp"
+    android:orientation="vertical">
+    <TextView
+        android:text="Time"
+        android:textSize="20dp"
+        android:id="@+id/tv_disp_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Title"
+        android:textSize="20dp"
+        android:id="@+id/tv_disp_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Channel"
+        android:textSize="20dp"
+        android:id="@+id/tv_disp_chan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/bt_disp_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept"
+        android:padding="25dp"
+        android:textSize="20dp"/>
+</LinearLayout>

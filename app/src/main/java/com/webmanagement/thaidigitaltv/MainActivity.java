@@ -81,9 +81,6 @@ public class MainActivity extends Activity {
     private static boolean stateOK = false;
 
 
-
-
-
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
 
     private SeekBar SB_detail_date = null;
@@ -137,10 +134,6 @@ public class MainActivity extends Activity {
         ContentFrame = (FrameLayout) findViewById(R.id.content_frame);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
-
-
-
-
 
 
 
@@ -291,6 +284,10 @@ public class MainActivity extends Activity {
                             arrDataStore_program.add(dataStore_program);
 
                         }
+
+
+                      //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
+                      //  startActivity(intent);
 
                         ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                         ContentFrame.removeAllViews();

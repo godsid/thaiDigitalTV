@@ -27,7 +27,7 @@ public class ListProgramDetailAdapter extends BaseAdapter {
     private int bg_color_rl;
     private int selectedPosition = 0;
     DetailProgram detailProgram;
-    ArrayList<Integer> arrHoldProg_idDB = ListProgram.arrHoldProg_idDB;
+    ArrayList<Integer> arrHoldProg_idDB = ProgramDetail.arrHoldProg_idDB;
 
 
 
