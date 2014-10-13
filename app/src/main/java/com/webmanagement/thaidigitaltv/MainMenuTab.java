@@ -2,7 +2,9 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.content.Context;
+
 import android.content.Intent;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,7 @@ public class MainMenuTab {
 
     AQuery aq;
 
-    DetailProgram detailProgram;
+    Store_Variable storeVariable;
 
     private int exp_left_group_pos, exp_left_child_pos;
 
@@ -59,13 +61,13 @@ public class MainMenuTab {
         this.rootView = view;
         this.context = rootView.getContext();
 
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
         mTabHost.setup();
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("TAB 1").setContent(R.id.ll_tab_1));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("TAB 2").setContent(R.id.ll_tab_2));
-        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("TAB 3").setContent(R.id.ll_tab_3));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("ช่องทีวีดิจิตอล").setContent(R.id.ll_tab_1));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("หมวดหมู่").setContent(R.id.ll_tab_2));
+        mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("ประเภทรายการ").setContent(R.id.ll_tab_3));
         mTabHost.setCurrentTab(0);
 
         LV_tab_1 = (ListView) rootView.findViewById(R.id.lv_tab_1);
@@ -87,9 +89,9 @@ public class MainMenuTab {
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();
 
-                detailProgram.setChan_id(get_channel_id);
-                detailProgram.setChan_name(get_channel_name);
-                detailProgram.setChan_pic(get_channel_pic);
+                storeVariable.setChan_id(get_channel_id);
+                storeVariable.setChan_name(get_channel_name);
+                storeVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
             }
@@ -108,9 +110,9 @@ public class MainMenuTab {
                 exp_left_group_pos = groupPosition;
                 exp_left_child_pos = childPosition;
 
-                detailProgram.setChan_id(get_channel_id);
-                detailProgram.setChan_name(get_channel_name);
-                detailProgram.setChan_pic(get_channel_pic);
+                storeVariable.setChan_id(get_channel_id);
+                storeVariable.setChan_name(get_channel_name);
+                storeVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
                 return false;

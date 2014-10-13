@@ -2,42 +2,34 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_custom_settime"
-    android:layout_width="fill_parent"
-    android:layout_height="100dp"
-    android:background="#BBB"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
     >
     <TextView
         android:id="@+id/tv_settime_timeval"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="60"
-        android:textColor="#EEEEEE"
-        android:textSize="25dp"
-        android:gravity="center"
+        android:textSize="20dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         />
     <TextView
         android:id="@+id/tv_settime_min"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="นาที"
-        android:textColor="#EEEEEE"
-        android:textSize="25dp"
-        android:gravity="center"
+        android:textSize="20dp"
         android:layout_toRightOf="@+id/tv_settime_timeval"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         />
     <RadioButton
         android:id="@+id/rb_settime_line"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
+        android:layout_height="wrap_content"
         android:button="@drawable/radio_b"
+        android:layout_alignParentRight="true"
+        android:layout_margin="9dp"
         />
-
 </RelativeLayout>

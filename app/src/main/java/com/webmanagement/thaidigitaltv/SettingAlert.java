@@ -26,7 +26,7 @@ public class SettingAlert extends Activity {
 
     private DatabaseAction dbAction;
     private int[] time_value = new int[]{5, 10, 20, 30, 40, 50, 60};
-    private DetailProgram detailProgram;
+    private Store_Variable storeVariable;
     ArrayList<DataCustomSettingTime> dataCustomSettingTime = new ArrayList<DataCustomSettingTime>();
     SettingTimeAdapter settingTimeAdapter;
 
@@ -52,7 +52,7 @@ public class SettingAlert extends Activity {
         aq = new AQuery(this);
 
         dbAction = new DatabaseAction(this);
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
         arrTempDay.clear();
         arrTempId.clear();
 
@@ -62,11 +62,11 @@ public class SettingAlert extends Activity {
         LV_Time = (ListView) findViewById(R.id.lv_time);
         LV_Time.setAdapter(settingTimeAdapter);
 
-        select_item = detailProgram.getItem_selected();
-        program_id = detailProgram.getProg_id(select_item);
-        program_name = detailProgram.getProg_name(select_item);
-        channel_name = detailProgram.getChan_name();
-        time_start = detailProgram.getTime_start(select_item);
+        select_item = storeVariable.getItem_selected();
+        program_id = storeVariable.getProg_id(select_item);
+        program_name = storeVariable.getProg_name(select_item);
+        channel_name = storeVariable.getChan_name();
+        time_start = storeVariable.getTime_start(select_item);
 
         setDataToListView();
 
@@ -133,9 +133,9 @@ public class SettingAlert extends Activity {
         IV_settime_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "B", Toast.LENGTH_SHORT).show();
-                setAlarm();
-                /*
+               // Toast.makeText(getApplicationContext(), "B", Toast.LENGTH_SHORT).show();
+               // setAlarm();
+
                 int time_selected = dataCustomSettingTime.get(settingTimeAdapter.getSelectedPosition()).time_val;
                 int isRepeat;
                 if (CB_settime_repeat.isChecked())
@@ -211,16 +211,12 @@ public class SettingAlert extends Activity {
                 }
 
                if (addSuccess) {
-                   Toast.makeText(this, "Add Complete", Toast.LENGTH_LONG).show();
-                   ViewProgramDetail = activity.getLayoutInflater().inflate(R.layout.activity_program_detail, ContentFrame, false);
-                   ContentFrame.removeAllViews();
-                   listProgram = new ListProgram(ViewProgramDetail);
-                   ContentFrame.addView(ViewProgramDetail);
-
+                   Toast.makeText(getApplicationContext(), "Add Complete", Toast.LENGTH_LONG).show();
+                   finish();
                } else {
-                   Toast.makeText(this, "Can't Add", Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(), "Can't Add", Toast.LENGTH_LONG).show();
                }
-*/
+
 
 
             }

@@ -2,9 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity" >
     <!--
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_launcher"
+        android:title="@string/action_search"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/action_record"
+        android:icon="@drawable/ic_launcher"
+        android:title="@string/action_record"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/ic_launcher"
+        android:title="@string/action_save"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/action_label"
+        android:icon="@drawable/ic_launcher"
+        android:title="@string/action_label"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/action_play"
+        android:icon="@drawable/ic_launcher"
+        android:title="@string/action_play"
+        android:showAsAction="ifRoom|withText" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:orderInCategory="100"
         android:showAsAction="never" />
         -->
 </menu>

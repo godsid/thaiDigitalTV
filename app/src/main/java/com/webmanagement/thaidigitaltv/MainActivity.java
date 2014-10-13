@@ -1,11 +1,7 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.sqlite.SQLiteCursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,19 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.TabHost;
 
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
@@ -38,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +37,7 @@ public class MainActivity extends Activity {
 
 
     //////////////////// Global variable ////////////
-    private DetailProgram detailProgram;
+    private Store_Variable storeVariable;
 
     private DatabaseAction dbAction;
     public static Typeface TF_font;
@@ -116,7 +106,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
@@ -176,8 +166,9 @@ public class MainActivity extends Activity {
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.getFocusables(position);
+                view.setSelected(true);
                 if (position == 0) {
-
 
                     ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                     ContentFrame.removeAllViews();
@@ -203,7 +194,7 @@ public class MainActivity extends Activity {
     }
 
     public void prepareMenuLeft() {
-        int[] g_pic = new int[]{R.drawable.toggle1, R.drawable.toggle2};
+        int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
         String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
 
 

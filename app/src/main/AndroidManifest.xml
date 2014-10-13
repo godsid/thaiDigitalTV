@@ -47,12 +47,12 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".ProgramDetail"
-            android:label="@string/title_activity_my" >
+             >
         </activity>
         <activity
             android:screenOrientation="portrait"
             android:name=".SettingAlert"
-            android:label="@string/title_activity_my" >
+            >
         </activity>
     </application>
 

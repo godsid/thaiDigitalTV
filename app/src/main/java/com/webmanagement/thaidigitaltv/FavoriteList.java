@@ -1,14 +1,9 @@
 package com.webmanagement.thaidigitaltv;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteCursor;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,7 +28,7 @@ public class FavoriteList {
 
     FavoriteListAdapter favoriteListAdapter;
     private DatabaseAction dbAction;
-    private DetailProgram detailProgram;
+    private Store_Variable storeVariable;
     private int itemPosition;
 
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
@@ -46,7 +41,7 @@ public class FavoriteList {
         final Animation animAlpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
 
         dbAction = new DatabaseAction(context);
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
 
 
         favoriteListAdapter = new FavoriteListAdapter(context, arrayListData);
@@ -84,7 +79,7 @@ public class FavoriteList {
 
     private void prepareDataToList() {
 
-        detailProgram.clearFavArray();
+        storeVariable.clearFavArray();
         arrayListData.clear();
 
         SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
@@ -144,11 +139,11 @@ public class FavoriteList {
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getFavProg_name(getItemPosition()));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + storeVariable.getFavProg_name(getItemPosition()));
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getFavProg_id(getItemPosition()));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(storeVariable.getFavProg_id(getItemPosition()));
                         if (chkDeleted == true) {
                             Toast.makeText(context, "Delete Complete", Toast.LENGTH_SHORT).show();
 

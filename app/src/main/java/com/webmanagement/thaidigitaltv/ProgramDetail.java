@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,7 @@ import java.util.Date;
 
 
 public class ProgramDetail extends Activity {
-    DetailProgram detailProgram;
+    Store_Variable storeVariable;
     AQuery aq;
 
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
@@ -66,7 +65,7 @@ public class ProgramDetail extends Activity {
         setContentView(R.layout.activity_program_detail);
 
         aq = new AQuery(this);
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
         calendar = Calendar.getInstance();
         date = new Date();
         dbAction = new DatabaseAction(this);
@@ -168,18 +167,18 @@ public class ProgramDetail extends Activity {
         LV_program_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                detailProgram.seItem_selected(position);
+                storeVariable.seItem_selected(position);
 
-                detailProgram.setProg_id(dataCustomProgramDetail.get(position).id);
-                detailProgram.setProg_name(dataCustomProgramDetail.get(position).col_1);
-                detailProgram.setTime_start(dataCustomProgramDetail.get(position).col_2);
+                storeVariable.setProg_id(dataCustomProgramDetail.get(position).id);
+                storeVariable.setProg_name(dataCustomProgramDetail.get(position).col_1);
+                storeVariable.setTime_start(dataCustomProgramDetail.get(position).col_2);
 
 
-                if (detailProgram.arrDelOrAdd.get(position).equals("add")) {
+                if (storeVariable.arrDelOrAdd.get(position).equals("add")) {
 
                     Intent intent = new Intent(getApplicationContext(),SettingAlert.class);
                     startActivity(intent);
-                } else if (detailProgram.arrDelOrAdd.get(position).equals("delete")) {
+                } else if (storeVariable.arrDelOrAdd.get(position).equals("delete")) {
                     position_for_delete = position;
                     menuActionDelete();
                 }
@@ -235,16 +234,16 @@ public class ProgramDetail extends Activity {
 
     public void setDataToLV() {
 
-        detailProgram.arrDelOrAdd.clear();
+        storeVariable.arrDelOrAdd.clear();
         listProgramDetailAdapter.arrayProgramDetail.clear();
-        detailProgram.clearAllArray();
+        storeVariable.clearAllArray();
 
         setHoldArrProg_idFromDB();
 
-        detailProgram.setDay_id(g_change_day);
+        storeVariable.setDay_id(g_change_day);
 
-        aq.id(IV_detail_list_title).image(detailProgram.getChan_pic());
-        TV_detail_list_title.setText(detailProgram.getChan_name());
+        aq.id(IV_detail_list_title).image(storeVariable.getChan_pic());
+        TV_detail_list_title.setText(storeVariable.getChan_name());
 
 
         int c = 0;
@@ -260,7 +259,7 @@ public class ProgramDetail extends Activity {
             int day_id = arrDataStore_program.get(j).getFr_day_id();
             boolean status_onair = false;
 
-            if (detailProgram.getChan_id() == chan_id && detailProgram.getDay_id() == day_id) {
+            if (storeVariable.getChan_id() == chan_id && storeVariable.getDay_id() == day_id) {
 
                 try {
 
@@ -293,9 +292,9 @@ public class ProgramDetail extends Activity {
                     Log.d("run", "Error Parse Date " + e);
                 }
 
-                detailProgram.setProg_id(prog_id);
-                detailProgram.setProg_name(prog_title);
-                detailProgram.setTime_start(prog_timestart);
+                storeVariable.setProg_id(prog_id);
+                storeVariable.setProg_name(prog_title);
+                storeVariable.setTime_start(prog_timestart);
 
 
                 dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, status_onair, c));
@@ -313,11 +312,11 @@ public class ProgramDetail extends Activity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + detailProgram.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + storeVariable.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(detailProgram.getProg_id(position_for_delete));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(storeVariable.getProg_id(position_for_delete));
                         if (chkDeleted) {
                             Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_SHORT).show();
                             setDataToLV();
@@ -335,7 +334,11 @@ public class ProgramDetail extends Activity {
     }
 
 
-
+    @Override
+    protected void onResume() {
+        setDataToLV();
+        super.onResume();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

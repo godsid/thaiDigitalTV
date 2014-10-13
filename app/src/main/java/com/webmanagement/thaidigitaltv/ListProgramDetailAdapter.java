@@ -1,8 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteCursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,7 @@ public class ListProgramDetailAdapter extends BaseAdapter {
 
     private int bg_color_rl;
     private int selectedPosition = 0;
-    DetailProgram detailProgram;
+    Store_Variable storeVariable;
     ArrayList<Integer> arrHoldProg_idDB = ProgramDetail.arrHoldProg_idDB;
 
 
@@ -36,7 +34,7 @@ public class ListProgramDetailAdapter extends BaseAdapter {
 
 
     public ListProgramDetailAdapter(Context context, ArrayList<DataCustomProgramDetail> arrayList) {
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
 
@@ -96,11 +94,11 @@ public class ListProgramDetailAdapter extends BaseAdapter {
             if (arrHoldProg_idDB.contains(arrayProgramDetail.get(position).id)) {
                 //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 getObject.TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
-                detailProgram.arrDelOrAdd.add("delete");
+                storeVariable.arrDelOrAdd.add("delete");
             } else {
                 // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 getObject.TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-                detailProgram.arrDelOrAdd.add("add");
+                storeVariable.arrDelOrAdd.add("add");
             }
 
             getObject.TV_col_3.setText("");
