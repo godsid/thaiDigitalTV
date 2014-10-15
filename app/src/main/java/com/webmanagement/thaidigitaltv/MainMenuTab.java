@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.content.Intent;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,9 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
-<<<<<<< HEAD
 import android.widget.TextView;
 import android.widget.Toast;
-=======
->>>>>>> 10a9a58d8104041b1087d8114feecd85a9fad102
+
 
 import com.androidquery.AQuery;
 

@@ -34,8 +34,8 @@ public class ProgramDetail extends Activity {
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
     TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
 
-    public static Typeface TF_font;
-    public String frontPath = "fonts/RSU_BOLD.ttf";
+    //public static Typeface TF_font;
+    //public String frontPath = "fonts/RSU_BOLD.ttf";
 
     ListView LV_program_detail;
     private SeekBar SB_detail_date = null;
@@ -70,11 +70,11 @@ public class ProgramDetail extends Activity {
         date = new Date();
         dbAction = new DatabaseAction(this);
         dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
-        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+        //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        //TV_detail_list_title.setTypeface(TF_font);
+        //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
 

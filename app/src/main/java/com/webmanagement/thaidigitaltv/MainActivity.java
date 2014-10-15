@@ -40,8 +40,8 @@ public class MainActivity extends Activity {
     private Store_Variable storeVariable;
 
     private DatabaseAction dbAction;
-    public static Typeface TF_font;
-    public String frontPath = "fonts/RSU_BOLD.ttf";
+    //public static Typeface TF_font;
+    //public String frontPath = "fonts/RSU_BOLD.ttf";
     static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
 
     ImageView IV_ic_nav_top_left, IV_ic_nav_top_right, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
@@ -113,10 +113,10 @@ public class MainActivity extends Activity {
         aq = new AQuery(this);
 
 
-        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+        //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_detail_list_title.setTypeface(TF_font);
+        //TV_detail_list_title.setTypeface(TF_font);
         //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
@@ -125,11 +125,6 @@ public class MainActivity extends Activity {
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 10a9a58d8104041b1087d8114feecd85a9fad102
         LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
@@ -154,7 +149,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 IV_detail_list_title.setImageResource(R.drawable.ic_launcher);
-                TV_detail_list_title.setText("Thai Digital TV");
+                TV_detail_list_title.setText("ThaiDigitalTV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
                 } else {

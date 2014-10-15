@@ -10,37 +10,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#455a64"
+        android:background="#111111"
         android:orientation="horizontal"
         >
-
-        <TextView
-
+        <ImageView
+            android:id="@+id/ic_nav_top_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_previous_item"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:id="@+id/tv_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="เตือนก่อนออกอากาศ"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/ic_nav_top_left" />
+            android:layout_toRightOf="@+id/ic_nav_top_left"
+            />
 
         <TextView
-            android:textColor="@color/White"
+            android:id="@+id/tv_settime_title_prog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:text="Medium Text"
-            android:id="@+id/tv_settime_title_prog"
-            android:layout_alignParentBottom="true"
-<<<<<<< HEAD:app/src/main/res/layout/activity_setting_time_list.xml
-            android:layout_alignParentLeft="true"
+            android:textColor="@color/White"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="3dp"/>
-=======
-            android:layout_toRightOf="@+id/ic_nav_top_left" />
->>>>>>> 10a9a58d8104041b1087d8114feecd85a9fad102:app/src/main/res/layout/activity_setting_alert.xml
+            android:layout_below="@+id/tv_alert"
+            android:layout_toRightOf="@+id/ic_nav_top_left"
+            />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -50,14 +54,6 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/save"
             />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ic_nav_top_left"
-            android:src="@drawable/back_alarm"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
     </RelativeLayout>
 
        <LinearLayout
