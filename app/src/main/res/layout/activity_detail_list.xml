@@ -3,20 +3,21 @@
     android:id="@+id/ll_detail_list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#455a64"
     android:orientation="vertical">
     <!--new-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center|center_vertical|center_horizontal"
-        android:background="@drawable/test"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/test2"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <ImageButton
                 android:layout_marginTop="9dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="15dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp "
                 android:id="@+id/iv_detail_today"
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_width="fill_parent"
@@ -47,6 +48,7 @@
                         android:layout_height="wrap_content"
                         android:text="พฤหัสบดี"
                         android:textSize="20dp"
+                        android:textColor="@color/White"
                          />
                 </LinearLayout>
                 <LinearLayout
@@ -63,6 +65,7 @@
                         android:layout_marginRight="15dp"
                         android:text="30"
                         android:textSize="20dp"
+                        android:textColor="@color/White"
                          />
                     <TextView
                         android:id="@+id/tv_detail_month"
@@ -71,6 +74,7 @@
                         android:layout_marginRight="15dp"
                         android:textSize="20dp"
                         android:text="ตุลาคม"
+                        android:textColor="@color/White"
                          />
                     <TextView
                         android:id="@+id/tv_detail_year"
@@ -78,6 +82,7 @@
                         android:layout_height="match_parent"
                         android:textSize="20dp"
                         android:text="2557"
+                        android:textColor="@color/White"
                          />
                 </LinearLayout>
 
@@ -89,7 +94,7 @@
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="10dp"
+
                     android:layout_marginTop="1dp"
                     android:progressDrawable="@drawable/scrubber_progress"
                     android:thumb="@drawable/scrubber_control"
@@ -102,7 +107,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:background="#006064"
+        android:background="#455a64"
         android:orientation="horizontal"
         android:gravity="center_horizontal|center_vertical"
         android:paddingBottom="5dp"
@@ -154,10 +159,14 @@
     </LinearLayout>
 
             <ListView
+                android:id="@+id/lv_program_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/lv_program_detail"
-                android:paddingBottom="10dp"
+                android:background="#455a64"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="2dp"
                 android:layout_gravity="center_horizontal"
                 />
 </LinearLayout>

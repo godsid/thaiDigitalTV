@@ -56,16 +56,10 @@ public class ListTab1Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_lv_tab_1, null);
         }
-
-
         TextView tv_title_lv_tab_1 = (TextView) convertView.findViewById(R.id.tv_title_lv_tab_1);
         ImageView iv_title_lv_tab_1 = (ImageView) convertView.findViewById(R.id.iv_channel_lv_tab_1);
-
-
         tv_title_lv_tab_1.setText(arrayList.get(position).ch_name);
         aq.id(iv_title_lv_tab_1).image(arrayList.get(position).ch_pic);
-
-
         return convertView;
     }
 

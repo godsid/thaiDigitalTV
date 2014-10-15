@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#263238"
+        android:background="#455a64"
         android:orientation="horizontal"
         >
         <TextView
@@ -26,15 +26,16 @@
             android:layout_marginLeft="10dp"/>
 
         <TextView
-            android:textColor="#AAA"
+            android:textColor="@color/White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="15dp"
             android:text="Medium Text"
             android:id="@+id/tv_settime_title_prog"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="3dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -46,15 +47,10 @@
             />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="#FFFFFF"
-        />
-
        <LinearLayout
            android:layout_width="match_parent"
-           android:layout_height="355dp"
+           android:layout_height="390dp"
+           android:background="#455a64"
            >
            <ListView
                android:id="@+id/lv_time"
@@ -62,17 +58,20 @@
                android:layout_height="wrap_content"
                android:fadeScrollbars="true"
                android:choiceMode="singleChoice"
+               android:background="#455a64"
+               android:dividerHeight="5dp"
+               android:divider="#455a64"
+               android:layout_marginTop="5dp"
+               android:layout_marginLeft="5dp"
+               android:layout_marginRight="5dp"
+               android:layout_marginBottom="5dp"
                />
        </LinearLayout>
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#FFFFFF"
-            />
+
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:background="#263238"
+           android:background="#455a64"
            android:orientation="horizontal"
            android:gravity="center_horizontal"
            android:paddingTop="10dp"
@@ -144,10 +143,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#263238"
+            android:background="#455a64"
             android:orientation="horizontal"
             android:gravity="right"
-            android:paddingTop="10dp"
             android:paddingRight="15dp">
             <TextView
                 android:id="@+id/tv_check"
@@ -157,6 +155,7 @@
                 android:textSize="20dp"
                 android:textColor="#FFFFFF"
                 />
+
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

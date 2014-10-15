@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_custom_settime"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_group_item"
     android:layout_height="?android:attr/listPreferredItemHeight"
     >
     <TextView
@@ -13,6 +14,7 @@
         android:textSize="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:textColor="@color/White"
         />
     <TextView
         android:id="@+id/tv_settime_min"
@@ -23,11 +25,12 @@
         android:layout_toRightOf="@+id/tv_settime_timeval"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:textColor="@color/White"
         />
     <RadioButton
         android:id="@+id/rb_settime_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:button="@drawable/radio_b"
         android:layout_alignParentRight="true"
         android:layout_margin="9dp"

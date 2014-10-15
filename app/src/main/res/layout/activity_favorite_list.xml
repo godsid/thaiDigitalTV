@@ -1,43 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ll_favorite_list"
->
-
+    android:background="@color/GreenGroupHighlight"
+    android:id="@+id/ll_favorite_list">
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="#263238"
-        android:orientation="horizontal"
-        >
-
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#455a64">
+        <ListView
+            android:id="@+id/lv_fav_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#455a64"
+            android:dividerHeight="5dp"
+            android:divider="#455a64"
+            android:fadeScrollbars="true"
+            android:fastScrollEnabled="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"/>
         <ImageView
             android:id="@+id/iv_fav_delete_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:src="@drawable/delete_all"
+            android:layout_alignParentBottom="true"
+
             />
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#cfd8dc"
-        >
-        <ListView
-            android:id="@+id/lv_fav_show"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fadeScrollbars="true"
-            android:fastScrollEnabled="true"
-            android:divider="#263238"
-            android:dividerHeight="1dp"
-            />
-    </LinearLayout>
 </LinearLayout>

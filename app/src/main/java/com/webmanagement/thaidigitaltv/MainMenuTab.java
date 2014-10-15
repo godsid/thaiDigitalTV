@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -74,6 +75,16 @@ public class MainMenuTab {
         mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator("ช่องทีวีดิจิตอล").setContent(R.id.ll_tab_1));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("หมวดหมู่").setContent(R.id.ll_tab_2));
         mTabHost.addTab(mTabHost.newTabSpec("tab_test3").setIndicator("ประเภทรายการ").setContent(R.id.ll_tab_3));
+        mTabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.tab_selector);
+        mTabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.tab_selector);
+        mTabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.tab_selector);
+        //mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#455a64"));
+        for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
+        {
+            TextView tv = (TextView) mTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(Color.parseColor("#FFFFFF"));
+        }
+
         mTabHost.setCurrentTab(0);
 
         LV_tab_1 = (ListView) rootView.findViewById(R.id.lv_tab_1);
@@ -90,7 +101,6 @@ public class MainMenuTab {
         LV_tab_1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String get_channel_name =  arrDataStore_channel.get(position).getChan_name();
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();

@@ -130,19 +130,13 @@ public class MainActivity extends Activity {
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
         ContentFrame = (FrameLayout) findViewById(R.id.content_frame);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
-
-
-
-
-
-
 
         LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
 
@@ -167,18 +161,15 @@ public class MainActivity extends Activity {
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                IV_detail_list_title.setImageResource(R.drawable.ic_launcher);
+                TV_detail_list_title.setText("Thai Digital TV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
                 } else {
-
                     DL_drawer_layout.openDrawer(LV_menu_left);
                 }
-
             }
         });
-
-
-
 
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -186,21 +177,21 @@ public class MainActivity extends Activity {
                 view.getFocusables(position);
                 view.setSelected(true);
                 if (position == 0) {
-
                     ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                     ContentFrame.removeAllViews();
                     mainMenuTab = new MainMenuTab(ViewMainMenu);
                     ContentFrame.addView(ViewMainMenu);
-
+                    IV_detail_list_title.setImageResource(R.drawable.ic_channel_tv);
+                    TV_detail_list_title.setText("ช่องรายการ");
 
                 } else if (position == 1) {
-
                     ViewFavoriteList = getLayoutInflater().inflate(R.layout.activity_favorite_list, ContentFrame, false);
                     ContentFrame.removeAllViews();
                     favoriteList = new FavoriteList(ViewFavoriteList);
                     ContentFrame.addView(ViewFavoriteList);
+                    IV_detail_list_title.setImageResource(R.drawable.ic_favorite_flase);
+                    TV_detail_list_title.setText("รายการโปรด");
                 }
-
 
                 DL_drawer_layout.closeDrawer(LV_menu_left);
             }
