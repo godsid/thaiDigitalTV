@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by SystemDLL on 17/9/2557.
  */
-public class DetailProgram {
+public class Store_Variable {
     public static int chan_id;
     public static String chan_name, chan_pic;
 

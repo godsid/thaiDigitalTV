@@ -31,6 +31,7 @@
         <item name="cancel_label">ยกเลิก</item>
     </array>
 
+<<<<<<< HEAD
     <!-- Code Color -->
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
@@ -175,4 +176,7 @@
     <color name="GreenGroupHighlight">#85c01f</color>
     <color name="ExpGroupView">#7e8a92</color>
     <color name="ExpListView">#4A4A4A</color>
+=======
+
+>>>>>>> 10a9a58d8104041b1087d8114feecd85a9fad102
 </resources>

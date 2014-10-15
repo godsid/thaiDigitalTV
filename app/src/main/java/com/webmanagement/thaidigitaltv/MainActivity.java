@@ -1,11 +1,7 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.sqlite.SQLiteCursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,19 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.TabHost;
 
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
@@ -38,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +37,7 @@ public class MainActivity extends Activity {
 
 
     //////////////////// Global variable ////////////
-    private DetailProgram detailProgram;
+    private Store_Variable storeVariable;
 
     private DatabaseAction dbAction;
     public static Typeface TF_font;
@@ -79,9 +69,6 @@ public class MainActivity extends Activity {
     ListView LV_menu_left;
 
     private static boolean stateOK = false;
-
-
-
 
 
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
@@ -119,7 +106,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        detailProgram = new DetailProgram();
+        storeVariable = new Store_Variable();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
@@ -138,6 +125,11 @@ public class MainActivity extends Activity {
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 10a9a58d8104041b1087d8114feecd85a9fad102
         LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
@@ -283,6 +275,10 @@ public class MainActivity extends Activity {
                             arrDataStore_program.add(dataStore_program);
 
                         }
+
+
+                      //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
+                      //  startActivity(intent);
 
                         ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                         ContentFrame.removeAllViews();
