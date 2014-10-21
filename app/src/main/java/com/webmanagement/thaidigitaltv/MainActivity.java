@@ -18,6 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import android.widget.TextView;
+<<<<<<< HEAD
+=======
+import android.widget.Toast;
+import android.widget.ToggleButton;
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -35,25 +40,36 @@ public class MainActivity extends Activity {
 
 
     private DatabaseAction dbAction;
+<<<<<<< HEAD
     public static Typeface TF_font;
     public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
 
     ImageView IV_ic_nav_top_left, IV_detail_list_title;
+=======
+    //public static Typeface TF_font;
+    //public String frontPath = "fonts/RSU_BOLD.ttf";
+    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
+    static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
+
+    ImageView IV_ic_nav_top_left, IV_tv_share, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
 
     DrawerLayout DL_drawer_layout;
 
     FrameLayout ContentFrame;
     View ViewFavoriteList, ViewMainMenu;
 
-    //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
-
     public static ArrayList<DataStore_Category> arrDataStore_category = new ArrayList<DataStore_Category>();
     public static ArrayList<DataStore_Channel> arrDataStore_channel = new ArrayList<DataStore_Channel>();
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
     MenuLeftAdapter menuLeftAdapter;
 
@@ -90,11 +106,11 @@ public class MainActivity extends Activity {
         aq = new AQuery(this);
 
 
-        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+        //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        //TV_detail_list_title.setTypeface(TF_font);
+        //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
@@ -102,13 +118,13 @@ public class MainActivity extends Activity {
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
 
-
-
         LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
 
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        IV_tv_share = (ImageView)findViewById(R.id.iv_tv_share);
 
 
         progressDialog = new ProgressDialog(this);
@@ -127,50 +143,60 @@ public class MainActivity extends Activity {
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                IV_detail_list_title.setImageResource(R.drawable.ic_launcher);
+                TV_detail_list_title.setText("ThaiDigitalTV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
                 } else {
-
                     DL_drawer_layout.openDrawer(LV_menu_left);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_true);
                 }
-
             }
         });
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.getFocusables(position);
                 view.setSelected(true);
                 if (position == 0) {
-
                     ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                     ContentFrame.removeAllViews();
                     mainMenuTab = new MainMenuTab(ViewMainMenu);
                     ContentFrame.addView(ViewMainMenu);
-
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
+                    IV_detail_list_title.setImageResource(R.drawable.ic_channel_tv);
+                    TV_detail_list_title.setText("ช่องรายการ");
 
                 } else if (position == 1) {
-
                     ViewFavoriteList = getLayoutInflater().inflate(R.layout.activity_favorite_list, ContentFrame, false);
                     ContentFrame.removeAllViews();
                     favoriteList = new FavoriteList(ViewFavoriteList);
                     ContentFrame.addView(ViewFavoriteList);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
+                    IV_detail_list_title.setImageResource(R.drawable.ic_favorite_flase);
+                    TV_detail_list_title.setText("รายการโปรด");
                 }
-
 
                 DL_drawer_layout.closeDrawer(LV_menu_left);
             }
         });
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     }
 
     public void prepareMenuLeft() {
         int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
         String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
-
 
         for (int i = 0; i < g_pic.length; i++) {
 

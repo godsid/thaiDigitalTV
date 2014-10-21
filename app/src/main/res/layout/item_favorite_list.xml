@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="90dp"
     android:id="@+id/rl_custom_fav"
-    android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="5dp"
+    android:background="@drawable/bg_group_item">
 
     <TextView
         android:id="@+id/tv_fav_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ชื่อรายการ"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/White"
         />
     <TextView
         android:id="@+id/tv_fav_time_show"
@@ -20,8 +24,9 @@
         android:layout_height="wrap_content"
         android:text="09:00-10:00"
         android:layout_below="@id/tv_fav_list_title"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:layout_marginTop="1dip"
+        android:textColor="@color/White"
         />
     <TextView
         android:id="@+id/tv_fav_cha_title"
@@ -30,6 +35,7 @@
         android:text="3 แฟมิลี่"
         android:layout_below="@id/tv_fav_time_show"
         android:layout_marginTop="5dp"
-        android:textSize="15dp"
+        android:textSize="15sp"
+        android:textColor="@color/White"
         />
 </RelativeLayout>

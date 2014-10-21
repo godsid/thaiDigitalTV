@@ -97,11 +97,19 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
             getObject.TV_col_3.setText("");
             if (arrayProgramDetail.get(position).st) {
+<<<<<<< HEAD:app/src/main/java/com/webmanagement/thaidigitaltv/ProgramDetailAdapter.java
                 // Log.d("run", "st i : " + arrayProgramDetail.get(position).st);
                 getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair_2, 0, 0, 0);
             } else {
                 // Log.d("run", "st e : " + arrayProgramDetail.get(position).st);
                 getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_null, 0, 0, 0);
+=======
+               // Log.d("run", "st i : " + arrayProgramDetail.get(position).st);
+                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair, 0, 0, 0);
+            } else {
+               // Log.d("run", "st e : " + arrayProgramDetail.get(position).st);
+                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_offline, 0, 0, 0);
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d:app/src/main/java/com/webmanagement/thaidigitaltv/ListProgramDetailAdapter.java
             }
 /*
             TV_col_4.setId(arrayProgramDetail.get(position).count);

@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <!--<item name="android:tabWidgetStyle">@drawable/apptheme_tab_indicator_holo</item> -->
     </style>
     <style name="noActionBar" parent="AppTheme">
         <item name="android:windowActionBar">true</item>

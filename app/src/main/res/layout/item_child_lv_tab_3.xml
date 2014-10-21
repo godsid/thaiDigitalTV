@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/bg_child_item"
     android:orientation="vertical" >
 
     <ImageView
@@ -11,13 +12,16 @@
         android:src="@drawable/ic_launcher"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/White"
         />
 
     <TextView
         android:id="@+id/tv_child_lv_tab3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:paddingLeft="15dp"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/iv_child_lv_tab3"

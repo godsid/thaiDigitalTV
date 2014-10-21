@@ -24,9 +24,6 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
 
     AQuery aq;
 
-    Typeface TF_font;
-    String frontPath = "fonts/RSU_BOLD.ttf";
-
     public ListTab3Adapter(Context context, ArrayList<ItemGroupTab3> groups) {
         this.context = context;
         this.groups = groups;

@@ -35,8 +35,8 @@ public class ProgramDetail extends Activity {
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
     TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
 
-    public static Typeface TF_font;
-    public String frontPath = "fonts/RSU_BOLD.ttf";
+    //public static Typeface TF_font;
+    //public String frontPath = "fonts/RSU_BOLD.ttf";
 
     ListView LV_program_detail;
     private SeekBar SB_detail_date = null;
@@ -60,8 +60,13 @@ public class ProgramDetail extends Activity {
 
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail;
 
+<<<<<<< HEAD
     public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
     ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
+=======
+    public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
+    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title, IV_tv_share;
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
 
     @Override
@@ -75,16 +80,18 @@ public class ProgramDetail extends Activity {
         date = new Date();
         dbAction = new DatabaseAction(this);
         dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
-        TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+        //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
-        TV_detail_list_title.setTypeface(TF_font);
-        TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        //TV_detail_list_title.setTypeface(TF_font);
+        //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
         IV_device_share = (ImageView) findViewById(R.id.iv_device_share);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
+
+        IV_tv_share = (ImageView) findViewById(R.id.iv_tv_share);
 
         IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
         TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
@@ -196,14 +203,19 @@ public class ProgramDetail extends Activity {
             }
         });
 
+<<<<<<< HEAD
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
+=======
+                IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
+<<<<<<< HEAD
 
         IV_device_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,6 +253,14 @@ public class ProgramDetail extends Activity {
                     }
                 });
         builder.show();
+=======
+                IV_tv_share.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "AllShare", Toast.LENGTH_SHORT).show();
+                    }
+                });
+>>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     }
 
     public void setHoldArrProg_idFromDB() {

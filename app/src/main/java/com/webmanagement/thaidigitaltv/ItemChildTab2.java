@@ -31,5 +31,4 @@ class ItemChildTab2 {
     public void setId(int id) {
         this.Id = id;
     }
-
 }
