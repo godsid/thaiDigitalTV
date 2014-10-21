@@ -14,7 +14,7 @@
         android:layout_marginLeft="15dp"
         android:paddingBottom="13dp"
         android:text="@string/list_name"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textStyle="bold"
         android:textColor="@color/White"
         />

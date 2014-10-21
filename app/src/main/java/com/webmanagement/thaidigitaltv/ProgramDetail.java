@@ -57,7 +57,7 @@ public class ProgramDetail extends Activity {
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail;
 
     public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    ImageView IV_ic_nav_top_left,  IV_detail_today, IV_detail_list_title;
+    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title, IV_tv_share;
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,8 @@ public class ProgramDetail extends Activity {
 
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
+
+        IV_tv_share = (ImageView) findViewById(R.id.iv_tv_share);
 
         IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
         TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
@@ -188,13 +190,19 @@ public class ProgramDetail extends Activity {
             }
         });
 
-        IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
+                IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
+                IV_tv_share.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "AllShare", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     public void setHoldArrProg_idFromDB() {
         arrHoldProg_idDB.clear();

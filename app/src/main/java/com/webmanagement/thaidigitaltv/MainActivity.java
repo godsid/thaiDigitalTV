@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
@@ -42,24 +43,20 @@ public class MainActivity extends Activity {
     private DatabaseAction dbAction;
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
-    static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
+    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
+    static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
-    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
+    ImageView IV_ic_nav_top_left, IV_tv_share, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
 
     DrawerLayout DL_drawer_layout;
 
     FrameLayout ContentFrame;
     View ViewFavoriteList, ViewMainMenu, ViewProgramDetail;
 
-    //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
-
     public static ArrayList<DataStore_Category> arrDataStore_category = new ArrayList<DataStore_Category>();
     public static ArrayList<DataStore_Channel> arrDataStore_channel = new ArrayList<DataStore_Channel>();
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
-
-
-
 
 
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
@@ -131,6 +128,8 @@ public class MainActivity extends Activity {
 
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        IV_tv_share = (ImageView)findViewById(R.id.iv_tv_share);
+
 
 
         progressDialog = new ProgressDialog(this);
@@ -152,11 +151,15 @@ public class MainActivity extends Activity {
                 TV_detail_list_title.setText("ThaiDigitalTV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
                 } else {
                     DL_drawer_layout.openDrawer(LV_menu_left);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_true);
                 }
             }
         });
+
+
 
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -168,6 +171,7 @@ public class MainActivity extends Activity {
                     ContentFrame.removeAllViews();
                     mainMenuTab = new MainMenuTab(ViewMainMenu);
                     ContentFrame.addView(ViewMainMenu);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
                     IV_detail_list_title.setImageResource(R.drawable.ic_channel_tv);
                     TV_detail_list_title.setText("ช่องรายการ");
 
@@ -176,6 +180,7 @@ public class MainActivity extends Activity {
                     ContentFrame.removeAllViews();
                     favoriteList = new FavoriteList(ViewFavoriteList);
                     ContentFrame.addView(ViewFavoriteList);
+                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
                     IV_detail_list_title.setImageResource(R.drawable.ic_favorite_flase);
                     TV_detail_list_title.setText("รายการโปรด");
                 }
@@ -183,15 +188,11 @@ public class MainActivity extends Activity {
                 DL_drawer_layout.closeDrawer(LV_menu_left);
             }
         });
-
-
-
     }
 
     public void prepareMenuLeft() {
         int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
         String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
-
 
         for (int i = 0; i < g_pic.length; i++) {
 
@@ -203,11 +204,6 @@ public class MainActivity extends Activity {
         menuLeftAdapter.notifyDataSetChanged();
 
     }
-
-
-
-
-
 
 
     public void loadToDataStore() {

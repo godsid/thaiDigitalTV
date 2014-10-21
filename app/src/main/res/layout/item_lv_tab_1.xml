@@ -23,7 +23,7 @@
         android:id="@+id/tv_title_lv_tab_1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:paddingLeft="15dp"
         android:text="new text"
         android:layout_centerInParent="true"

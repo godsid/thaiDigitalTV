@@ -14,7 +14,7 @@
             android:id="@+id/ic_nav_top_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_previous_item"
+            android:src="@drawable/previous_page"
             android:layout_centerVertical="true"
             />
         <ImageView
@@ -22,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
+
             android:layout_toRightOf="@+id/ic_nav_top_left"
             android:src="@drawable/ic_launcher"
             />
@@ -35,17 +35,15 @@
             android:layout_marginLeft="10dp"
             android:text="ThaiDigitalTV"
             android:textColor="#FFFFFF"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
         <ImageView
-            android:id="@+id/tv_settime_title_prog"
+            android:id="@+id/iv_tv_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/tv_allshare"
             android:layout_alignParentRight="true"
-            android:src="@drawable/allshare"
-            android:layout_centerInParent="true"
             />
-
     </RelativeLayout>
 
 
@@ -66,18 +64,18 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical|center_horizontal"
-        android:background="@drawable/test2"
+        android:background="@drawable/bg_head_1"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <ImageButton
-                android:layout_marginTop="9dp"
-                android:layout_marginLeft="15dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp "
                 android:id="@+id/iv_detail_today"
-                android:background="@drawable/ic_today_btn"
+                android:layout_width="70dp"
+                android:layout_height="70dp "
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_today"
                 />
         </LinearLayout>
         <LinearLayout
@@ -103,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="พฤหัสบดี"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textColor="@color/White"
                          />
                 </LinearLayout>
@@ -120,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
                         android:text="30"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textColor="@color/White"
                          />
                     <TextView
@@ -128,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:text="ตุลาคม"
                         android:textColor="@color/White"
                          />
@@ -136,29 +134,32 @@
                         android:id="@+id/tv_detail_year"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:text="2557"
                         android:textColor="@color/White"
                          />
                 </LinearLayout>
 
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp">
                 <SeekBar
                     android:secondaryProgress="@android:integer/config_shortAnimTime"
                     android:id="@+id/sb_detail_date"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="1dp"
                     android:progressDrawable="@drawable/scrubber_progress"
                     android:thumb="@drawable/scrubber_control"
+                    android:thumbOffset="5dp"
                     />
-
+                </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -166,10 +167,7 @@
         android:background="#455a64"
         android:orientation="horizontal"
         android:gravity="center_horizontal|center_vertical"
-        android:paddingBottom="5dp"
-        >
-
-
+        android:paddingBottom="5dp">
             <TextView
                 android:id="@+id/tv_header_program"
                 android:layout_width="130dp"
@@ -177,7 +175,7 @@
                 android:gravity="center"
                 android:text="@string/tb_header_program"
                 android:textColor="#FFFFFF"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold">
             </TextView>
             <TextView
@@ -189,7 +187,7 @@
                 android:paddingRight="15dp"
                 android:text="@string/tb_header_time"
                 android:textColor="#FFFFFF"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold">
             </TextView>
             <TextView
@@ -199,7 +197,7 @@
                 android:gravity="center"
                 android:text="@string/tb_header_status"
                 android:textColor="#FFFFFF"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold">
             </TextView>
             <TextView
@@ -209,11 +207,15 @@
                 android:gravity="center"
                 android:text="@string/tb_header_fav"
                 android:textColor="#FFFFFF"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold">
             </TextView>
     </LinearLayout>
-
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/GreenGroupHighlight"
+            />
             <ListView
                 android:id="@+id/lv_program_detail"
                 android:layout_width="match_parent"
@@ -226,9 +228,5 @@
                 android:layout_gravity="center_horizontal"
                 />
 </LinearLayout>
-
-
-
-
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
