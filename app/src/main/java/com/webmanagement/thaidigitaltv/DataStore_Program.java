@@ -4,8 +4,8 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 8/10/2557.
  */
 public class DataStore_Program {
-    private int prog_id,fr_channel_id,fr_day_id,fr_type_id;
-    String prog_name,prog_timestart,prog_timeend;
+    private int prog_id, fr_channel_id, fr_day_id, fr_type_id;
+    String prog_name, prog_timestart, prog_timeend;
 
     public int getProg_id() {
         return prog_id;

@@ -16,10 +16,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SeekBar;
 
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -36,20 +34,18 @@ import java.util.Date;
 public class MainActivity extends Activity {
 
 
-    //////////////////// Global variable ////////////
-    private Store_Variable storeVariable;
-
     private DatabaseAction dbAction;
     public static Typeface TF_font;
     public String frontPath = "fonts/RSU_BOLD.ttf";
+    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
 
-    ImageView IV_ic_nav_top_left, IV_ic_nav_top_right, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
+    ImageView IV_ic_nav_top_left, IV_detail_list_title;
 
     DrawerLayout DL_drawer_layout;
 
     FrameLayout ContentFrame;
-    View ViewFavoriteList, ViewMainMenu, ViewProgramDetail;
+    View ViewFavoriteList, ViewMainMenu;
 
     //static String urlPath = "https://dl.dropboxusercontent.com/s/w7ih0hrbius82rj/menu_item3.js";
 
@@ -58,37 +54,19 @@ public class MainActivity extends Activity {
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
 
-
-
-
-
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
     MenuLeftAdapter menuLeftAdapter;
 
-
     ListView LV_menu_left;
 
-    private static boolean stateOK = false;
+
+    TextView TV_detail_list_title;
 
 
-    TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
-
-    private SeekBar SB_detail_date = null;
-    int tv_header_tb_size = 18;
-    int tv_item_tb_size = 16;
-
-    ToggleButton toggleButton;
-    TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
     Calendar calendar;
     Date date;
-    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
-    String[] arr_month = new String[]{"มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม",
-            "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"};
-    int g_current_day, g_current_date, g_current_month, g_current_year;
-    int g_change_day;
+
     ProgressDialog progressDialog;
-
-
 
     AQuery aq;
 
@@ -99,17 +77,16 @@ public class MainActivity extends Activity {
     MainMenuTab mainMenuTab;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        storeVariable = new Store_Variable();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
+
         aq = new AQuery(this);
 
 
@@ -134,17 +111,17 @@ public class MainActivity extends Activity {
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMax(100);
         progressDialog.setMessage("กำลังโหลดข้อมูล...");
         progressDialog.setTitle("กรุณารอสักครู่");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
         progressDialog.show();
+
 
         prepareMenuLeft();
         loadToDataStore();
-
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +136,6 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
 
 
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -190,7 +165,6 @@ public class MainActivity extends Activity {
         });
 
 
-
     }
 
     public void prepareMenuLeft() {
@@ -208,11 +182,6 @@ public class MainActivity extends Activity {
         menuLeftAdapter.notifyDataSetChanged();
 
     }
-
-
-
-
-
 
 
     public void loadToDataStore() {
@@ -277,8 +246,8 @@ public class MainActivity extends Activity {
                         }
 
 
-                      //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
-                      //  startActivity(intent);
+                        //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
+                        //  startActivity(intent);
 
                         ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
                         ContentFrame.removeAllViews();
@@ -334,8 +303,23 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+
+        arrDataStore_category.clear();
+        arrDataStore_channel.clear();
+        arrDataStore_program.clear();
+        arrDataStore_type.clear();
+
+        /*
+        ComponentName receiver = new ComponentName(this, ReceiverAlarm.class);
+        PackageManager pm = this.getPackageManager();
+        pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+*/
+        //stopService(new Intent(this,ServiceAlarm.class));
+        // startService(new Intent(this,ServiceAlarm.class));
+
         Log.d("run", "onDestroy");
         super.onDestroy();
     }
+
 
 }

@@ -21,7 +21,7 @@ public class FavoriteListAdapter extends BaseAdapter {
 
     ArrayList<DataCustomFavoriteList> arrayList = new ArrayList<DataCustomFavoriteList>();
     private LayoutInflater mInflater;
-    private Store_Variable storeVariable;
+    private GlobalVariable globalVariable;
 
 
     public FavoriteListAdapter(Context context, ArrayList<DataCustomFavoriteList> arrayList) {
@@ -47,7 +47,7 @@ public class FavoriteListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        storeVariable = new Store_Variable();
+        globalVariable = new GlobalVariable();
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_favorite_list, null);
         }
@@ -64,8 +64,8 @@ public class FavoriteListAdapter extends BaseAdapter {
         TV_fav_time_show.setText(arrayList.get(position).time_show);
         TV_fav_cha_title.setText(arrayList.get(position).cha_title);
 
-        storeVariable.setFavProg_id(arrayList.get(position).list_id);
-        storeVariable.setFavProg_name(arrayList.get(position).list_title);
+        globalVariable.addArrFav_Prog_id(arrayList.get(position).list_id);
+        globalVariable.addArrFav_Prog_name(arrayList.get(position).list_title);
 
         return convertView;
     }

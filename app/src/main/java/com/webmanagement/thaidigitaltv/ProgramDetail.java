@@ -28,8 +28,9 @@ import java.util.Date;
 
 
 public class ProgramDetail extends Activity {
-    Store_Variable storeVariable;
+    GlobalVariable globalVariable;
     AQuery aq;
+
 
     TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
     TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
@@ -45,6 +46,8 @@ public class ProgramDetail extends Activity {
     DatabaseAction dbAction;
     private int position_for_delete;
 
+    ImageView IV_device_share;
+
     Calendar calendar;
     Date date;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
@@ -53,19 +56,21 @@ public class ProgramDetail extends Activity {
     int g_current_day, g_current_date, g_current_month, g_current_year;
     int g_change_day;
 
-    ListProgramDetailAdapter listProgramDetailAdapter;
+    ProgramDetailAdapter programDetailAdapter;
+
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail;
 
-    public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    ImageView IV_ic_nav_top_left,  IV_detail_today, IV_detail_list_title;
+    public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
+    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program_detail);
 
         aq = new AQuery(this);
-        storeVariable = new Store_Variable();
+        globalVariable = new GlobalVariable();
         calendar = Calendar.getInstance();
         date = new Date();
         dbAction = new DatabaseAction(this);
@@ -77,6 +82,7 @@ public class ProgramDetail extends Activity {
         TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
+        IV_device_share = (ImageView) findViewById(R.id.iv_device_share);
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
 
@@ -95,8 +101,7 @@ public class ProgramDetail extends Activity {
         TV_header_fav = (TextView) findViewById(R.id.tv_header_fav);
 
         LV_program_detail = (ListView) findViewById(R.id.lv_program_detail);
-        listProgramDetailAdapter = new ListProgramDetailAdapter(this, dataCustomProgramDetail);
-        LV_program_detail.setAdapter(listProgramDetailAdapter);
+
 
         g_current_day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         g_current_date = calendar.get(Calendar.DAY_OF_MONTH);
@@ -167,18 +172,21 @@ public class ProgramDetail extends Activity {
         LV_program_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                storeVariable.seItem_selected(position);
-
-                storeVariable.setProg_id(dataCustomProgramDetail.get(position).id);
-                storeVariable.setProg_name(dataCustomProgramDetail.get(position).col_1);
-                storeVariable.setTime_start(dataCustomProgramDetail.get(position).col_2);
 
 
-                if (storeVariable.arrDelOrAdd.get(position).equals("add")) {
+                Log.d("run", "lv");
+                if (globalVariable.getArrDelOrAdd(position).equals("add")) {
 
-                    Intent intent = new Intent(getApplicationContext(),SettingAlert.class);
+                    Intent intent = new Intent(getApplicationContext(), SettingAlert.class);
+                    intent.putExtra("i_Prog_id", dataCustomProgramDetail.get(position).id);
+                    intent.putExtra("i_Prog_name", dataCustomProgramDetail.get(position).pname);
+                    intent.putExtra("i_Prog_timestart", dataCustomProgramDetail.get(position).pstart);
+                    intent.putExtra("i_Chan_name", globalVariable.getChan_name());
+
+
                     startActivity(intent);
-                } else if (storeVariable.arrDelOrAdd.get(position).equals("delete")) {
+                } else if (globalVariable.getArrDelOrAdd(position).equals("delete")) {
+                    Log.d("run", "else");
                     position_for_delete = position;
                     menuActionDelete();
                 }
@@ -188,6 +196,7 @@ public class ProgramDetail extends Activity {
             }
         });
 
+
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +204,45 @@ public class ProgramDetail extends Activity {
             }
         });
 
+
+        IV_device_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                startActivity(intent);
+            }
+        });
+
+
+    } //End Oncreate
+
+
+    private void menuActionDelete() {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ยืนยันการลบ");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(globalVariable.getArrProg_id(position_for_delete));
+                        if (chkDeleted) {
+                            Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_SHORT).show();
+                            setDataToLV();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Can't Delete ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        builder.show();
     }
+
     public void setHoldArrProg_idFromDB() {
         arrHoldProg_idDB.clear();
         SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
@@ -233,17 +280,18 @@ public class ProgramDetail extends Activity {
     }
 
     public void setDataToLV() {
-
-        storeVariable.arrDelOrAdd.clear();
-        listProgramDetailAdapter.arrayProgramDetail.clear();
-        storeVariable.clearAllArray();
+        Log.d("run", "================= setDataToLV =============================");
+        programDetailAdapter = new ProgramDetailAdapter(this, dataCustomProgramDetail);
+        programDetailAdapter.arrayProgramDetail.clear();
+        globalVariable.clearArrDelOrAdd();
+        globalVariable.clearAllArray();
 
         setHoldArrProg_idFromDB();
 
-        storeVariable.setDay_id(g_change_day);
+        globalVariable.setDay_id(g_change_day);
 
-        aq.id(IV_detail_list_title).image(storeVariable.getChan_pic());
-        TV_detail_list_title.setText(storeVariable.getChan_name());
+        aq.id(IV_detail_list_title).image(globalVariable.getChan_pic());
+        TV_detail_list_title.setText(globalVariable.getChan_name());
 
 
         int c = 0;
@@ -259,7 +307,7 @@ public class ProgramDetail extends Activity {
             int day_id = arrDataStore_program.get(j).getFr_day_id();
             boolean status_onair = false;
 
-            if (storeVariable.getChan_id() == chan_id && storeVariable.getDay_id() == day_id) {
+            if (globalVariable.getChan_id() == chan_id && globalVariable.getDay_id() == day_id) {
 
                 try {
 
@@ -292,45 +340,21 @@ public class ProgramDetail extends Activity {
                     Log.d("run", "Error Parse Date " + e);
                 }
 
-                storeVariable.setProg_id(prog_id);
-                storeVariable.setProg_name(prog_title);
-                storeVariable.setTime_start(prog_timestart);
+                globalVariable.addArrProg_id(prog_id);
+                globalVariable.addArrProg_name(prog_title);
+                globalVariable.addArrProg_timestart(prog_timestart);
 
 
-                dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, p_time, status_onair, c));
+                dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, prog_timestart,prog_timeend, status_onair, c));
                 c++;
 
             }
         }
 
-        listProgramDetailAdapter.notifyDataSetChanged();
+        // listProgramDetailAdapter.notifyDataSetChanged();
 
-    }
+        LV_program_detail.setAdapter(programDetailAdapter);
 
-    private void menuActionDelete() {
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + storeVariable.getProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
-        builder.setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(storeVariable.getProg_id(position_for_delete));
-                        if (chkDeleted) {
-                            Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_SHORT).show();
-                            setDataToLV();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Can't Delete ", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-        builder.setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-        builder.show();
     }
 
 

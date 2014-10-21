@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseAction {
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
+    private Context mContext;
 
     private static final String TB_NAME = "tb_list_favorite";
     private static final String C_list_id = "list_id";
@@ -25,12 +26,12 @@ public class DatabaseAction {
 
 
     public DatabaseAction(Context context) {
-
+        mContext = context;
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.getWritableDatabase();
     }
 
-    public long addFavoriteProgram(int pid, String prn, String chn, String tis, int tib,int dai,int alr) {
+    public long addFavoriteProgram(int pid, String prn, String chn, String tis, int tib, int dai, int alr) {
         ContentValues values = new ContentValues();
         values.put(C_program_id, pid);
         values.put(C_program_name, prn);
@@ -54,7 +55,7 @@ public class DatabaseAction {
     }
 
 
-    public int updateFavoriteProgram(String lid, String pid, String prn,String chn, String tib,int dai,int alr) {
+    public int updateFavoriteProgram(String lid, String pid, String prn, String chn, String tib, int dai, int alr) {
         ContentValues values = new ContentValues();
         values.put(C_program_id, pid);
         values.put(C_program_name, prn);
@@ -69,6 +70,14 @@ public class DatabaseAction {
 
     public boolean deleteFavoriteProgram(int i) {
         return database.delete(TB_NAME, C_program_id + "=" + i, null) > 0;
+    }
+
+    public int countFavoriteProgram() {
+        String countQuery = "SELECT  * FROM " + TB_NAME;
+        Cursor cursor = database.rawQuery(countQuery, null);
+        int cnt = cursor.getCount();
+        cursor.close();
+        return cnt;
     }
 
 

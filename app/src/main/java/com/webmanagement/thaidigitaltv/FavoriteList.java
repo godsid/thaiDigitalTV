@@ -1,8 +1,11 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,10 +31,11 @@ public class FavoriteList {
 
     FavoriteListAdapter favoriteListAdapter;
     private DatabaseAction dbAction;
-    private Store_Variable storeVariable;
+    private GlobalVariable globalVariable;
     private int itemPosition;
 
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+
     public FavoriteList(View rootView) {
         this.rootView = rootView;
         this.context = rootView.getContext();
@@ -41,7 +45,7 @@ public class FavoriteList {
         final Animation animAlpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
 
         dbAction = new DatabaseAction(context);
-        storeVariable = new Store_Variable();
+        globalVariable = new GlobalVariable();
 
 
         favoriteListAdapter = new FavoriteListAdapter(context, arrayListData);
@@ -54,7 +58,6 @@ public class FavoriteList {
         prepareDataToList();
 
 
-       
         IV_fav_delete_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +82,7 @@ public class FavoriteList {
 
     private void prepareDataToList() {
 
-        storeVariable.clearFavArray();
+        globalVariable.clearFavArray();
         arrayListData.clear();
 
         SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
@@ -97,7 +100,7 @@ public class FavoriteList {
             else
                 st_repeat = "เตือนซ้ำทุกสัปดาห์";
             String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
-            String ln3 = "วัน"+arr_day[day_id]+"  "+chan_name+"  "+st_repeat;
+            String ln3 = "วัน" + arr_day[day_id] + "  " + chan_name + "  " + st_repeat;
             arrayListData.add(new DataCustomFavoriteList(prog_id, prog_name, ln3, time_sb));
             cur.moveToNext();
         }
@@ -116,6 +119,7 @@ public class FavoriteList {
     }
 
     private void showActionMenuDialog() {
+
         new AlertDialog.Builder(context)
                 .setTitle("เมนู")
                 .setItems(R.array.dialog_menu_fav,
@@ -125,10 +129,12 @@ public class FavoriteList {
                                     menuActionEdit();
                                 else if (i == 1)
                                     menuActionDelete();
-
                             }
                         })
-                .show();
+
+                .show()
+                .setCanceledOnTouchOutside(true);
+
     }
 
 
@@ -136,24 +142,50 @@ public class FavoriteList {
 
     }
 
+    private void cancelAlarm(int prog_id) {
+        Intent intent2 = new Intent(context, ReceiverAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, prog_id, intent2, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+    }
+
+    private void cancelAllAlarm() {
+        dbAction = new DatabaseAction(context);
+        SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
+
+        while (!cur.isAfterLast()) {
+            int prog_id = Integer.parseInt(cur.getString(1));
+            Intent intent2 = new Intent(context, ReceiverAlarm.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, prog_id, intent2, 0);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+            alarmManager.cancel(pendingIntent);
+
+            cur.moveToNext();
+        }
+        cur.close();
+
+    }
+
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + storeVariable.getFavProg_name(getItemPosition()));
-        builder.setPositiveButton("Yes",
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrFav_Prog_id(getItemPosition()));
+        builder.setPositiveButton("ใช่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(storeVariable.getFavProg_id(getItemPosition()));
-                        if (chkDeleted == true) {
-                            Toast.makeText(context, "Delete Complete", Toast.LENGTH_SHORT).show();
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(globalVariable.getArrFav_Prog_id(getItemPosition()));
+                        if (chkDeleted) {
+                            cancelAlarm(globalVariable.getArrFav_Prog_id(getItemPosition()));
+                            Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
 
                             prepareDataToList();
                         } else {
-                            Toast.makeText(context, "Can't Delete ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        builder.setNegativeButton("No",
+        builder.setNegativeButton("ไม่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
@@ -169,21 +201,26 @@ public class FavoriteList {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
         builder.setMessage("คุณแน่ใจที่จะลบรายการทั้งหมดหรือไม่");
-        builder.setPositiveButton("Yes",
+        builder.setPositiveButton("ใช่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean resAction = dbAction.deleteAllFavoriteProgram();
-                        if (resAction == true) {
-                            Toast.makeText(context, "Delete Complete", Toast.LENGTH_LONG).show();
-
-                            prepareDataToList();
+                        int rowCount = dbAction.countFavoriteProgram();
+                        if (rowCount > 0) {
+                            boolean resAction = dbAction.deleteAllFavoriteProgram();
+                            if (resAction == true) {
+                                Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_LONG).show();
+                                cancelAllAlarm();
+                                prepareDataToList();
+                            } else {
+                                Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_LONG).show();
+                            }
                         } else {
-                            Toast.makeText(context, "Can't Delete", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "ไม่มีรายการที่ต้องการลบ", Toast.LENGTH_LONG).show();
                         }
 
                     }
                 });
-        builder.setNegativeButton("No",
+        builder.setNegativeButton("ไม่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();

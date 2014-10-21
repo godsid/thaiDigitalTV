@@ -41,7 +41,7 @@
             android:textStyle="bold"
             />
         <ImageView
-            android:id="@+id/tv_settime_title_prog"
+            android:id="@+id/iv_device_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

@@ -28,8 +28,186 @@
     <array name="dialog_menu_fav">
         <item name="edit_label">แก้ไข</item>
         <item name="delete_label">ลบ</item>
-        <item name="cancel_label">ยกเลิก</item>
     </array>
 
+    <string name="title_activity_display_alert_time">DisplayAlertTime</string>
+    <string name="title_activity_activity_device_list">activity_device_list</string>
+
+
+    <!-- common -->
+    <string name="select_player">Select Player</string>
+    <string name="select_provider">Select Provider</string>
+    <string name="select_receiver">Select Receiver</string>
+    <string name="itemselector">Select Item</string>
+    <string name="music">Music</string>
+    <string name="audio">Audio</string>
+    <string name="photo">Photo</string>
+    <string name="image">Image</string>
+    <string name="video">Video</string>
+    <string name="folder">Folder</string>
+    <string name="now_requesting_">Now Requesting...</string>
+    <string name="fail_to_request_error">Fail to request error: </string>
+    <string name="no_application">There is no application that can handle this content.</string>
+
+    <!-- Framework not supported -->
+    <string name="framework_not_installed_title">Framework is not installed</string>
+    <string name="framework_not_installed_message">AllShare Framework is not installed. Check if this device supports AllShare.</string>
+    <string name="framework_not_installed_ok">Ok</string>
+
+    <!-- Sample Launcher -->
+    <string name="group1_media_browse">#1. Media Browse</string>
+    <string name="group2_media_play">#2. Media Play</string>
+    <string name="group3_file_upload">#3. File Push</string>
+    <string name="group4_tv_control">#4. TV Control</string>
+    <string name="group5_PlayShare">#5. Play Share</string>
+    <string name="connecting_to_allsahre_service">Waiting for service…</string>
+    <string name="fail_to_connect_allshare_service">Fail to connect AllShare Service</string>
+
+    <!-- group1 Media Browse -->
+    <string name="media_browse">Media Browse</string>
+    <string name="group1_practice1">1.1 Device &amp; Content Browser</string>
+    <string name="group1_practice2">1.2 Content Search</string>
+    <string name="device_browser">Device Browser</string>
+    <string name="content_browser">Content Browser</string>
+    <string name="group1_practice1_1">Provider</string>
+    <string name="group1_practice1_2">AVPlayer</string>
+    <string name="group1_practice1_3">ImageViewer</string>
+    <string name="group1_practice1_4">TV Controller</string>
+    <string name="refresh_device_list">Refresh Device List</string>
+    <string name="itemsearch_title">Content Search Result</string>
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
+
+    <!-- group2 Media Play -->
+    <string name="mediaplayer_title">Media Play</string>
+    <string name="group2_playlocal_remote">2.1 Play Local Media To Remote Player</string>
+    <string name="group2_playlocal">2.2 Play Remote Content</string>
+    <string name="group2_playremote_remote">2.3 Play Remote Content To Remote Player</string>
+    <string name="group2_playweb_remote">2.4 Play Web Content To Remote Player</string>
+    <string name="play_remote_err">Cannot play content : </string>
+    <string name="mediaplayer_medialocal">Local content</string>
+    <string name="mediaplayer_mediaremote">Remote content</string>
+    <string name="mediaplayer_web_mediatype">Select web content type</string>
+    <string name="mediaplayer_mediatype">Select media type</string>
+    <string name="mediaplayer_avplayer">AV Player</string>
+    <string name="mediaplayer_imageplayer">Image Player</string>
+    <string name="mediaplayer_audiocontent">Select audio item</string>
+    <string name="mediaplayer_videocontent">Select video item</string>
+    <string name="mediaplayer_imagecontent">Select photo item</string>
+    <string name="imageviewer_show_txt">show</string>
+    <string name="player_provider">Provider: </string>
+    <string name="player_item">Item: </string>
+    <string name="player_play">Player: </string>
+    <string name="player_state">Current State: </string>
+    <string name="player_toast_title">Title : </string>
+    <string name="player_view_state">Viewer State : </string>
+    <string name="player_avplay_state">Player State : </string>
+    <string name="player_volume">volume : </string>
+    <string name="player_set_volume">Set mute success : </string>
+    <string name="player_get_volume">Get mute success : </string>
+    <string name="player_time_txt">00:00</string>
+    <string name="player_volume_txt">volume</string>
+    <string name="player_back_txt">Back</string>
+    <string name="player_next_txt">Next</string>
+    <string name="player_play_txt">Play</string>
+    <string name="player_pause_txt">Pause</string>
+    <string name="player_resume_txt">Resume</string>
+    <string name="player_stop_txt">Stop</string>
+    <string name="player_getstate_txt">Get State</string>
+    <string name="player_seektest_txt">Seek test</string>
+    <string name="player_mute_txt">Mute</string>
+    <string name="player_getvol_txt">Get Vol</string>
+    <string name="remote_media">Remote Media</string>
+    <string name="local_media">Local Media</string>
+
+    <!-- group3 File Push -->
+    <string name="group3_title_file_push">File Push</string>
+    <string name="group3_1upload_media_file">3.1 Multimedia File</string>
+    <string name="group3_2upload_general_file">3.2 General File</string>
+    <string name="group3_title_select_file_push_type">Select File Push Type</string>
+    <string name="group3_1_can_not_upload_media_file">Multimedia File Upload is not available!</string>
+    <string name="group3_1_wait_for_upload_general_file">Please wait a moment for file upload</string>
+    <string name="group3_1_title">Select media to upload</string>
+    <string name="group3_upload">Upload</string>
+    <string name="group3_stop">Stop</string>
+    <string name="group3_fail">Upload file fail!</string>
+    <string name="item_info_1">Provider:</string>
+    <string name="item_info_2">Item: </string>
+    <string name="item_info_3">Receiver:</string>
+    <string name="item_info_4">Local Media</string>
+
+    <!-- group4 TV Control -->
+    <string name="tv_function_control">4.1 TV Function Control</string>
+    <string name="web_function_control">4.2 Web Function Control</string>
+    <string name="tv_control_type">Select Control Type</string>
+    <string name="tv_function_control_title">TV Function Control</string>
+    <string name="pow_off">Pw Off</string>
+    <string name="Source">Source</string>
+    <string name="num_pre">PRE</string>
+    <string name="volm">VOL</string>
+    <string name="ch">CH</string>
+    <string name="mute">Mute</string>
+    <string name="channelList">CH List</string>
+    <string name="Content">Content</string>
+    <string name="menu">Menu</string>
+    <string name="tools">Tools</string>
+    <string name="up">Up</string>
+    <string name="info">Info</string>
+    <string name="left">Left</string>
+    <string name="enter">Enter</string>
+    <string name="right">Right</string>
+    <string name="reRurn">Return</string>
+    <string name="down">Down</string>
+    <string name="exit">Exit</string>
+    <string name="pause">Pause</string>
+    <string name="tv_play">Play</string>
+    <string name="tv_stop">Stop</string>
+    <string name="rec">Rec.</string>
+    <string name="arrowback">&lt;&lt;</string>
+    <string name="inputGo">Go</string>
+    <string name="inputPrompt">Enter Url</string>
+    <string name="webControlTitle">Web Function Control</string>
+    <string name="home_web">Home</string>
+    <string name="stop_web">Stop</string>
+    <string name="refresh_web">Refresh</string>
+    <string name="back_web">Back</string>
+    <string name="browser_mode_web">Browser Mode</string>
+    <string name="Forwar_web">Forward</string>
+    <string name="zoomout_web">Zoom Out</string>
+    <string name="zoom_default_web">Zoom Default</string>
+    <string name="zoom_in_web">Zoom In</string>
+    <string name="scroll_up_web">Scroll Up</string>
+    <string name="send_mouse_web">Send Mouse Button</string>
+    <string name="scroll_down_web">Scroll Down</string>
+    <string name="tv_select">Select TV to control</string>
+    <string name="point_browser">Point Browsing</string>
+    <string name="link_browser">Point Browsing</string>
+    <string name="browser_mode_dlg_title">Browser Mode</string>
+    <string name="mouse_button_title">Mouse Button</string>
+    <string name="Left_Button">Left Button</string>
+    <string name="right_button">Right Button</string>
+    <string name="middle_button">Middle Button</string>
+    <string name="rear_button">Rear Button</string>
+    <string name="slide_left">Slide Left Button</string>
+    <string name="slede_right">Slide Right Button</string>
+    <string name="Send">Send</string>
+    <string name="Send_title">Send String</string>
+    <string name="play_resume">resume</string>
+    <string name="play_pause">pause</string>
+    <string name="Model">Model</string>
+    <string name="IP">IP</string>
+    <string name="not_support_websharing">Selected TV is not support Web Sharing function</string>
+    <string name="connect_failt_authentication">Fail to connect TV due to authentication</string>
+    <string name="tv_disconnected">TV is disconnected</string>
+    <string name="not_support_link_browse">Note: Link browsing function is not supported by TV Browser Simulator</string>
+    <string name="not_support_sendTouchClick">The sendTouchClick() API is not supported in AVD</string>
+
+    <!-- group5 Play Share -->
+    <string name="group5_practice1">Local content</string>
+    <string name="group5_practice2">Web content</string>
+    <string name="playshare_activity_title">Select Control Type</string>
+    <string name="playshare_localcontent">Select Control Type</string>
+    <string name="localcontent_activity_title">Select Control Type</string>
+    <string name="close">Close</string>
 
 </resources>

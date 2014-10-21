@@ -18,12 +18,11 @@ import java.util.ArrayList;
 /**
  * Created by SystemDLL on 7/10/2557.
  */
-public class MenuLeftAdapter  extends BaseAdapter {
+public class MenuLeftAdapter extends BaseAdapter {
 
     ArrayList<DataCustomMenuLeft> arraySettingTime = new ArrayList<DataCustomMenuLeft>();
     private LayoutInflater mInflater;
-AQuery aq;
-
+    AQuery aq;
 
 
     public MenuLeftAdapter(Context context, ArrayList<DataCustomMenuLeft> arrayList) {

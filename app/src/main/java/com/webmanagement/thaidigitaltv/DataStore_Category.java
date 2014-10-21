@@ -4,7 +4,7 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 8/10/2557.
  */
 public class DataStore_Category {
-    String cate_title,cate_pic;
+    String cate_title, cate_pic;
     int cate_id;
 
     public String getCate_title() {

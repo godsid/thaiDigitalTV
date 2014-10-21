@@ -77,7 +77,7 @@ class DataCustomListTab1 {
     String ch_name, ch_pic;
     int ch_id;
 
-    public DataCustomListTab1(int ch_id,String ch_name,String ch_pic) {
+    public DataCustomListTab1(int ch_id, String ch_name, String ch_pic) {
         this.ch_name = ch_name;
         this.ch_pic = ch_pic;
         this.ch_id = ch_id;

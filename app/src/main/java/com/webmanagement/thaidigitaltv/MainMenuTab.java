@@ -27,14 +27,14 @@ public class MainMenuTab {
     TabHost mTabHost;
     ExpandableListView EXP_tab_2, EXP_tab_3;
     FrameLayout ContentFrame;
-    View  ViewProgramDetail;
+    View ViewProgramDetail;
     LayoutInflater inflater;
     ListView LV_tab_1;
     Activity activity;
 
     AQuery aq;
 
-    Store_Variable storeVariable;
+    GlobalVariable globalVariable;
 
     private int exp_left_group_pos, exp_left_child_pos;
 
@@ -61,7 +61,7 @@ public class MainMenuTab {
         this.rootView = view;
         this.context = rootView.getContext();
 
-        storeVariable = new Store_Variable();
+        globalVariable = new GlobalVariable();
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
         mTabHost.setup();
@@ -74,9 +74,9 @@ public class MainMenuTab {
         EXP_tab_2 = (ExpandableListView) rootView.findViewById(R.id.exp_tab_2);
         EXP_tab_3 = (ExpandableListView) rootView.findViewById(R.id.exp_tab_3);
 
-        this.activity = (Activity)context;
+        this.activity = (Activity) context;
         ContentFrame = (FrameLayout) activity.findViewById(R.id.content_frame);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE );
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         LoadMenuToTab();
 
@@ -85,13 +85,13 @@ public class MainMenuTab {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String get_channel_name =  arrDataStore_channel.get(position).getChan_name();
+                String get_channel_name = arrDataStore_channel.get(position).getChan_name();
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();
 
-                storeVariable.setChan_id(get_channel_id);
-                storeVariable.setChan_name(get_channel_name);
-                storeVariable.setChan_pic(get_channel_pic);
+                globalVariable.setChan_id(get_channel_id);
+                globalVariable.setChan_name(get_channel_name);
+                globalVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
             }
@@ -110,16 +110,15 @@ public class MainMenuTab {
                 exp_left_group_pos = groupPosition;
                 exp_left_child_pos = childPosition;
 
-                storeVariable.setChan_id(get_channel_id);
-                storeVariable.setChan_name(get_channel_name);
-                storeVariable.setChan_pic(get_channel_pic);
+
+                globalVariable.setChan_id(get_channel_id);
+                globalVariable.setChan_name(get_channel_name);
+                globalVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
                 return false;
             }
         });
-
-
 
 
     } //End of Constructor
@@ -138,7 +137,7 @@ public class MainMenuTab {
             String item_type_name;
             int item_type_id;
 
-           // int item_prog_id;
+            // int item_prog_id;
             String item_prog_name;
 
             int item_cate_id_in_chan, item_type_id_in_prog, item_chan_id_in_prog;
@@ -158,7 +157,7 @@ public class MainMenuTab {
                 dataCustomListTab1.add(new DataCustomListTab1(item_chan_id, item_chan_title, item_chan_pic));
 
             }
-           // Log.d("run","arrDataStore_channel : "+arrDataStore_channel.size());
+            // Log.d("run","arrDataStore_channel : "+arrDataStore_channel.size());
             listTab1Adapter = new ListTab1Adapter(context, dataCustomListTab1);
             LV_tab_1.setAdapter(listTab1Adapter);
             listTab1Adapter.notifyDataSetChanged();
@@ -202,7 +201,7 @@ public class MainMenuTab {
             }
             listTab2Adapter = new ListTab2Adapter(context, group_list_tab2);
             EXP_tab_2.setAdapter(listTab2Adapter);
-           // Log.d("run","arrDataStore_category : "+arrDataStore_channel.size());
+            // Log.d("run","arrDataStore_category : "+arrDataStore_channel.size());
 
             //==================//
             //Set Data To Tab 3//
@@ -249,10 +248,10 @@ public class MainMenuTab {
             }
             listTab3Adapter = new ListTab3Adapter(context, group_list_tab3);
             EXP_tab_3.setAdapter(listTab3Adapter);
-           // Log.d("run","arrDataStore_program : "+arrDataStore_channel.size());
+            // Log.d("run","arrDataStore_program : "+arrDataStore_channel.size());
 
         } catch (Exception e) {
-            Log.d("run","Error LoadMenuToTab : "+e);
+            Log.d("run", "Error LoadMenuToTab : " + e);
         }
     }
 
