@@ -47,18 +47,12 @@ public class MainActivity extends Activity {
 
     private DatabaseAction dbAction;
 
-    public static Typeface TF_font;
-    public String frontPath = "fonts/RSU_BOLD.ttf";
-    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-
-    ImageView IV_ic_nav_top_left, IV_detail_list_title;
-
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
+    ImageView IV_ic_nav_top_left, IV_tv_share, IV_detail_list_title;
 
     DrawerLayout DL_drawer_layout;
 
@@ -69,7 +63,6 @@ public class MainActivity extends Activity {
     public static ArrayList<DataStore_Channel> arrDataStore_channel = new ArrayList<DataStore_Channel>();
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
-
 
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
     MenuLeftAdapter menuLeftAdapter;
@@ -152,8 +145,6 @@ public class MainActivity extends Activity {
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
-
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMax(100);
         progressDialog.setMessage("กำลังโหลดข้อมูล...");
@@ -181,6 +172,7 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
 
 
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -211,7 +203,6 @@ public class MainActivity extends Activity {
             }
         });
     }
-
 
 
 

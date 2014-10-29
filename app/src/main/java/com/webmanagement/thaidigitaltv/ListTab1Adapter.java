@@ -9,6 +9,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,10 +28,12 @@ public class ListTab1Adapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private DataCustomListTab1 dataCustomListTab1;
     AQuery aq;
+    Context context2;
 
 
     public ListTab1Adapter(Context context, ArrayList<DataCustomListTab1> arrayList) {
         this.arrayList = arrayList;
+        this.context2 = context;
         mInflater = LayoutInflater.from(context);
         aq = new AQuery(context);
     }
@@ -60,6 +64,13 @@ public class ListTab1Adapter extends BaseAdapter {
         ImageView iv_title_lv_tab_1 = (ImageView) convertView.findViewById(R.id.iv_channel_lv_tab_1);
         tv_title_lv_tab_1.setText(arrayList.get(position).ch_name);
         aq.id(iv_title_lv_tab_1).image(arrayList.get(position).ch_pic);
+
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
+        animation.setDuration(500);
+        convertView.startAnimation(animation);
+        animation = null;
+
         return convertView;
     }
 

@@ -62,11 +62,13 @@
         </activity>
         <activity
             android:name=".DisplayAlarm"
-            android:label="@string/title_activity_display_alert_time" >
+            android:label="@string/title_activity_display_alert_time"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".DeviceList"
-            android:label="@string/title_activity_activity_device_list" >
+            android:label="@string/title_activity_activity_device_list"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

@@ -73,10 +73,9 @@ public class ProgramDetail extends Activity {
 
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail;
 
-
     public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
+    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title, IV_tv_share;
 
-    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
 
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
     boolean haveTVinNetwork = false;
@@ -134,23 +133,11 @@ public class ProgramDetail extends Activity {
         SB_detail_date.setMax(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         SB_detail_date.setProgress(g_current_date);
 
-
-/*
-        TV_detail_day.setTypeface(MainTF_font);
-        TV_detail_date.setTypeface(MainTF_font);
-        TV_detail_month.setTypeface(MainTF_font);
-        TV_detail_year.setTypeface(MainTF_font);
-*/
         TV_detail_day.setText(arr_day[g_current_day]);
         TV_detail_date.setText(Integer.toString(g_current_date));
         TV_detail_month.setText(arr_month[g_current_month]);
         TV_detail_year.setText(Integer.toString(g_current_year));
-/*
-        TV_header_program.setTypeface(MainTF_font);
-        TV_header_time.setTypeface(MainTF_font);
-        TV_header_status.setTypeface(MainTF_font);
-        TV_header_fav.setTypeface(MainTF_font);
-*/
+
         TV_header_program.setTextSize(tv_header_tb_size);
         TV_header_time.setTextSize(tv_header_tb_size);
         TV_header_status.setTextSize(tv_header_tb_size);
@@ -220,31 +207,28 @@ public class ProgramDetail extends Activity {
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-
-
         IV_device_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (haveTVinNetwork) {
 
                 Intent intent = new Intent(getApplicationContext(), DeviceList.class);
                 startActivity(intent);
-            } else {
-
-                    Toast.makeText(ProgramDetail.this,"โปรดเชื่อมต่อ TV เข้ากับเครือข่าย",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProgramDetail.this,"ตรวจสอบ : ไม่พบ TV ในเครือข่าย",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ProgramDetail.this,"โปรดเชื่อมต่อ TV เข้ากับเครือข่าย",Toast.LENGTH_SHORT).show();
              }
             }
         });
 
         chkTVinNetwork();
-
     } //End Oncreate
 
 
@@ -310,9 +294,6 @@ public class ProgramDetail extends Activity {
                     }
                 });
         builder.show();
-
-
-
     }
 
     public void setHoldArrProg_idFromDB() {

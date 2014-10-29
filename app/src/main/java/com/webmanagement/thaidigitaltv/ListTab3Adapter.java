@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,13 +21,13 @@ import java.util.ArrayList;
 
 public class ListTab3Adapter extends BaseExpandableListAdapter {
 
-    private Context context;
+    private Context context2;
     private ArrayList<ItemGroupTab3> groups;
 
     AQuery aq;
 
     public ListTab3Adapter(Context context, ArrayList<ItemGroupTab3> groups) {
-        this.context = context;
+        this.context2 = context;
         this.groups = groups;
         aq = new AQuery(context);
     }
@@ -47,7 +49,7 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
 
         ItemChildTab3 child = (ItemChildTab3) getChild(groupPosition, childPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) context2.getSystemService(context2.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.item_child_lv_tab_3, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.tv_child_lv_tab3);
@@ -56,6 +58,12 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
 
         tv.setText(child.getProgName().toString());
         aq.id(iv).image(child.getChanPic());
+
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
+        animation.setDuration(500);
+        convertView.startAnimation(animation);
+        animation = null;
 
         return convertView;
     }
@@ -88,7 +96,7 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
 
         ItemGroupTab3 group = (ItemGroupTab3) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater inf = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inf = (LayoutInflater) context2.getSystemService(context2.LAYOUT_INFLATER_SERVICE);
             convertView = inf.inflate(R.layout.item_group_lv_tab_3, null);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.tv_group_lv_tab3);
@@ -96,7 +104,13 @@ public class ListTab3Adapter extends BaseExpandableListAdapter {
 
 
         tv.setText(group.getTypeName());
-        //aq.id(iv).image(group.getImage());
+
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
+        animation.setDuration(500);
+        convertView.startAnimation(animation);
+        animation = null;
+
 
         return convertView;
     }

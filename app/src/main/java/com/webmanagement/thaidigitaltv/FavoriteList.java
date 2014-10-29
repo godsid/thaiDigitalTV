@@ -1,5 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class FavoriteList {
+public class FavoriteList extends Activity {
 
     View rootView;
     Context context;
@@ -98,8 +99,9 @@ public class FavoriteList {
                 st_repeat = "เตือนครั้งเดียว";
             else
                 st_repeat = "เตือนซ้ำทุกสัปดาห์";
-            String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
-            String ln3 = "วัน" + arr_day[day_id] + "  " + chan_name + "  " + st_repeat;
+            //String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
+            String time_sb = "ออกอากาศวัน"+ arr_day[day_id] +" เวลา " + time_start + " น.";
+            String ln3 = chan_name + "  " + st_repeat;
             arrayListData.add(new DataCustomFavoriteList(prog_id, prog_name, ln3, time_sb));
             cur.moveToNext();
         }
@@ -130,7 +132,6 @@ public class FavoriteList {
                                     menuActionDelete();
                             }
                         })
-
                 .show()
                 .setCanceledOnTouchOutside(true);
 
@@ -138,7 +139,8 @@ public class FavoriteList {
 
 
     private void menuActionEdit() {
-
+        //Intent intent3 = new Intent(getApplicationContext(), SettingAlert.class);
+        //startActivity(intent3);
     }
 
     private void cancelAlarm(int prog_id) {
@@ -169,18 +171,18 @@ public class FavoriteList {
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrFav_Prog_id(getItemPosition()));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrFav_Prog_name(getItemPosition()));
         builder.setPositiveButton("ใช่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
                         if (chkDeleted) {
                             cancelAlarm(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
-                            Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FavoriteList.this,"สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
 
                             prepareDataToList();
                         } else {
-                            Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FavoriteList.this,"ผิดพลาด : ไม่สามารถรายการได้",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

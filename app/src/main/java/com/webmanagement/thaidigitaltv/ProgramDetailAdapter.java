@@ -98,12 +98,12 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
             getObject.TV_col_3.setText("");
             if (arrayProgramDetail.get(position).st) {
-
                // Log.d("run", "st i : " + arrayProgramDetail.get(position).st);
                 getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair, 0, 0, 0);
             } else {
                // Log.d("run", "st e : " + arrayProgramDetail.get(position).st);
-                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_offline, 0, 0, 0); }
+                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_offline, 0, 0, 0);
+            }
 /*
             TV_col_4.setId(arrayProgramDetail.get(position).count);
 
