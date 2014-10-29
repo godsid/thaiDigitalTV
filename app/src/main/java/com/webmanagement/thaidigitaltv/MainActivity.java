@@ -1,7 +1,10 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,15 +21,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import android.widget.TextView;
-<<<<<<< HEAD
-=======
+
 import android.widget.Toast;
 import android.widget.ToggleButton;
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.sec.android.allshare.Device;
+import com.sec.android.allshare.DeviceFinder;
+import com.sec.android.allshare.ERROR;
+import com.sec.android.allshare.ServiceConnector;
+import com.sec.android.allshare.ServiceProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,21 +46,19 @@ public class MainActivity extends Activity {
 
 
     private DatabaseAction dbAction;
-<<<<<<< HEAD
+
     public static Typeface TF_font;
     public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-    static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
+    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
 
     ImageView IV_ic_nav_top_left, IV_detail_list_title;
-=======
+
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
-    ImageView IV_ic_nav_top_left, IV_tv_share, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
 
     DrawerLayout DL_drawer_layout;
 
@@ -66,10 +70,7 @@ public class MainActivity extends Activity {
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
     MenuLeftAdapter menuLeftAdapter;
 
@@ -86,24 +87,50 @@ public class MainActivity extends Activity {
 
     AQuery aq;
 
-
     LinearLayout llFavoriteList;
     LinearLayout llMainMenu;
     FavoriteList favoriteList;
     MainMenuTab mainMenuTab;
 
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
-
+        context = MainActivity.this;
         aq = new AQuery(this);
+
+        ERROR err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+
+            @Override
+            public void onCreated(ServiceProvider serviceProvider, ServiceConnector.ServiceState serviceState) {
+                GlobalVariable.setServiceProvider(serviceProvider);
+                Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+            }
+
+            @Override
+            public void onDeleted(ServiceProvider serviceProvider) {
+              //  GlobalVariable.setServiceProvider(null);
+                Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
+            }
+        });
+
+
+        if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
+            // AllShare Framework Service is not installed.
+            Log.d("run", "AllShare Framework Service is not installed.");
+        } else if (err == ERROR.INVALID_ARGUMENT) {
+            // Input argument is invalid. Check and try again
+            Log.d("run", "Input argument is invalid. Check and try again.");
+        } else {
+            // Success on calling the function.
+            Log.d("run", "Success on calling the function.");
+        }
 
 
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
@@ -124,7 +151,7 @@ public class MainActivity extends Activity {
 
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        IV_tv_share = (ImageView)findViewById(R.id.iv_tv_share);
+
 
 
         progressDialog = new ProgressDialog(this);
@@ -156,10 +183,6 @@ public class MainActivity extends Activity {
         });
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -187,12 +210,10 @@ public class MainActivity extends Activity {
                 DL_drawer_layout.closeDrawer(LV_menu_left);
             }
         });
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     }
+
+
+
 
     public void prepareMenuLeft() {
         int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
@@ -286,6 +307,7 @@ public class MainActivity extends Activity {
                         Log.d("logrun2", e.toString());
                     }
                 } else {
+                    showAlertDialog();
                     Log.d("logrun2", "Object is Null");
                 }
 
@@ -295,6 +317,26 @@ public class MainActivity extends Activity {
 
     }
 
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("เกิดข้อผิดพลาด");
+        builder.setMessage("ไม่สามารถโหลดข้อมูลได้");
+        builder.setNegativeButton("ลองอีกครั้ง",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        loadToDataStore();
+                    }
+                });
+        builder.setPositiveButton("ออก",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+
+        builder.show();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -329,11 +371,15 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        if (GlobalVariable.getServiceProvider() != null && isFinishing() == true)
+            GlobalVariable.setServiceProvider(null);
+        BitmapCache.getBitmapCache().clear();
 
         arrDataStore_category.clear();
         arrDataStore_channel.clear();
         arrDataStore_program.clear();
         arrDataStore_type.clear();
+
 
         /*
         ComponentName receiver = new ComponentName(this, ReceiverAlarm.class);

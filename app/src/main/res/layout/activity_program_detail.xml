@@ -38,11 +38,9 @@
             android:textSize="20sp"
             />
         <ImageView
-<<<<<<< HEAD
+
             android:id="@+id/iv_device_share"
-=======
-            android:id="@+id/iv_tv_share"
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/tv_allshare"

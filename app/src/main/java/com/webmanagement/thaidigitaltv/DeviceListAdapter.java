@@ -1,6 +1,9 @@
 package com.webmanagement.thaidigitaltv;
 
-import com.sec.android.allshare.Device;
+/**
+ * Created by SystemDLL on 25/9/2557.
+ */
+
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,89 +13,99 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sec.android.allshare.Device;
+
+import java.net.URI;
+import java.util.ArrayList;
 
 /**
- * Created by SystemDLL on 20/10/2557.
+ * Created by Banpot.S on 9/4/14 AD.
  */
-public class DeviceListAdapter  extends ArrayAdapter<Device>
-{
+public class DeviceListAdapter extends BaseAdapter {
+
+    ArrayList<DataCustomDeviceListAdapter> arrayList = new ArrayList<DataCustomDeviceListAdapter>();
+    private LayoutInflater mInflater;
+
+    private Device device;
 
 
-    public DeviceListAdapter( Context context )
-    {
-        super( context, R.layout.item_device_list );
-
+    public DeviceListAdapter(Context context, ArrayList<DataCustomDeviceListAdapter> arrayList) {
+        this.arrayList = arrayList;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public View getView( int position, View convertView, ViewGroup parent )
-    {
+    public int getCount() {
+        return arrayList.size();
+    }
 
-        TextView tv;
-        TextView model;
-        TextView Ip;
-        ImageView iv;
+    @Override
+    public Object getItem(int position) {
+        return arrayList.get(position);
+    }
 
-        if( convertView == null )
-        {
-            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-            convertView = inflater.inflate( R.layout.item_device_list, null );
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.item_device_list, null);
         }
 
-        tv = (TextView)convertView.findViewById( R.id.title );
-        iv = (ImageView)convertView.findViewById( R.id.icon );
-        model = (TextView)convertView.findViewById( R.id.model );
-        Ip = (TextView)convertView.findViewById( R.id.ip);
+        ImageView IC_device = (ImageView) convertView.findViewById(R.id.ic_device);
+        TextView TV_device_name = (TextView) convertView.findViewById(R.id.tv_device_name);
+        TextView TV_device_model = (TextView) convertView.findViewById(R.id.tv_device_model);
+        TextView TV_device_ip = (TextView) convertView.findViewById(R.id.tv_device_ip);
 
-        Device device = getItem( position );
-        tv.setText( "[" + device.getNIC() + "]" + device.getName() );
-        model.setText( device.getModelName() );
-        Ip.setText( device.getIPAddress() );
+        Uri icon = arrayList.get(position).icon;
+        TV_device_name.setText(arrayList.get(position).name);
+        TV_device_model.setText(arrayList.get(position).model);
+        TV_device_ip.setText(arrayList.get(position).ip);
 
-        // check cache.
-        Uri uri = device.getIcon();
-
-        if( uri == null )
+        if( icon == null )
         {
             // no thumbnail.
-            iv.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+            IC_device.setImageResource(R.drawable.ic_tv);
             return convertView;
         }
 
-        Bitmap bitmap = BitmapCache.getBitmapCache().get( uri.toString() );
-        DownloadThumbnailTask downloader = (DownloadThumbnailTask)iv.getTag();
+        Bitmap bitmap = BitmapCache.getBitmapCache().get( icon.toString() );
+        DownloadThumbnailTask downloader = (DownloadThumbnailTask)IC_device.getTag();
 
         if( bitmap == null || bitmap.isRecycled() )
         {
             // if there is already assigned job for this image view, cancel it.
             if( downloader != null )
             {
-                if( downloader.getUri() != null && downloader.getUri().equals( uri ) )
+                if( downloader.getUri() != null && downloader.getUri().equals( icon ) )
                 {
                     // already downloaded image.
                     // do nothing.
                 }
                 else
                 {
-                    iv.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+                    IC_device.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
                     downloader.cancel( true );
-                    downloader = new DownloadThumbnailTask( iv, uri );
+                    downloader = new DownloadThumbnailTask( IC_device, icon );
                     downloader.execute();
-                    iv.setTag( downloader );
+                    IC_device.setTag( downloader );
                 }
             }
             else
             {
-                iv.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-                downloader = new DownloadThumbnailTask( iv, uri );
+                IC_device.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+                downloader = new DownloadThumbnailTask( IC_device, icon );
                 downloader.execute();
-                iv.setTag( downloader );
+                IC_device.setTag( downloader );
             }
         }
         else
@@ -101,10 +114,32 @@ public class DeviceListAdapter  extends ArrayAdapter<Device>
             {
                 downloader.cancel( true );
             }
-            iv.setImageBitmap( bitmap );
+            IC_device.setImageBitmap(bitmap);
         }
+
+
 
         return convertView;
     }
 
+
 }
+
+
+class DataCustomDeviceListAdapter {
+    String  name, model,ip;
+    Uri icon;
+
+    public DataCustomDeviceListAdapter(Uri icon, String name, String model, String ip) {
+        this.icon = icon;
+        this.name = name;
+        this.model = model;
+        this.ip = ip;
+    }
+
+
+}
+
+
+
+

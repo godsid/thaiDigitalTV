@@ -5,13 +5,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.sec.android.allshare.Device;
+import com.sec.android.allshare.DeviceFinder;
+import com.sec.android.allshare.ERROR;
+import com.sec.android.allshare.ServiceConnector;
+import com.sec.android.allshare.ServiceProvider;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +37,6 @@ import java.util.Date;
 
 
 public class ProgramDetail extends Activity {
-    GlobalVariable globalVariable;
     AQuery aq;
 
 
@@ -60,14 +68,14 @@ public class ProgramDetail extends Activity {
 
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail;
 
-<<<<<<< HEAD
-    public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
-=======
+
     public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title, IV_tv_share;
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+
+    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
+
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
+    boolean haveTVinNetwork = false;
+    int scoreFirstVisible = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +83,14 @@ public class ProgramDetail extends Activity {
         setContentView(R.layout.activity_program_detail);
 
         aq = new AQuery(this);
-        globalVariable = new GlobalVariable();
+
         calendar = Calendar.getInstance();
         date = new Date();
         dbAction = new DatabaseAction(this);
         dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
+
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
+
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         //TV_detail_list_title.setTypeface(TF_font);
@@ -91,7 +101,7 @@ public class ProgramDetail extends Activity {
 
         IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
 
-        IV_tv_share = (ImageView) findViewById(R.id.iv_tv_share);
+
 
         IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
         TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
@@ -118,6 +128,7 @@ public class ProgramDetail extends Activity {
 
         SB_detail_date.setMax(calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         SB_detail_date.setProgress(g_current_date);
+
 
 /*
         TV_detail_day.setTypeface(MainTF_font);
@@ -182,17 +193,17 @@ public class ProgramDetail extends Activity {
 
 
                 Log.d("run", "lv");
-                if (globalVariable.getArrDelOrAdd(position).equals("add")) {
+                if (GlobalVariable.getArrDelOrAdd(position).equals("add")) {
 
                     Intent intent = new Intent(getApplicationContext(), SettingAlert.class);
                     intent.putExtra("i_Prog_id", dataCustomProgramDetail.get(position).id);
                     intent.putExtra("i_Prog_name", dataCustomProgramDetail.get(position).pname);
                     intent.putExtra("i_Prog_timestart", dataCustomProgramDetail.get(position).pstart);
-                    intent.putExtra("i_Chan_name", globalVariable.getChan_name());
+                    intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
 
 
                     startActivity(intent);
-                } else if (globalVariable.getArrDelOrAdd(position).equals("delete")) {
+                } else if (GlobalVariable.getArrDelOrAdd(position).equals("delete")) {
                     Log.d("run", "else");
                     position_for_delete = position;
                     menuActionDelete();
@@ -203,30 +214,73 @@ public class ProgramDetail extends Activity {
             }
         });
 
-<<<<<<< HEAD
+
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
-=======
-                IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-<<<<<<< HEAD
+
 
         IV_device_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (haveTVinNetwork) {
+
                 Intent intent = new Intent(getApplicationContext(), DeviceList.class);
                 startActivity(intent);
+            } else {
+
+                    Toast.makeText(ProgramDetail.this,"โปรดเชื่อมต่อ TV เข้ากับเครือข่าย",Toast.LENGTH_SHORT).show();
+             }
             }
         });
 
+        chkTVinNetwork();
 
     } //End Oncreate
+
+
+    private void chkTVinNetwork() {
+        ArrayList<Device> mDeviceList;
+        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
+        deviceFinder.refresh();
+        mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
+
+
+        if (mDeviceList.size() > 0) {
+            haveTVinNetwork = true;
+            IV_device_share.setImageResource(R.drawable.tv_allshare);
+            IV_device_share.setEnabled(true);
+
+        } else {
+            haveTVinNetwork = false;
+            IV_device_share.setImageResource(R.drawable.ic_all_share_disconnect);
+
+        }
+        Log.d("run","mDeviceList "+mDeviceList.size());
+    }
+
+    private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
+
+
+        @Override
+        public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
+            Log.d("run","onDeviceAdded");
+            chkTVinNetwork();
+        }
+
+        @Override
+        public void onDeviceRemoved(Device.DeviceType deviceType,Device device, ERROR error) {
+            Log.d("run","onDeviceRemoved");
+            chkTVinNetwork();
+        }
+    };
 
 
     private void menuActionDelete() {
@@ -234,11 +288,11 @@ public class ProgramDetail extends Activity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่");
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(globalVariable.getArrProg_id(position_for_delete));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrProg_id(position_for_delete));
                         if (chkDeleted) {
                             Toast.makeText(getApplicationContext(), "Delete Complete", Toast.LENGTH_SHORT).show();
                             setDataToLV();
@@ -253,14 +307,9 @@ public class ProgramDetail extends Activity {
                     }
                 });
         builder.show();
-=======
-                IV_tv_share.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "AllShare", Toast.LENGTH_SHORT).show();
-                    }
-                });
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+
+
+
     }
 
     public void setHoldArrProg_idFromDB() {
@@ -300,18 +349,18 @@ public class ProgramDetail extends Activity {
     }
 
     public void setDataToLV() {
-        Log.d("run", "================= setDataToLV =============================");
+        Log.d("run", "========== ProgramDetail setDataToLV =========");
         programDetailAdapter = new ProgramDetailAdapter(this, dataCustomProgramDetail);
         programDetailAdapter.arrayProgramDetail.clear();
-        globalVariable.clearArrDelOrAdd();
-        globalVariable.clearAllArray();
+        GlobalVariable.clearArrDelOrAdd();
+        GlobalVariable.clearAllArray();
 
         setHoldArrProg_idFromDB();
 
-        globalVariable.setDay_id(g_change_day);
+        GlobalVariable.setDay_id(g_change_day);
 
-        aq.id(IV_detail_list_title).image(globalVariable.getChan_pic());
-        TV_detail_list_title.setText(globalVariable.getChan_name());
+        aq.id(IV_detail_list_title).image(GlobalVariable.getChan_pic());
+        TV_detail_list_title.setText(GlobalVariable.getChan_name());
 
 
         int c = 0;
@@ -327,7 +376,7 @@ public class ProgramDetail extends Activity {
             int day_id = arrDataStore_program.get(j).getFr_day_id();
             boolean status_onair = false;
 
-            if (globalVariable.getChan_id() == chan_id && globalVariable.getDay_id() == day_id) {
+            if (GlobalVariable.getChan_id() == chan_id && GlobalVariable.getDay_id() == day_id) {
 
                 try {
 
@@ -350,6 +399,7 @@ public class ProgramDetail extends Activity {
                             } else {
                                 //  Log.d("run", c + " : " + TimeNow + " NOW " + TS + " - " + TE);
                                 status_onair = true;
+                                scoreFirstVisible = c;
                             }
                         } else {
                             //   Log.d("run", c + " : " + TimeNow + " Over " + TS + " - " + TE);
@@ -360,9 +410,9 @@ public class ProgramDetail extends Activity {
                     Log.d("run", "Error Parse Date " + e);
                 }
 
-                globalVariable.addArrProg_id(prog_id);
-                globalVariable.addArrProg_name(prog_title);
-                globalVariable.addArrProg_timestart(prog_timestart);
+                GlobalVariable.addArrProg_id(prog_id);
+                GlobalVariable.addArrProg_name(prog_title);
+                GlobalVariable.addArrProg_timestart(prog_timestart);
 
 
                 dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, prog_timestart,prog_timeend, status_onair, c));
@@ -374,6 +424,10 @@ public class ProgramDetail extends Activity {
         // listProgramDetailAdapter.notifyDataSetChanged();
 
         LV_program_detail.setAdapter(programDetailAdapter);
+        if (selectIsToDay)
+            LV_program_detail.setSelection(scoreFirstVisible);
+        else
+            LV_program_detail.setSelection(0);
 
     }
 
@@ -381,6 +435,7 @@ public class ProgramDetail extends Activity {
     @Override
     protected void onResume() {
         setDataToLV();
+        chkTVinNetwork();
         super.onResume();
     }
 

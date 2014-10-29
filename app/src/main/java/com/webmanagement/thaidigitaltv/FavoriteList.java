@@ -31,7 +31,6 @@ public class FavoriteList {
 
     FavoriteListAdapter favoriteListAdapter;
     private DatabaseAction dbAction;
-    private GlobalVariable globalVariable;
     private int itemPosition;
 
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
@@ -45,7 +44,7 @@ public class FavoriteList {
         final Animation animAlpha = AnimationUtils.loadAnimation(context, R.anim.anim_alpha);
 
         dbAction = new DatabaseAction(context);
-        globalVariable = new GlobalVariable();
+
 
 
         favoriteListAdapter = new FavoriteListAdapter(context, arrayListData);
@@ -82,7 +81,7 @@ public class FavoriteList {
 
     private void prepareDataToList() {
 
-        globalVariable.clearFavArray();
+        GlobalVariable.clearFavArray();
         arrayListData.clear();
 
         SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
@@ -170,13 +169,13 @@ public class FavoriteList {
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrFav_Prog_id(getItemPosition()));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrFav_Prog_id(getItemPosition()));
         builder.setPositiveButton("ใช่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(globalVariable.getArrFav_Prog_id(getItemPosition()));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
                         if (chkDeleted) {
-                            cancelAlarm(globalVariable.getArrFav_Prog_id(getItemPosition()));
+                            cancelAlarm(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
                             Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
 
                             prepareDataToList();

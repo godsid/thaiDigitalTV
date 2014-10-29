@@ -27,7 +27,6 @@ public class SettingAlert extends Activity {
 
     private DatabaseAction dbAction;
     private int[] time_value = new int[]{5, 10, 20, 30, 40, 50, 60};
-    private GlobalVariable globalVariable;
     ArrayList<DataCustomSettingTime> dataCustomSettingTime = new ArrayList<DataCustomSettingTime>();
     SettingTimeAdapter settingTimeAdapter;
 
@@ -57,7 +56,7 @@ public class SettingAlert extends Activity {
         aq = new AQuery(this);
         bundle = getIntent().getExtras();
         dbAction = new DatabaseAction(this);
-        globalVariable = new GlobalVariable();
+
         arrTempDay.clear();
         arrTempId.clear();
 

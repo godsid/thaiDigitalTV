@@ -1,8 +1,11 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.graphics.Color;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -40,7 +44,6 @@ public class MainMenuTab {
 
     AQuery aq;
 
-    GlobalVariable globalVariable;
 
     private int exp_left_group_pos, exp_left_child_pos;
 
@@ -66,8 +69,8 @@ public class MainMenuTab {
 
         this.rootView = view;
         this.context = rootView.getContext();
+        aq = new AQuery(context);
 
-        globalVariable = new GlobalVariable();
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
         mTabHost.setup();
@@ -100,18 +103,15 @@ public class MainMenuTab {
         LV_tab_1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-<<<<<<< HEAD
 
-                String get_channel_name = arrDataStore_channel.get(position).getChan_name();
-=======
                 String get_channel_name =  arrDataStore_channel.get(position).getChan_name();
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();
 
-                globalVariable.setChan_id(get_channel_id);
-                globalVariable.setChan_name(get_channel_name);
-                globalVariable.setChan_pic(get_channel_pic);
+                GlobalVariable.setChan_id(get_channel_id);
+                GlobalVariable.setChan_name(get_channel_name);
+                GlobalVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
             }
@@ -131,11 +131,26 @@ public class MainMenuTab {
                 exp_left_child_pos = childPosition;
 
 
-                globalVariable.setChan_id(get_channel_id);
-                globalVariable.setChan_name(get_channel_name);
-                globalVariable.setChan_pic(get_channel_pic);
+                GlobalVariable.setChan_id(get_channel_id);
+                GlobalVariable.setChan_name(get_channel_name);
+                GlobalVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
+                return false;
+            }
+        });
+
+        EXP_tab_3.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                String get_prog_name = group_list_tab3.get(groupPosition).getItems().get(childPosition).getProgName();
+
+                String get_channel_pic = group_list_tab3.get(groupPosition).getItems().get(childPosition).getChanPic();
+                //get position highlight
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                parent.setItemChecked(index, true);
+                //Toast.makeText(context,get_prog_name,Toast.LENGTH_SHORT).show();
+                showDialogDetailProgram(get_prog_name,get_channel_pic);
                 return false;
             }
         });
@@ -280,6 +295,38 @@ public class MainMenuTab {
 
         Intent intent = new Intent(activity.getApplicationContext(), ProgramDetail.class);
         activity.startActivity(intent);
+
+    }
+
+    private void showDialogDetailProgram(String pn,String cp) {
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+           // builder.setTitle("Hello User");
+            //builder.setMessage("What is your name:");
+
+            // Use an EditText view to get user input.
+            final TextView TV_prog_name = new TextView(context);
+            TV_prog_name.setText(pn);
+            final ImageView IV_chan_pic = new ImageView(context);
+            aq.id(IV_chan_pic).image(cp);
+            builder.setView(IV_chan_pic);
+        Toast.makeText(context,cp,Toast.LENGTH_SHORT).show();
+
+            builder.setPositiveButton("ปิดหน้าต่าง", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+
+                    return;
+                }
+            });
+
+
+
+            builder.create();
+            builder.show();
 
     }
 }

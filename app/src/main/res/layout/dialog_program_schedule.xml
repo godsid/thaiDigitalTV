@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Program Name"
+        android:id="@+id/tv_prog_name"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_chan_pic"
+        android:layout_below="@+id/tv_prog_name"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Channel ID"
+        android:id="@+id/tv_chan_id"
+        android:layout_alignTop="@+id/iv_chan_pic"
+        android:layout_toRightOf="@+id/iv_chan_pic" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_prog_schedule"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/iv_chan_pic" />
+</RelativeLayout>
