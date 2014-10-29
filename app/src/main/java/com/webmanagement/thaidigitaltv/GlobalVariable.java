@@ -3,6 +3,8 @@ package com.webmanagement.thaidigitaltv;
 import android.util.Log;
 
 import com.sec.android.allshare.Device;
+import com.sec.android.allshare.ServiceConnector;
+import com.sec.android.allshare.ServiceProvider;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,7 @@ public class GlobalVariable {
     public static ArrayList<String> arrDelOrAdd = new ArrayList<String>();
 
     private static Device mDevice = null;
+    private static ServiceProvider mServiceProvider = null;
 
     public static void clearAllArray() {
         arrProg_id.clear();
@@ -65,6 +68,23 @@ public class GlobalVariable {
         return mDevice;
     }
 
+    public static void setServiceProvider( ServiceProvider serviceProvider )
+    {
+
+        if (serviceProvider == null)
+            ServiceConnector.deleteServiceProvider(mServiceProvider);
+            mServiceProvider = serviceProvider;
+       // Log.d("run","setServiceProvider "+mServiceProvider);
+
+    }
+
+    public static ServiceProvider getServiceProvider()
+    {
+
+        return mServiceProvider;
+    }
+
+
     public static int getItem_selected() {
         return Item_selected;
     }
@@ -72,6 +92,7 @@ public class GlobalVariable {
     public static void setItem_selected(int item_selected) {
         Item_selected = item_selected;
     }
+
 
     public static int getDay_id() {
         return Day_id;
@@ -202,102 +223,7 @@ public class GlobalVariable {
         }
     }
 
-  
-  
-  /*
 
-  public static String getFavProg_name(int i) {
-    return this.arrFav_Pro_name.get(i);
-  }
-
-  public static void setFavProg_name(String j) {
-    this.arrFav_Pro_name.add(j);
-  }
-
-  public static int getDay_id() {
-    return this.item_day_id;
-  }
-
-  public static void setDay_id(int j) {
-    this.item_day_id = j;
-  }
-
-  public static int getFavProg_id(int i) {
-    return this.arrFav_Pro_id.get(i);
-  }
-
-  public static void setFavProg_id(int j) {
-    this.arrFav_Pro_id.add(j);
-  }
-
-  public static int getProg_id(int i) {
-    try {
-      // Log.d("run",i+" : "+this.arrPro_id.get(i)+" : "+this.arrPro_id.size()+" try ");
-      return this.arrPro_id.get(i);
-    } catch (Exception e) {
-      //Log.d("run","catch getProg_id "+i+" : "+this.arrPro_id.get(i)+" : "+this.arrPro_id.size());
-      return this.arrPro_id.get(i);
-    }
-
-  }
-
-
-  public static void setProg_id(int j) {
-    this.arrPro_id.add(j);
-  }
-
-
-  public static String getProg_name(int i) {
-    return this.arrPro_name.get(i);
-  }
-
-  public static void setProg_name(String j) {
-    this.arrPro_name.add(j);
-  }
-
-
-
-  public static String getProg_timestart(int i) {
-    return this.arrProg_timestart.get(i);
-  }
-
-  public static void setProg_timestart(String j) {
-    this.arrProg_timestart.add(j);
-  }
-
-  public static int getChan_id() {
-    return chan_id;
-  }
-
-  public static void setChan_id(int chan_id) {
-    this.chan_id = chan_id;
-  }
-
-  public static String getChan_name() {
-    return chan_name;
-  }
-
-  public static void setChan_name(String chan_name) {
-    this.chan_name = chan_name;
-  }
-
-  public static String getChan_pic() {
-    return chan_pic;
-  }
-
-  public static void setChan_pic(String chan_pic) {
-    this.chan_pic = chan_pic;
-  }
-
-
-  public static int getItem_selected() {
-    return item_selected;
-  }
-
-  public static void seItem_selected(int item_selected) {
-    this.item_selected = item_selected;
-  }
-*/
 
 }
 

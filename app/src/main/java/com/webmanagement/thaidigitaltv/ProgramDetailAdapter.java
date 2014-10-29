@@ -24,7 +24,6 @@ public class ProgramDetailAdapter extends BaseAdapter {
     TextView TV_col_4;
     private int bg_color_rl;
     private int selectedPosition = 0;
-    GlobalVariable globalVariable;
     ArrayList<Integer> arrHoldProg_idDB = ProgramDetail.arrHoldProg_idDB;
     Context context2;
     private int position_for_delete;
@@ -34,7 +33,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
 
     public ProgramDetailAdapter(Context context, ArrayList<DataCustomProgramDetail> arrayList) {
-        globalVariable = new GlobalVariable();
+
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
         context2 = context;
@@ -88,11 +87,11 @@ public class ProgramDetailAdapter extends BaseAdapter {
             if (arrHoldProg_idDB.contains(arrayProgramDetail.get(position).id)) {
                 //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
-                globalVariable.addArrDelOrAdd("delete");
+                GlobalVariable.addArrDelOrAdd("delete");
             } else {
                 // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
                 TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-                globalVariable.addArrDelOrAdd("add");
+                GlobalVariable.addArrDelOrAdd("add");
             }
 
             getObject.TV_col_3.setText("");

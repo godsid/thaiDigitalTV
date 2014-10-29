@@ -23,8 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.sec.android.allshare.Device;
+import com.sec.android.allshare.DeviceFinder;
+import com.sec.android.allshare.ERROR;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -37,6 +41,9 @@ public class DisplayAlarm extends Activity {
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
+
+    boolean haveTVinNetwork = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,41 +188,27 @@ public class DisplayAlarm extends Activity {
                         finish();
                 }
                 else if (progress1 >= 90){
-                    if (repeat_id != 0)
+                    chkTVinNetwork();
+                    if (repeat_id != 0 )
                         Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
-                    r.stop();
-                    stopVibrator();
-                    finish();
+                        r.stop();
+                        stopVibrator();
+                        finish();
+                    if (haveTVinNetwork) {
+                        Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                        startActivity(intent);
 
-                    PackageManager manager = getPackageManager();
-                    try {
-                        Intent i;
-                        i = manager.getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
-                        if (i == null)
-                            throw new PackageManager.NameNotFoundException();
-                        i.addCategory(Intent.CATEGORY_LAUNCHER);
-                        startActivity(i);
-                    } catch (PackageManager.NameNotFoundException e) {
-
+                    } else {
+                        Toast.makeText(DisplayAlarm.this,"ตรวจสอบ : ไม่พบ TV ในเครือข่าย",Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }
                 else{
                     seekBar.setProgress(50);
-                    iv_L1.setImageResource(R.drawable.arrow_left_1);
-                    iv_L2.setImageResource(R.drawable.arrow_left_2);
-                    iv_L3.setImageResource(R.drawable.arrow_left_3);
-                    iv_L4.setImageResource(R.drawable.arrow_left_4);
-                    iv_L5.setImageResource(R.drawable.arrow_left_5);
-                    iv_L6.setImageResource(R.drawable.arrow_left_6);
-                    iv_R1.setImageResource(R.drawable.arrow_right_1);
-                    iv_R2.setImageResource(R.drawable.arrow_right_2);
-                    iv_R3.setImageResource(R.drawable.arrow_right_3);
-                    iv_R4.setImageResource(R.drawable.arrow_right_4);
-                    iv_R5.setImageResource(R.drawable.arrow_right_5);
-                    iv_R6.setImageResource(R.drawable.arrow_right_6);
                 }
             }
         });
+
 
         try {
 
@@ -254,71 +247,45 @@ public class DisplayAlarm extends Activity {
         } catch (Exception e) {
             Log.d("run", "File DisplayAlarm : " + e);
         }
-
-/*
-        bt_accept.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                if (repeat_id != 0)
-                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
-
-                r.stop();
-                stopVibrator();
-                finish();
-            }
-        });
-
-        bt_accept_open_app.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeat_id != 0)
-                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
-                r.stop();
-                stopVibrator();
-                finish();
-
-                PackageManager manager = getPackageManager();
-                try {
-                    Intent i;
-                    i = manager.getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
-                    if (i == null)
-                        throw new PackageManager.NameNotFoundException();
-                    i.addCategory(Intent.CATEGORY_LAUNCHER);
-                    startActivity(i);
-                } catch (PackageManager.NameNotFoundException e) {
-
-                }
-            }
-        });
-*/
-
-        /////////////////////////////////////////////////////////
- /*
-        buttonKS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ReceiverAlarm.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), prog_id, intent, 0);
-
-                //Intent intent = new Intent(getBaseContext(),AlertTimeControl.class);
-                // PendingIntent pendingIntent = PendingIntent.getService(getBaseContext(), 0, intent, 0);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                alarmManager.cancel(pendingIntent);
-
-                //Intent intent = new Intent();
-                //intent.setClass(MyScheduledActivity.this, AndroidScheduledActivity.class);
-                // startActivity(intent);
-                stopVibrator();
-                r.stop();
-                finish();
-            }
-        });
-*/
     }
+
+
+    private void chkTVinNetwork() {
+        ArrayList<Device> mDeviceList;
+        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
+        deviceFinder.refresh();
+        mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
+
+
+        if (mDeviceList.size() > 0) {
+            haveTVinNetwork = true;
+
+        } else {
+            haveTVinNetwork = false;
+        }
+        Log.d("run","mDeviceList "+mDeviceList.size());
+    }
+
+
+    private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
+
+
+        @Override
+        public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
+            Log.d("run","onDeviceAdded");
+            chkTVinNetwork();
+        }
+
+        @Override
+        public void onDeviceRemoved(Device.DeviceType deviceType,Device device, ERROR error) {
+            Log.d("run","onDeviceRemoved");
+            chkTVinNetwork();
+        }
+    };
+
+
+
 
     private String alertNextTime(String time_before) {
         Calendar calendar = Calendar.getInstance();
