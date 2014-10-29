@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -114,6 +116,14 @@ public class ProgramDetailAdapter extends BaseAdapter {
                 }
             });
 */
+
+            Animation animation = null;
+            animation = AnimationUtils.loadAnimation(context2, R.anim.flick_wave);
+            animation.setDuration(500);
+            convertView.startAnimation(animation);
+            animation = null;
+
+
 
         } catch (Exception e) {
             Log.d("run", "Exception : " + e);

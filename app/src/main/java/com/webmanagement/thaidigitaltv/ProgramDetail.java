@@ -2,6 +2,7 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
@@ -13,7 +14,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -55,6 +59,7 @@ public class ProgramDetail extends Activity {
     private int position_for_delete;
 
     ImageView IV_device_share;
+    Context context;
 
     Calendar calendar;
     Date date;
@@ -83,7 +88,7 @@ public class ProgramDetail extends Activity {
         setContentView(R.layout.activity_program_detail);
 
         aq = new AQuery(this);
-
+        context = ProgramDetail.this;
         calendar = Calendar.getInstance();
         date = new Date();
         dbAction = new DatabaseAction(this);
@@ -190,21 +195,19 @@ public class ProgramDetail extends Activity {
         LV_program_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("run", "P "+position);
 
-
-                Log.d("run", "lv");
                 if (GlobalVariable.getArrDelOrAdd(position).equals("add")) {
 
-                    Intent intent = new Intent(getApplicationContext(), SettingAlert.class);
+                    Intent intent = new Intent(context, SettingAlert.class);
                     intent.putExtra("i_Prog_id", dataCustomProgramDetail.get(position).id);
                     intent.putExtra("i_Prog_name", dataCustomProgramDetail.get(position).pname);
                     intent.putExtra("i_Prog_timestart", dataCustomProgramDetail.get(position).pstart);
                     intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
 
-
                     startActivity(intent);
                 } else if (GlobalVariable.getArrDelOrAdd(position).equals("delete")) {
-                    Log.d("run", "else");
+
                     position_for_delete = position;
                     menuActionDelete();
                 }
@@ -424,10 +427,18 @@ public class ProgramDetail extends Activity {
         // listProgramDetailAdapter.notifyDataSetChanged();
 
         LV_program_detail.setAdapter(programDetailAdapter);
-        if (selectIsToDay)
+        if (selectIsToDay) {
             LV_program_detail.setSelection(scoreFirstVisible);
-        else
+
+        } else {
             LV_program_detail.setSelection(0);
+
+        }
+
+
+
+
+
 
     }
 

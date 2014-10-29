@@ -177,6 +177,11 @@ public class DisplayAlarm extends Activity {
 
 
     @Override
+    public void onBackPressed() {
+       return;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.display_alert_time, menu);

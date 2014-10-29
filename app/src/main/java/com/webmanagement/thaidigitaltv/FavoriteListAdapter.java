@@ -9,6 +9,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -21,11 +23,13 @@ public class FavoriteListAdapter extends BaseAdapter {
 
     ArrayList<DataCustomFavoriteList> arrayList = new ArrayList<DataCustomFavoriteList>();
     private LayoutInflater mInflater;
+    Context context2;
 
 
     public FavoriteListAdapter(Context context, ArrayList<DataCustomFavoriteList> arrayList) {
         this.arrayList = arrayList;
         mInflater = LayoutInflater.from(context);
+        this.context2 = context;
     }
 
     @Override
@@ -65,6 +69,12 @@ public class FavoriteListAdapter extends BaseAdapter {
 
         GlobalVariable.addArrFav_Prog_id(arrayList.get(position).list_id);
         GlobalVariable.addArrFav_Prog_name(arrayList.get(position).list_title);
+
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(context2, R.anim.flick_wave);
+        animation.setDuration(500);
+        convertView.startAnimation(animation);
+        animation = null;
 
         return convertView;
     }

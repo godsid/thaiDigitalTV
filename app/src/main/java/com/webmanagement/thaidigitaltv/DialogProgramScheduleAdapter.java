@@ -1,18 +1,13 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.sec.android.allshare.Device;
 
 import java.util.ArrayList;
 
@@ -25,12 +20,13 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
     ArrayList<DataCustomDialogProgramSchedule> arrayList = new ArrayList<DataCustomDialogProgramSchedule>();
     private LayoutInflater mInflater;
 
-    private Device device;
+    Context context2;
 
 
     public DialogProgramScheduleAdapter(Context context, ArrayList<DataCustomDialogProgramSchedule> arrayList) {
         this.arrayList = arrayList;
         mInflater = LayoutInflater.from(context);
+        this.context2 = context;
     }
 
     @Override
@@ -64,6 +60,12 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
         TV_day.setText(arrayList.get(position).day);
         TV_timestart.setText(arrayList.get(position).timestart+" - ");
         TV_timeend.setText(arrayList.get(position).timeend);
+
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
+        animation.setDuration(500);
+        convertView.startAnimation(animation);
+        animation = null;
 
         return convertView;
     }
