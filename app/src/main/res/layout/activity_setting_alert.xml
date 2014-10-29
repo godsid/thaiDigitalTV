@@ -7,6 +7,7 @@
     android:id="@+id/ll_settime_list"
     android:background="#455a64"
     android:weightSum="1"
+    android:scrollbars="vertical"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,7 +57,21 @@
             android:src="@drawable/save"
             />
     </RelativeLayout>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/GreenGroupHighlight"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ช่วงเวลา"
+            android:textColor="@color/White"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+        />
+        </RelativeLayout>
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="380dp"
@@ -87,72 +102,78 @@
             android:layout_marginRight="5dp">
             <ToggleButton
                 android:id="@+id/tgb_0"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle1"
-                android:layout_marginTop="10dp"
+                android:textOff=""
+                android:background="@drawable/toggle0"
+                android:layout_marginTop="15dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_1"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle2"
+                android:textOff=""
+                android:background="@drawable/toggle1"
                 android:layout_toRightOf="@+id/tgb_0"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle3"
+                android:textOff=""
+                android:background="@drawable/toggle2"
                 android:layout_toRightOf="@+id/tgb_1"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_3"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle4"
+                android:textOff=""
+                android:background="@drawable/toggle3"
                 android:layout_toRightOf="@+id/tgb_2"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_4"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
+                android:textOff=""
                 android:background="@drawable/toggle4"
                 android:layout_toRightOf="@+id/tgb_3"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_5"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle6"
+                android:textOff=""
+                android:background="@drawable/toggle5"
                 android:layout_toRightOf="@+id/tgb_4"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
             <ToggleButton
                 android:id="@+id/tgb_6"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:textOff=""
+                android:layout_width="50dp"
+                android:layout_height="48dp"
                 android:textOn=""
-                android:background="@drawable/toggle7"
+                android:textOff=""
+                android:background="@drawable/toggle6"
                 android:layout_toRightOf="@+id/tgb_5"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="-5dp"
                 />
         </RelativeLayout>
         <LinearLayout
@@ -165,7 +186,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:paddingRight="15dp">
+            android:paddingRight="7dp">
             <TextView
                 android:id="@+id/tv_check"
                 android:layout_width="wrap_content"

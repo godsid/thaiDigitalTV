@@ -100,12 +100,9 @@ public class MainMenuTab {
         LV_tab_1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-<<<<<<< HEAD
 
-                String get_channel_name = arrDataStore_channel.get(position).getChan_name();
-=======
+               // String get_channel_name = arrDataStore_channel.get(position).getChan_name();
                 String get_channel_name =  arrDataStore_channel.get(position).getChan_name();
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();
 

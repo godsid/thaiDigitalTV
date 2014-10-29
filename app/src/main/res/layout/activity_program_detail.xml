@@ -38,16 +38,13 @@
             android:textSize="20sp"
             />
         <ImageView
-<<<<<<< HEAD
             android:id="@+id/iv_device_share"
-=======
-            android:id="@+id/iv_tv_share"
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/tv_allshare"
             android:layout_alignParentRight="true"
             />
+
     </RelativeLayout>
 
 
@@ -171,7 +168,7 @@
         android:background="#455a64"
         android:orientation="horizontal"
         android:gravity="center_horizontal|center_vertical"
-        android:paddingBottom="5dp">
+        android:paddingBottom="3dp">
             <TextView
                 android:id="@+id/tv_header_program"
                 android:layout_width="130dp"

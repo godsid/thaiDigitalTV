@@ -21,7 +21,7 @@ public class ServiceAlarm extends Service {
     @Override
     public void onCreate() {
 
-        Toast.makeText(getApplicationContext(), "onCreate Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onCreate Service", Toast.LENGTH_SHORT).show();
         super.onCreate();
     }
 
@@ -29,32 +29,32 @@ public class ServiceAlarm extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(getApplicationContext(), "onDestroy Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onDestroy Service", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        Toast.makeText(getApplicationContext(), "onBind Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onBind Service", Toast.LENGTH_SHORT).show();
         return null;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Toast.makeText(getApplicationContext(), "onUnbind Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onUnbind Service", Toast.LENGTH_SHORT).show();
         return super.onUnbind(intent);
     }
 
     @Override
     public void onRebind(Intent intent) {
-        Toast.makeText(getApplicationContext(), "onRebind Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onRebind Service", Toast.LENGTH_SHORT).show();
         super.onRebind(intent);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Toast.makeText(getApplicationContext(), "onStartCommand Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "onStartCommand Service", Toast.LENGTH_SHORT).show();
 
         Context context = getApplicationContext();
 

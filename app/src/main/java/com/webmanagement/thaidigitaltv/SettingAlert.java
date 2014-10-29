@@ -96,31 +96,31 @@ public class SettingAlert extends Activity {
 
         if (!arrTempDay.contains(0)) {
             TGB0.setEnabled(false);
-            TGB0.setBackgroundResource(R.drawable.tg_3_dis);
+            TGB0.setBackgroundResource(R.drawable.toggle_0_dis);
         }
         if (!arrTempDay.contains(1)) {
             TGB1.setEnabled(false);
-            TGB1.setBackgroundResource(R.drawable.tg_2_dis);
+            TGB1.setBackgroundResource(R.drawable.toggle_1_dis);
         }
         if (!arrTempDay.contains(2)) {
             TGB2.setEnabled(false);
-            TGB2.setBackgroundResource(R.drawable.tg_3_dis);
+            TGB2.setBackgroundResource(R.drawable.toggle_2_dis);
         }
         if (!arrTempDay.contains(3)) {
             TGB3.setEnabled(false);
-            TGB3.setBackgroundResource(R.drawable.tg_4_dis);
+            TGB3.setBackgroundResource(R.drawable.toggle_3_dis);
         }
         if (!arrTempDay.contains(4)) {
             TGB4.setEnabled(false);
-            TGB4.setBackgroundResource(R.drawable.tg_4_dis);
+            TGB4.setBackgroundResource(R.drawable.toggle_4_dis);
         }
         if (!arrTempDay.contains(5)) {
             TGB5.setEnabled(false);
-            TGB5.setBackgroundResource(R.drawable.tg_5_dis);
+            TGB5.setBackgroundResource(R.drawable.toggle_5_dis);
         }
         if (!arrTempDay.contains(6)) {
             TGB6.setEnabled(false);
-            TGB6.setBackgroundResource(R.drawable.tg_6_dis);
+            TGB6.setBackgroundResource(R.drawable.toggle_6_dis);
         }
 
 
@@ -147,7 +147,7 @@ public class SettingAlert extends Activity {
 
                 if (!TGB0.isChecked() && !TGB1.isChecked() && !TGB2.isChecked() && !TGB3.isChecked()
                         && !TGB4.isChecked() && !TGB5.isChecked() && !TGB6.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "คำเตือน : เลือกวันที่ต้องการแจ้งเตือนก่อน", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "คำเตือน : กรุณาเลือกวันที่ต้องการแจ้งเตือน", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 for (int i = 0; i < arrTempDay.size(); i++) {

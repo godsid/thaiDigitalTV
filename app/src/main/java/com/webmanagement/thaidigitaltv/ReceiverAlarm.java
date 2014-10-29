@@ -29,7 +29,7 @@ public class ReceiverAlarm extends BroadcastReceiver {
   //          addAllAlarm();
 
 
-            Toast.makeText(mContext, "onReceive", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "onReceive", Toast.LENGTH_SHORT).show();
 
             String prog_id = intent.getStringExtra("prog_id");
             String prog_name = intent.getStringExtra("prog_name");

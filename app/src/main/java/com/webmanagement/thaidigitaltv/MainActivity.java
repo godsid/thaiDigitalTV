@@ -18,11 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import android.widget.TextView;
-<<<<<<< HEAD
-=======
+
 import android.widget.Toast;
 import android.widget.ToggleButton;
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -40,21 +38,13 @@ public class MainActivity extends Activity {
 
 
     private DatabaseAction dbAction;
-<<<<<<< HEAD
-    public static Typeface TF_font;
-    public String frontPath = "fonts/RSU_BOLD.ttf";
-    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-    static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-
-    ImageView IV_ic_nav_top_left, IV_detail_list_title;
-=======
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
-    ImageView IV_ic_nav_top_left, IV_tv_share, IV_ic_fav_top_right, IV_detail_today, IV_detail_list_title;
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
+    ImageView IV_ic_nav_top_left, IV_tv_share, IV_detail_list_title;
+
 
     DrawerLayout DL_drawer_layout;
 
@@ -66,10 +56,6 @@ public class MainActivity extends Activity {
     public static ArrayList<DataStore_Program> arrDataStore_program = new ArrayList<DataStore_Program>();
     public static ArrayList<DataStore_Type> arrDataStore_type = new ArrayList<DataStore_Type>();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     ArrayList<DataCustomMenuLeft> dataCustomMenuLeft = new ArrayList<DataCustomMenuLeft>();
     MenuLeftAdapter menuLeftAdapter;
 
@@ -124,7 +110,7 @@ public class MainActivity extends Activity {
 
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        IV_tv_share = (ImageView)findViewById(R.id.iv_tv_share);
+        //IV_tv_share = (ImageView)findViewById(R.id.iv_tv_share);
 
 
         progressDialog = new ProgressDialog(this);
@@ -156,10 +142,7 @@ public class MainActivity extends Activity {
         });
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -187,11 +170,6 @@ public class MainActivity extends Activity {
                 DL_drawer_layout.closeDrawer(LV_menu_left);
             }
         });
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 6d84c1cdf69e38a0fe249ee4645db265d911383d
     }
 
     public void prepareMenuLeft() {

@@ -1,5 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -99,8 +100,9 @@ public class FavoriteList {
                 st_repeat = "เตือนครั้งเดียว";
             else
                 st_repeat = "เตือนซ้ำทุกสัปดาห์";
-            String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
-            String ln3 = "วัน" + arr_day[day_id] + "  " + chan_name + "  " + st_repeat;
+            //String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
+            String time_sb = "ออกอากาศวัน"+ arr_day[day_id] +" เวลา " + time_start + " น.";
+            String ln3 = chan_name + "  " + st_repeat;
             arrayListData.add(new DataCustomFavoriteList(prog_id, prog_name, ln3, time_sb));
             cur.moveToNext();
         }
@@ -139,7 +141,7 @@ public class FavoriteList {
 
 
     private void menuActionEdit() {
-
+        
     }
 
     private void cancelAlarm(int prog_id) {
@@ -170,7 +172,7 @@ public class FavoriteList {
     private void menuActionDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrFav_Prog_id(getItemPosition()));
+        builder.setMessage("คุณแน่ใจที่จะลบรายการ " + globalVariable.getArrFav_Prog_name(getItemPosition()));
         builder.setPositiveButton("ใช่",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

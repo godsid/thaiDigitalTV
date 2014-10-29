@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,7 @@ public class DisplayAlarm extends Activity {
     int prog_id = 0, day_id,repeat_id;
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
-
+    int progress1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +51,171 @@ public class DisplayAlarm extends Activity {
         v.cancel();
         r.stop();
 
-        Button bt_accept = (Button) findViewById(R.id.bt_disp_accept);
-        Button buttonKS = (Button) findViewById(R.id.bt_kill_service);
-        Button bt_accept_open_app = (Button) findViewById(R.id.bt_disp_accept_and_open);
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
-        TextView tv_time = (TextView) findViewById(R.id.tv_disp_time);
-        ImageView iv_channel = (ImageView) findViewById(R.id.iv_disp_chan);
+        //Button bt_accept = (Button) findViewById(R.id.bt_disp_accept);
+        //Button buttonKS = (Button) findViewById(R.id.bt_kill_service);
+        //Button bt_accept_open_app = (Button) findViewById(R.id.bt_disp_accept_and_open);
+        //TextView TV_time_before = (TextView) findViewById(R.id.tv_time_before);
+        //TextView TV_time_onair = (TextView) findViewById(R.id.tv_time_onair);
+        //ImageView iv_channel = (ImageView) findViewById(R.id.iv_disp_chan);
+
+        final ImageView iv0 = (ImageView) findViewById(R.id.iv_center_0);
+        final ImageView iv_L1 = (ImageView) findViewById(R.id.iv_slide_left1);
+        final ImageView iv_L2 = (ImageView) findViewById(R.id.iv_slide_left2);
+        final ImageView iv_L3 = (ImageView) findViewById(R.id.iv_slide_left3);
+        final ImageView iv_L4 = (ImageView) findViewById(R.id.iv_slide_left4);
+        final ImageView iv_L5 = (ImageView) findViewById(R.id.iv_slide_left5);
+        final ImageView iv_L6 = (ImageView) findViewById(R.id.iv_slide_left6);
+        final ImageView iv_R1 = (ImageView) findViewById(R.id.iv_slide_right1);
+        final ImageView iv_R2 = (ImageView) findViewById(R.id.iv_slide_right2);
+        final ImageView iv_R3 = (ImageView) findViewById(R.id.iv_slide_right3);
+        final ImageView iv_R4 = (ImageView) findViewById(R.id.iv_slide_right4);
+        final ImageView iv_R5 = (ImageView) findViewById(R.id.iv_slide_right5);
+        final ImageView iv_R6 = (ImageView) findViewById(R.id.iv_slide_right6);
+        final Button bt_acc = (Button) findViewById(R.id.bt_accept);
+        final Button bt_device = (Button) findViewById(R.id.bt_device_sh);
+
+        SeekBar sk1 = (SeekBar) findViewById(R.id.seek_1);
+        sk1.setProgress(50);
+        //Drawable ii = getResources().getDrawable(R.drawable.scrubber_control_time);
+        //sk1.setThumb(ii);
+
+        sk1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress1 = progress;
+                //slide left
+                if(progress <= 50){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3);
+                    iv_R4.setImageResource(R.drawable.arrow_right_4);
+                    iv_R5.setImageResource(R.drawable.arrow_right_5);
+                    iv_R6.setImageResource(R.drawable.arrow_right_6);
+                }
+                if(progress <= 47){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1);
+                }
+                if(progress <= 42){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1_2);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2_2);
+                }
+                if(progress <= 37){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1_2);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3_2);
+                }
+                if(progress <= 32){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1_2);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3_2);
+                    iv_L4.setImageResource(R.drawable.arrow_left_4_2);
+                }
+                if(progress <= 27){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1_2);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3_2);
+                    iv_L4.setImageResource(R.drawable.arrow_left_4_2);
+                    iv_L5.setImageResource(R.drawable.arrow_left_5_2);
+                }
+                if(progress <= 22){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1_2);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3_2);
+                    iv_L4.setImageResource(R.drawable.arrow_left_4_2);
+                    iv_L5.setImageResource(R.drawable.arrow_left_5_2);
+                    iv_L6.setImageResource(R.drawable.arrow_left_6_2);
+                }
+                if(progress >= 50){
+                    iv_L1.setImageResource(R.drawable.arrow_left_1);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3);
+                    iv_L4.setImageResource(R.drawable.arrow_left_4);
+                    iv_L5.setImageResource(R.drawable.arrow_left_5);
+                    iv_L6.setImageResource(R.drawable.arrow_left_6);
+                }
+                if(progress >= 58){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                }
+                if(progress >= 62){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2_2);
+                }
+                if(progress >= 67){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3_2);
+                }
+                if(progress >= 72){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3_2);
+                    iv_R4.setImageResource(R.drawable.arrow_right_4_2);
+                }
+                if(progress >= 77){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3_2);
+                    iv_R4.setImageResource(R.drawable.arrow_right_4_2);
+                    iv_R5.setImageResource(R.drawable.arrow_right_5_2);
+                }
+                if(progress >= 82){
+                    iv_R1.setImageResource(R.drawable.arrow_right_1_2);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3_2);
+                    iv_R4.setImageResource(R.drawable.arrow_right_4_2);
+                    iv_R5.setImageResource(R.drawable.arrow_right_5_2);
+                    iv_R6.setImageResource(R.drawable.arrow_right_6_2);
+                }
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (progress1 <= 10){
+                    if (repeat_id != 0)
+                        Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+                        r.stop();
+                        stopVibrator();
+                        finish();
+                }
+                else if (progress1 >= 90){
+                    if (repeat_id != 0)
+                        Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+                    r.stop();
+                    stopVibrator();
+                    finish();
+
+                    PackageManager manager = getPackageManager();
+                    try {
+                        Intent i;
+                        i = manager.getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
+                        if (i == null)
+                            throw new PackageManager.NameNotFoundException();
+                        i.addCategory(Intent.CATEGORY_LAUNCHER);
+                        startActivity(i);
+                    } catch (PackageManager.NameNotFoundException e) {
+
+                    }
+                }
+                else{
+                    seekBar.setProgress(50);
+                    iv_L1.setImageResource(R.drawable.arrow_left_1);
+                    iv_L2.setImageResource(R.drawable.arrow_left_2);
+                    iv_L3.setImageResource(R.drawable.arrow_left_3);
+                    iv_L4.setImageResource(R.drawable.arrow_left_4);
+                    iv_L5.setImageResource(R.drawable.arrow_left_5);
+                    iv_L6.setImageResource(R.drawable.arrow_left_6);
+                    iv_R1.setImageResource(R.drawable.arrow_right_1);
+                    iv_R2.setImageResource(R.drawable.arrow_right_2);
+                    iv_R3.setImageResource(R.drawable.arrow_right_3);
+                    iv_R4.setImageResource(R.drawable.arrow_right_4);
+                    iv_R5.setImageResource(R.drawable.arrow_right_5);
+                    iv_R6.setImageResource(R.drawable.arrow_right_6);
+                }
+            }
+        });
 
         try {
 
@@ -79,9 +240,12 @@ public class DisplayAlarm extends Activity {
 
             }
 
-            tv_title.setText(prog_id + " : " + prog_name + "  " + chan_name);
-            tv_time.setText("แจ้งเตือนอีก " + time_before + " ก่อนถึงเวลา " + time_start);
-            aq.id(iv_channel).image(getIntent().getStringExtra("pic"));
+            //tv_title.setText(prog_id + " : " + prog_name + "  " + chan_name);
+            tv_title.setText("รายการ" + prog_name + "  " + chan_name);
+            //tv_time.setText("แจ้งเตือน " + time_before + " ก่อนถึงเวลา " + time_start);
+            //TV_time_before.setText("แจ้งเตือนก่อนเวลาออกอากาศ " + time_before + " นาที");
+            //TV_time_onair.setText("เวลาออกอากาศ " + time_start + " นาที");
+            //aq.id(iv_channel).image(getIntent().getStringExtra("pic"));
 
             long[] pattern = {1000, 0, 0, 100, 100, 0, 100, 2000, 0, 0,};
             v.vibrate(pattern, 0);
@@ -90,6 +254,21 @@ public class DisplayAlarm extends Activity {
         } catch (Exception e) {
             Log.d("run", "File DisplayAlarm : " + e);
         }
+
+/*
+        bt_accept.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                if (repeat_id != 0)
+                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+
+                r.stop();
+                stopVibrator();
+                finish();
+            }
+        });
 
         bt_accept_open_app.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +292,10 @@ public class DisplayAlarm extends Activity {
                 }
             }
         });
+*/
 
+        /////////////////////////////////////////////////////////
+ /*
         buttonKS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,20 +317,7 @@ public class DisplayAlarm extends Activity {
                 finish();
             }
         });
-
-        bt_accept.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                if (repeat_id != 0)
-                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
-
-                r.stop();
-                stopVibrator();
-                finish();
-            }
-        });
+*/
     }
 
     private String alertNextTime(String time_before) {
@@ -167,7 +336,7 @@ public class DisplayAlarm extends Activity {
         calendarNext.add(Calendar.DAY_OF_WEEK, 7);
 
 
-        return "แจ้งเตือนอีกครั้ง วัน"+arr_day[day_id]+" เวลา"+hm;
+        return "แจ้งเตือนอีกครั้งวัน"+arr_day[day_id]+" เวลา"+hm;
 
     }
 
