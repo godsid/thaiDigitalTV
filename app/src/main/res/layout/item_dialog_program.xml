@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:textSize="18dp"
-        android:layout_width="80dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="25dp"
-        android:text="Day"
-        android:id="@+id/tv_day" />
-
-    <TextView
-        android:textSize="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="time start"
-        android:id="@+id/tv_timestart"
-        android:layout_toRightOf="@id/tv_day"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:textSize="18dp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="time end"
-        android:id="@+id/tv_timeend"
-        android:layout_toRightOf="@id/tv_timestart"
-        android:layout_gravity="right" />
-</RelativeLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="พฤหัสบดี"
+            android:textSize="18dp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_timestart"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="06:00 - "
+            android:textSize="18sp"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_timeend"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="06:00"
+            android:textSize="18sp"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

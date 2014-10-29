@@ -4,8 +4,7 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 6/10/2557.
  */
 class ItemChildTab3 {
-    private String ProgName, ChanPic;
-
+    private String ProgName, ChanPic ,ChanName;
 
     public String getProgName() {
         return ProgName;

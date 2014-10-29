@@ -2,17 +2,14 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.graphics.Color;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
@@ -21,13 +18,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.androidquery.AQuery;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -306,15 +301,14 @@ public class MainMenuTab {
         AlertDialog.Builder dlb = new AlertDialog.Builder(context);
         dlb.setCancelable(true);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_program_schedule, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_program_schedule, null);
         ListView LV_prog_schedule = (ListView) view.findViewById(R.id.lv_prog_schedule);
         TextView TV_prog_name = (TextView) view.findViewById(R.id.tv_prog_name);
         TextView TV_chan_id = (TextView) view.findViewById(R.id.tv_chan_id);
-        ImageView IV_chan_pic = (ImageView) view.findViewById(R.id.iv_chan_pic);
+        //ImageView IV_chan_pic = (ImageView) view.findViewById(R.id.iv_chan_pic);
 
-
+        //aq.id(IV_chan_pic).image(cp);
         TV_prog_name.setText(pn);
-        aq.id(IV_chan_pic).image(cp);
         prepareDataToList(LV_prog_schedule,pn,TV_chan_id);
 
         dlb.setView(view);
@@ -329,10 +323,6 @@ public class MainMenuTab {
         });
 
         dlb.show();
-
-
-
-
     }
 
 
@@ -360,7 +350,7 @@ public class MainMenuTab {
 
                 if (item_prog_name.equals(pn)) {
                     dataCustomDialogProgramSchedule.add(new DataCustomDialogProgramSchedule(arr_day[item_day_id], item_time_start, item_time_end));
-                    tvchid.setText("เลขช่อง "+Integer.toString(item_chan_id));
+                    tvchid.setText("ช่อง "+Integer.toString(item_chan_id));
                 }
 
             }
