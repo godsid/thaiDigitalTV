@@ -141,8 +141,8 @@ Context context;
                 dataCustomDeviceListAdapter.add(new DataCustomDeviceListAdapter(uri, deviceName, deviceModel, deviceIp));
 
             }
-           //LV_device_list.setAdapter(deviceListAdapter);
-            aq.id(LV_device_list).adapter(deviceListAdapter);
+           LV_device_list.setAdapter(deviceListAdapter);
+
 
         }
 

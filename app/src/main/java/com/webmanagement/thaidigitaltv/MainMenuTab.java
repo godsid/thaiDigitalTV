@@ -27,6 +27,9 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by SystemDLL on 8/10/2557.
@@ -44,8 +47,11 @@ public class MainMenuTab {
 
     AQuery aq;
 
+    ArrayList<DataCustomDialogProgramSchedule> dataCustomDialogProgramSchedule = new ArrayList<DataCustomDialogProgramSchedule>();
+    DialogProgramScheduleAdapter dialogProgramScheduleAdapter;
 
-    private int exp_left_group_pos, exp_left_child_pos;
+
+    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
 
     ListTab1Adapter listTab1Adapter;
     ArrayList<DataCustomListTab1> dataCustomListTab1 = new ArrayList<DataCustomListTab1>();
@@ -81,8 +87,7 @@ public class MainMenuTab {
         mTabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.tab_selector);
         mTabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.tab_selector);
         //mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(Color.parseColor("#455a64"));
-        for(int i=0;i<mTabHost.getTabWidget().getChildCount();i++)
-        {
+        for (int i = 0; i < mTabHost.getTabWidget().getChildCount(); i++) {
             TextView tv = (TextView) mTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
             tv.setTextColor(Color.parseColor("#FFFFFF"));
         }
@@ -104,7 +109,7 @@ public class MainMenuTab {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String get_channel_name =  arrDataStore_channel.get(position).getChan_name();
+                String get_channel_name = arrDataStore_channel.get(position).getChan_name();
 
                 int get_channel_id = arrDataStore_channel.get(position).getChan_id();
                 String get_channel_pic = arrDataStore_channel.get(position).getChan_pic();
@@ -127,9 +132,6 @@ public class MainMenuTab {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
 
-                exp_left_group_pos = groupPosition;
-                exp_left_child_pos = childPosition;
-
 
                 GlobalVariable.setChan_id(get_channel_id);
                 GlobalVariable.setChan_name(get_channel_name);
@@ -150,7 +152,7 @@ public class MainMenuTab {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 //Toast.makeText(context,get_prog_name,Toast.LENGTH_SHORT).show();
-                showDialogDetailProgram(get_prog_name,get_channel_pic);
+                showDialogDetailProgram(get_prog_name, get_channel_pic);
                 return false;
             }
         });
@@ -298,36 +300,77 @@ public class MainMenuTab {
 
     }
 
-    private void showDialogDetailProgram(String pn,String cp) {
+    private void showDialogDetailProgram(String pn, String cp) {
 
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-           // builder.setTitle("Hello User");
-            //builder.setMessage("What is your name:");
+        AlertDialog.Builder dlb = new AlertDialog.Builder(context);
+        dlb.setCancelable(true);
 
-            // Use an EditText view to get user input.
-            final TextView TV_prog_name = new TextView(context);
-            TV_prog_name.setText(pn);
-            final ImageView IV_chan_pic = new ImageView(context);
-            aq.id(IV_chan_pic).image(cp);
-            builder.setView(IV_chan_pic);
-        Toast.makeText(context,cp,Toast.LENGTH_SHORT).show();
-
-            builder.setPositiveButton("ปิดหน้าต่าง", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_program_schedule, null);
+        ListView LV_prog_schedule = (ListView) view.findViewById(R.id.lv_prog_schedule);
+        TextView TV_prog_name = (TextView) view.findViewById(R.id.tv_prog_name);
+        TextView TV_chan_id = (TextView) view.findViewById(R.id.tv_chan_id);
+        ImageView IV_chan_pic = (ImageView) view.findViewById(R.id.iv_chan_pic);
 
 
-                    return;
-                }
-            });
+        TV_prog_name.setText(pn);
+        aq.id(IV_chan_pic).image(cp);
+        prepareDataToList(LV_prog_schedule,pn,TV_chan_id);
+
+        dlb.setView(view);
+        //Toast.makeText(context, cp, Toast.LENGTH_SHORT).show();
+
+        dlb.setNegativeButton("ปิดหน้าต่าง", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dlb.show();
 
 
 
-            builder.create();
-            builder.show();
 
     }
+
+
+    private void prepareDataToList(ListView lv,String pn,TextView tvchid) {
+        String item_time_start,item_prog_name,item_time_end;
+        int item_day_id,item_chan_id;
+        dataCustomDialogProgramSchedule.clear();
+        Collections.sort(arrDataStore_program,new Comparator<DataStore_Program>() {
+            @Override
+            public int compare(DataStore_Program lhs, DataStore_Program rhs) {
+                if (lhs.getFr_day_id() > rhs.getFr_day_id())
+                    return 1;
+                if (lhs.getFr_day_id() < rhs.getFr_day_id())
+                    return -1;
+                return 0;
+            }
+        });
+
+        for (int j = 0; j < arrDataStore_program.size(); j++) {
+            item_prog_name = arrDataStore_program.get(j).getProg_name();
+            item_time_start = arrDataStore_program.get(j).getProg_timestart();
+            item_time_end = arrDataStore_program.get(j).getProg_timeend();
+            item_day_id = arrDataStore_program.get(j).getFr_day_id();
+            item_chan_id = arrDataStore_program.get(j).getFr_channel_id();
+
+                if (item_prog_name.equals(pn)) {
+                    dataCustomDialogProgramSchedule.add(new DataCustomDialogProgramSchedule(arr_day[item_day_id], item_time_start, item_time_end));
+                    tvchid.setText("เลขช่อง "+Integer.toString(item_chan_id));
+                }
+
+            }
+
+        dialogProgramScheduleAdapter = new DialogProgramScheduleAdapter(context, dataCustomDialogProgramSchedule);
+        lv.setAdapter(dialogProgramScheduleAdapter);
+    }
+
 }
+
+
+
 
