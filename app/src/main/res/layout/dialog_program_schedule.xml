@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Program Name"
-        android:id="@+id/tv_prog_name"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/ll1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Coral">
+            <TextView
+                android:id="@+id/tv_prog_name"
+                android:textColor="#EEE"
+                android:textSize="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Program Name" />
+        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ll2"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_chan_pic"
-        android:layout_below="@+id/tv_prog_name"
-        android:src="@drawable/ic_launcher"
-        android:layout_alignParentLeft="true" />
+        android:layout_below="@+id/ll1"
+        android:background="@color/Bisque">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Channel ID"
-        android:id="@+id/tv_chan_id"
-        android:layout_alignTop="@+id/iv_chan_pic"
-        android:layout_toRightOf="@+id/iv_chan_pic" />
+        <ImageView
+            android:id="@+id/iv_chan_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_prog_schedule"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/iv_chan_pic" />
-</RelativeLayout>
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_chan_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Channel ID"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_chan_pic" />
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/lv_prog_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/ll2"
+            android:background="#fffbcd" />
+
+    </RelativeLayout>
