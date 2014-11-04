@@ -139,8 +139,6 @@ public class FavoriteList extends Activity {
 
 
     private void menuActionEdit() {
-        //Intent intent3 = new Intent(getApplicationContext(), SettingAlert.class);
-        //startActivity(intent3);
     }
 
     private void cancelAlarm(int prog_id) {
@@ -178,11 +176,10 @@ public class FavoriteList extends Activity {
                         boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
                         if (chkDeleted) {
                             cancelAlarm(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
-                            Toast.makeText(FavoriteList.this,"สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(context,"สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
                             prepareDataToList();
                         } else {
-                            Toast.makeText(FavoriteList.this,"ผิดพลาด : ไม่สามารถรายการได้",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"ผิดพลาด : ไม่สามารถลบรายการได้",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -197,40 +194,34 @@ public class FavoriteList extends Activity {
 
     }
 
-
     private void menuActionDeleteAll() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("ยืนยันการลบ");
-        builder.setMessage("คุณแน่ใจที่จะลบรายการทั้งหมดหรือไม่");
-        builder.setPositiveButton("ใช่",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        int rowCount = dbAction.countFavoriteProgram();
-                        if (rowCount > 0) {
+        int rowCount = dbAction.countFavoriteProgram();
+        if (rowCount <= 0) {
+            Toast.makeText(context, "ไม่มีรายการที่ต้องลบ", Toast.LENGTH_LONG).show();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("ยืนยันการลบ");
+            builder.setMessage("คุณแน่ใจที่จะลบรายการทั้งหมดใช่หรือไม่ ?");
+            builder.setPositiveButton("ใช่",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
                             boolean resAction = dbAction.deleteAllFavoriteProgram();
                             if (resAction == true) {
-                                Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "สำเร็จ : ลบรายการทั้งหมดเรียบร้อย", Toast.LENGTH_LONG).show();
                                 cancelAllAlarm();
                                 prepareDataToList();
                             } else {
-                                Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "ผิดพลาด : ไม่สามารถลบรายการได้", Toast.LENGTH_LONG).show();
                             }
-                        } else {
-                            Toast.makeText(context, "ไม่มีรายการที่ต้องการลบ", Toast.LENGTH_LONG).show();
                         }
-
-                    }
-                });
-        builder.setNegativeButton("ไม่",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        builder.show();
-
+                    });
+            builder.setNegativeButton("ไม่",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            builder.show();
+        }
     }
-
-
 }

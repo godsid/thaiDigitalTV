@@ -174,7 +174,6 @@ public class MainActivity extends Activity {
         });
 
 
-
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -200,6 +199,7 @@ public class MainActivity extends Activity {
                 }
 
                 DL_drawer_layout.closeDrawer(LV_menu_left);
+
             }
         });
     }
@@ -304,9 +304,18 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
     }
+
+    private static long back_pressed;
+
+    @Override
+    public void onBackPressed()
+    {
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
+    }
+
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

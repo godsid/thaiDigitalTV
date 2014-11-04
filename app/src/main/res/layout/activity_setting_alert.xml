@@ -97,9 +97,7 @@
             android:layout_height="wrap_content"
             android:background="#7e8a92"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
+            android:gravity="center_horizontal">
             <ToggleButton
                 android:id="@+id/tgb_0"
                 android:layout_width="50dp"
@@ -183,9 +181,6 @@
             android:orientation="horizontal"
             android:gravity="right"
             android:paddingTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
             android:paddingRight="7dp">
             <TextView
                 android:id="@+id/tv_check"

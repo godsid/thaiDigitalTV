@@ -118,7 +118,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
 */
 
             Animation animation = null;
-            animation = AnimationUtils.loadAnimation(context2, R.anim.flick_wave);
+            animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
             animation.setDuration(500);
             convertView.startAnimation(animation);
             animation = null;

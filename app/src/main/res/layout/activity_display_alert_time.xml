@@ -178,7 +178,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="40dp"
-                    android:background="@drawable/slide_center"/>
+                    android:background="@drawable/slide_center_tran"/>
                 <ImageView
                     android:id="@+id/iv_slide_right1"
                     android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="60dp"
+                    android:layout_marginBottom="40dp"
                     android:progressDrawable="@drawable/scrubber_progress_time"
                     android:thumb="@drawable/scrubber_control_time"/>
 
