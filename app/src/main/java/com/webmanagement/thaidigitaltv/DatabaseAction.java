@@ -80,6 +80,12 @@ public class DatabaseAction {
         return cnt;
     }
 
+    public Cursor readFavoriteById(int id) {
+        String countQuery = "SELECT  * FROM " + TB_NAME+" WHERE "+C_program_id+"="+id;
+        Cursor cursor = database.rawQuery(countQuery, null);
+        return cursor;
+    }
+
 
     public boolean deleteAllFavoriteProgram() {
         return database.delete(TB_NAME, null, null) > 0;

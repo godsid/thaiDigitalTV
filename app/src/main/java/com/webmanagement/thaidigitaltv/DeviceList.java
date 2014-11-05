@@ -57,20 +57,11 @@ Context context;
         aq = new AQuery(this);
 
         dataCustomDeviceListAdapter = new ArrayList<DataCustomDeviceListAdapter>();
-
         LV_device_list = (ListView)findViewById(R.id.lv_device_list);
-        ImageView ic_nav_top_left = (ImageView)findViewById(R.id.ic_nav_top_left);
 
         showDeviceList();
 
 
-
-        ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         LV_device_list.setOnItemClickListener(new OnItemClickListener() {
             @Override

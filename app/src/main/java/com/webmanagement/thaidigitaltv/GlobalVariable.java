@@ -1,10 +1,20 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,10 +43,12 @@ public class GlobalVariable {
     public static String Prog_timestart;
     public static String Prog_timeend;
 
-    public static ArrayList<String> arrDelOrAdd = new ArrayList<String>();
 
     private static Device mDevice = null;
     private static ServiceProvider mServiceProvider = null;
+    public static ArrayList<Device> arrDeviceList = null;
+
+    private static boolean confDialog;
 
     public static void clearAllArray() {
         arrProg_id.clear();
@@ -49,11 +61,6 @@ public class GlobalVariable {
     public static void clearFavArray() {
         arrFav_Prog_id.clear();
         arrFav_Prog_name.clear();
-
-    }
-
-    public static void clearArrDelOrAdd() {
-        arrDelOrAdd.clear();
 
     }
 
@@ -207,20 +214,28 @@ public class GlobalVariable {
         arrFav_Prog_name.add(j);
     }
 
-    public static String getArrDelOrAdd(int i) {
+    public static AlertDialog.Builder simpleDialogTemplate(Context c,String t,String b) {
 
-        return arrDelOrAdd.get(i);
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle(null);
+        View view = LayoutInflater.from(c).inflate(R.layout.dialog_template,null);
+        TextView title = (TextView)view.findViewById(R.id.title);
+        TextView body = (TextView)view.findViewById(R.id.body);
+        title.setText(t);
+        body.setText(b);
+        builder.setView(view);
+        return  builder;
     }
 
-    public static void addArrDelOrAdd(String j) {
-        arrDelOrAdd.add(j);
-    }
 
-    public static void printArrDelOrAdd() {
-        Log.d("run", "== Size ==" + arrDelOrAdd.size());
-        for (int i = 0; i < arrDelOrAdd.size(); i++) {
-            Log.d("run", i + " " + arrDelOrAdd.get(i));
-        }
+    public static boolean userChoosed(boolean b){
+
+        if(b)
+            //YOUR CODE FOR YES HERE
+           return true;
+        else
+            return false;
+
     }
 
 

@@ -54,7 +54,7 @@
             android:id="@+id/iv_settime_save"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/save"
+            android:src="@drawable/ic_save"
             />
     </RelativeLayout>
     <RelativeLayout

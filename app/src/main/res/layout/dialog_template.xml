@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_centerVertical="true"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/ll1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/BGTitleDialog">
+        <TextView
+            android:id="@+id/title"
+            android:text="เลือกอุปกรณ์"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ll2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll1"
+        android:background="@color/BGBodyDialog">
+    <WebView android:id="@+id/loader"
+        android:scrollbars="none"
+        android:background="@color/BGTitleDialog"
+        android:layout_width="60dp"
+        android:visibility="gone"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="5dp"/>
+    <TextView
+        android:id="@+id/body"
+        android:text="เลือกอุปกรณ์"
+        android:textColor="#333"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/loader"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>
+</RelativeLayout>

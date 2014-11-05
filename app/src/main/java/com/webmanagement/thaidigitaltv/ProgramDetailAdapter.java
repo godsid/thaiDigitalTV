@@ -1,14 +1,30 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sec.android.allshare.Device;
+import com.sec.android.allshare.ERROR;
+import com.sec.android.allshare.control.TVController;
 
 import java.util.ArrayList;
 
@@ -23,22 +39,18 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
     getObject getObject;
 
-    TextView TV_col_4;
-    private int bg_color_rl;
-    private int selectedPosition = 0;
-    ArrayList<Integer> arrHoldProg_idDB = ProgramDetail.arrHoldProg_idDB;
-    Context context2;
+    Context context;
     private int position_for_delete;
-
     DatabaseAction dbAction;
     int p;
 
 
-    public ProgramDetailAdapter(Context context, ArrayList<DataCustomProgramDetail> arrayList) {
 
+    public ProgramDetailAdapter(Context context2, ArrayList<DataCustomProgramDetail> arrayList) {
+        context = context2;
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
-        context2 = context;
+
         dbAction = new DatabaseAction(context);
 
     }
@@ -60,65 +72,72 @@ public class ProgramDetailAdapter extends BaseAdapter {
     }
 
 
+
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         try {
 
             p = position;
 
-            //   if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_program_detail, null);
 
             getObject = new getObject();
             getObject.TV_col_1 = (TextView) convertView.findViewById(R.id.tv_col_1);
             getObject.TV_col_2 = (TextView) convertView.findViewById(R.id.tv_col_2);
-            getObject.TV_col_3 = (TextView) convertView.findViewById(R.id.tv_col_3);
-            final TextView TV_col_4 = (TextView) convertView.findViewById(R.id.tv_col_4);
+            ImageView IV_col_3 = (ImageView) convertView.findViewById(R.id.tv_col_3);
+            getObject.IV_col_4 = (ImageView) convertView.findViewById(R.id.iv_col_4);
             convertView.setTag(getObject);
-            // } else {
-            //      getObject = (getObject) convertView.getTag();
-            // }
-
-
-            //  convertView.setTag(objectView);
 
             getObject.TV_col_1.setText(arrayProgramDetail.get(position).pname);
             getObject.TV_col_2.setText(arrayProgramDetail.get(position).pstart+"\n"+arrayProgramDetail.get(position).pend);
 
-            TV_col_4.setText("");
-            if (arrHoldProg_idDB.contains(arrayProgramDetail.get(position).id)) {
-                //Log.d("run","if "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-                TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_3, 0, 0, 0);
-                GlobalVariable.addArrDelOrAdd("delete");
+            if (arrayProgramDetail.get(position).haveindb) {
+                getObject.IV_col_4.setImageResource(R.drawable.ic_delete);
             } else {
-                // Log.d("run","else "+c+" : "+arrHoldProg_idDB.contains(id)+","+id);
-                TV_col_4.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_3, 0, 0, 0);
-                GlobalVariable.addArrDelOrAdd("add");
+                getObject.IV_col_4.setImageResource(R.drawable.ic_add);
             }
 
-            getObject.TV_col_3.setText("");
-            if (arrayProgramDetail.get(position).st) {
-               // Log.d("run", "st i : " + arrayProgramDetail.get(position).st);
-                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_onair, 0, 0, 0);
-            } else {
-               // Log.d("run", "st e : " + arrayProgramDetail.get(position).st);
-                getObject.TV_col_3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_offline, 0, 0, 0);
-            }
-/*
-            TV_col_4.setId(arrayProgramDetail.get(position).count);
-
-            TV_col_4.setOnClickListener(new View.OnClickListener() {
+            getObject.IV_col_4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    goWay(TV_col_4.getId());
-                    Log.d("run", "Clicked " + TV_col_4.getId());
+                    if (arrayProgramDetail.get(position).haveindb) {
+                            actionDelete(position);
 
+                    } else {
+
+                        Intent intent = new Intent(context, SettingAlert.class);
+                        intent.putExtra("i_Prog_id", arrayProgramDetail.get(position).id);
+                        intent.putExtra("i_Prog_name", arrayProgramDetail.get(position).pname);
+                        intent.putExtra("i_Prog_timestart", arrayProgramDetail.get(position).pstart);
+                        intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
+                        intent.putExtra("i_Action_type", "add");
+                        context.startActivity(intent);
+                    }
                 }
             });
-*/
+
+            if (arrayProgramDetail.get(position).st) {
+                //convertView.setSelected(true);
+                if (ProgramDetail.haveTVinNetwork) {
+                    IV_col_3.setImageResource(R.drawable.ic_share);
+                    IV_col_3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new DialogDeviceList(context);
+                        }
+                    });
+                } else {
+                    IV_col_3.setImageResource(R.drawable.ic_onair);
+                }
+            } else {
+                IV_col_3.setImageResource(R.drawable.ic_offline);
+            }
+
 
             Animation animation = null;
-            animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
+            animation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+
             animation.setDuration(500);
             convertView.startAnimation(animation);
             animation = null;
@@ -128,30 +147,65 @@ public class ProgramDetailAdapter extends BaseAdapter {
         } catch (Exception e) {
             Log.d("run", "Exception : " + e);
         }
+
         return convertView;
     }
 
 
-    public int getSelectedPosition() {
-        return selectedPosition;
+
+
+    public void actionDelete(int p) {
+        position_for_delete = p;
+        String s = "คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่";
+        AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrProg_id(position_for_delete));
+                        if (chkDeleted) {
+                            Toast.makeText(context, "Delete Complete", Toast.LENGTH_SHORT).show();
+
+                            ProgramDetail.arrHoldProg_idDB.add(arrayProgramDetail.get(position_for_delete).id);
+                            arrayProgramDetail.get(position_for_delete).haveindb = false;
+                            getObject.IV_col_4.setImageResource(R.drawable.ic_add);
+                            notifyDataSetChanged();
+
+                        } else {
+                            Toast.makeText(context, "Can't Delete ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        builder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.show();
+
     }
 
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
-    }
 
 
-}
+
+
+} // End Class
+
+
+
+
+
+
 
 
 class DataCustomProgramDetail {
     int id;
     String pname, pstart, pend;
-    boolean st;
+    boolean st,haveindb;
 
     int count;
 
-    public DataCustomProgramDetail(int id, String pname, String pstart, String pend, boolean st, int count) {
+    public DataCustomProgramDetail(int id, String pname, String pstart, String pend, boolean st, int count,boolean haveindb) {
 
         this.id = id;
         this.pname = pname;
@@ -159,11 +213,13 @@ class DataCustomProgramDetail {
         this.pend = pend;
         this.st = st;
         this.count = count;
+        this.haveindb = haveindb;
     }
 }
 
 class getObject {
-    TextView TV_col_1, TV_col_2, TV_col_3, TV_col_4;
+    TextView TV_col_1, TV_col_2;
+    ImageView IV_col_4;
 }
 
 

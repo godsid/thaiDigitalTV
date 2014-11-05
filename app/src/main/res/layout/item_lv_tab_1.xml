@@ -25,6 +25,7 @@
         android:textSize="15sp"
         android:paddingLeft="15dp"
         android:text="new text"
+        android:textStyle="bold"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/iv_channel_lv_tab_1"
         android:textColor="@color/White"

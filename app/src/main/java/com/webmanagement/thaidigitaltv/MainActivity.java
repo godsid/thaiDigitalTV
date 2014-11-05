@@ -2,18 +2,25 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,6 +31,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.ViewAnimator;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -77,7 +85,7 @@ public class MainActivity extends Activity {
     Calendar calendar;
     Date date;
 
-    ProgressDialog progressDialog;
+    private Dialog progressDialog;
 
     AQuery aq;
 
@@ -103,6 +111,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void onCreated(ServiceProvider serviceProvider, ServiceConnector.ServiceState serviceState) {
+                if (serviceProvider == null)
+                    return;
                 GlobalVariable.setServiceProvider(serviceProvider);
                 Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
             }
@@ -146,12 +156,24 @@ public class MainActivity extends Activity {
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMax(100);
-        progressDialog.setMessage("กำลังโหลดข้อมูล...");
-        progressDialog.setTitle("กรุณารอสักครู่");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        View view = getLayoutInflater().inflate(R.layout.dialog_template, null);
+        WebView wv = (WebView) view.findViewById(R.id.loader);
+        wv.setVisibility(View.VISIBLE);
+        wv.setBackgroundResource(R.color.BGBodyDialog);
+        wv.loadUrl("file:///android_asset/loader.gif");
+        TextView title = (TextView)view.findViewById(R.id.title);
+        TextView body = (TextView)view.findViewById(R.id.body);
+        title.setText("กรุณารอสักครู่");
+        body.setText("กำลังโหลดข้อมูล...");
+
+        //progressDialog.setMax(100);
+        //progressDialog.setMessage("กำลังโหลดข้อมูล...");
+        //progressDialog.setTitle("กรุณารอสักครู่");
+       // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
+        progressDialog.setContentView(view);
         progressDialog.show();
 
 
@@ -312,16 +334,16 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        if (back_pressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
         else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
         back_pressed = System.currentTimeMillis();
     }
 
 
     private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("เกิดข้อผิดพลาด");
-        builder.setMessage("ไม่สามารถโหลดข้อมูลได้");
+
+        String s = "ไม่สามารถโหลดข้อมูลได้";
+        AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "เกิดข้อผิดพลาด", s);
         builder.setNegativeButton("ลองอีกครั้ง",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -359,19 +381,20 @@ public class MainActivity extends Activity {
     protected void onResume() {
         //if (stateOK)
         //setEexpLeftChildSelected();
-        Log.d("run", "onResume");
+        Log.d("run", "MainActivity : onResume");
         super.onResume();
     }
 
 
     @Override
     protected void onPause() {
-        Log.d("run", "onPause");
+        Log.d("run", "MainActivity : onPause");
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+
         if (GlobalVariable.getServiceProvider() != null && isFinishing() == true)
             GlobalVariable.setServiceProvider(null);
         BitmapCache.getBitmapCache().clear();
@@ -381,18 +404,8 @@ public class MainActivity extends Activity {
         arrDataStore_program.clear();
         arrDataStore_type.clear();
 
-
-        /*
-        ComponentName receiver = new ComponentName(this, ReceiverAlarm.class);
-        PackageManager pm = this.getPackageManager();
-        pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-*/
-        //stopService(new Intent(this,ServiceAlarm.class));
-        // startService(new Intent(this,ServiceAlarm.class));
-
-        Log.d("run", "onDestroy");
+        Log.d("run", "MainActivity : onDestroy");
         super.onDestroy();
     }
-
 
 }

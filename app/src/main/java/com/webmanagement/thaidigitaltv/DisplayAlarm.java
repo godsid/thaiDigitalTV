@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -26,6 +27,8 @@ import com.androidquery.AQuery;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
+import com.sec.android.allshare.ServiceConnector;
+import com.sec.android.allshare.ServiceProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,12 +44,16 @@ public class DisplayAlarm extends Activity {
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
-
+    ServiceProvider serviceProvider;
     boolean haveTVinNetwork = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_display_alert_time);
         aq = new AQuery(this);
         dbAction = new DatabaseAction(this);
@@ -57,6 +64,35 @@ public class DisplayAlarm extends Activity {
 
         v.cancel();
         r.stop();
+
+        ERROR err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+
+            @Override
+            public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
+                if (serviceProvider2 == null)
+                    return;
+                serviceProvider = serviceProvider2;
+                Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+            }
+
+            @Override
+            public void onDeleted(ServiceProvider serviceProvider) {
+                //  GlobalVariable.setServiceProvider(null);
+                Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
+            }
+        });
+
+
+        if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
+            // AllShare Framework Service is not installed.
+            Log.d("run", "AllShare Framework Service is not installed.");
+        } else if (err == ERROR.INVALID_ARGUMENT) {
+            // Input argument is invalid. Check and try again
+            Log.d("run", "Input argument is invalid. Check and try again.");
+        } else {
+            // Success on calling the function.
+            Log.d("run", "Success on calling the function.");
+        }
 
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
         //Button bt_accept = (Button) findViewById(R.id.bt_disp_accept);
@@ -271,7 +307,7 @@ public class DisplayAlarm extends Activity {
 
     private void chkTVinNetwork() {
         ArrayList<Device> mDeviceList;
-        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        DeviceFinder deviceFinder = serviceProvider.getDeviceFinder();
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
         deviceFinder.refresh();
         mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
