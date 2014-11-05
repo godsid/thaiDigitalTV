@@ -178,4 +178,8 @@
     <color name="GreenGroupHighlight">#85c01f</color>
     <color name="ExpGroupView">#7e8a92</color>
     <color name="ExpListView">#4A4A4A</color>
+    <color name="BGBodyDialog">#fff6fbfb</color>
+    <color name="BGTitleDialog">#455a64</color>
+    <color name="THead1">#ff495259</color>
+    <color name="TDescription">#ff76868f</color>
 </resources>

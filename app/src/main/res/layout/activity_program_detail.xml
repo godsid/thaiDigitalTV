@@ -41,7 +41,7 @@
             android:id="@+id/iv_device_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tv_allshare"
+            android:src="@drawable/ic_share"
             android:layout_alignParentRight="true"
             />
 
@@ -215,7 +215,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:background="@color/GreenGroupHighlight"
+            android:background="@color/SeaGreen"
             />
             <ListView
                 android:id="@+id/lv_program_detail"

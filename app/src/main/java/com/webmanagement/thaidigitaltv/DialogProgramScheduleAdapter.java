@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
         this.arrayList = arrayList;
         mInflater = LayoutInflater.from(context);
         this.context2 = context;
+
+
+
     }
 
     @Override

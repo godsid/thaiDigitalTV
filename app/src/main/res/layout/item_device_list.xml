@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="Title"
+            android:textColor="@color/THead1"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -36,6 +37,7 @@
             android:layout_below="@+id/tv_device_name"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:textColor="@color/TDescription"
             android:text="Model"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -47,6 +49,7 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             android:text="IP"
+            android:textColor="@color/TDescription"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 

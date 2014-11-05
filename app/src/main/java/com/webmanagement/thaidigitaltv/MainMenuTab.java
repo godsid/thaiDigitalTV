@@ -10,12 +10,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -306,7 +304,7 @@ public class MainMenuTab {
         AlertDialog.Builder dlb = new AlertDialog.Builder(context);
         dlb.setCancelable(true);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_program_schedule, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_program_schedule, null);
         ListView LV_prog_schedule = (ListView) view.findViewById(R.id.lv_prog_schedule);
         TextView TV_prog_name = (TextView) view.findViewById(R.id.tv_prog_name);
         TextView TV_chan_id = (TextView) view.findViewById(R.id.tv_chan_id);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+    android:background="@color/BGTitleDialog"
+        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/ll1"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/BGTitleDialog">
+            <TextView
+
+                android:id="@+id/tv_prog_name"
+                android:text="4 Angies สี่สาวแสนซน"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"/>
+            </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/ll2"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/ll1"
+        android:background="@color/BGTitleDialog">
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:id="@+id/sp"
+            android:background="@color/White"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            />
+            <TextView
+                android:id="@+id/tv_chan_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="ช่อง 3"
+                android:layout_toRightOf="@+id/sp"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+            <ListView
+                android:id="@+id/lv_prog_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll1"
+                android:background="@color/White"
+                android:choiceMode="none"
+                android:clickable="false"
+                android:listSelector="#00f6fbfb" />
+    </RelativeLayout>
