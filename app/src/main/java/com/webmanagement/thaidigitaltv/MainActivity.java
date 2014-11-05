@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
+
     ImageView IV_ic_nav_top_left, IV_tv_share, IV_detail_list_title;
 
     DrawerLayout DL_drawer_layout;
