@@ -137,6 +137,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
             Animation animation = null;
             animation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+
             animation.setDuration(500);
             convertView.startAnimation(animation);
             animation = null;

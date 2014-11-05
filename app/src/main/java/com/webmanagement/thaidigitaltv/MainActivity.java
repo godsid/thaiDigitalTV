@@ -196,7 +196,6 @@ public class MainActivity extends Activity {
         });
 
 
-
         LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -222,6 +221,7 @@ public class MainActivity extends Activity {
                 }
 
                 DL_drawer_layout.closeDrawer(LV_menu_left);
+
             }
         });
     }
@@ -326,9 +326,18 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
     }
+
+    private static long back_pressed;
+
+    @Override
+    public void onBackPressed()
+    {
+        if (back_pressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
+        else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
+    }
+
 
     private void showAlertDialog() {
 
@@ -398,23 +407,4 @@ public class MainActivity extends Activity {
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        String s = "คุณแน่ใจที่จะออกจากแอพพลิเคชั่นหรือไม่";
-        AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
-        builder.setNegativeButton("ไม่",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-        builder.setPositiveButton("ใช่",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                        //super.onBackPressed();
-                    }
-                });
-
-        builder.show();
-    }
 }

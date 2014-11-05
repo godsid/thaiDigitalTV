@@ -209,7 +209,9 @@ public class ProgramDetail extends Activity {
             }
         });
 
+
 */
+
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -420,9 +422,8 @@ public class ProgramDetail extends Activity {
             LV_program_detail.setSelection(0);
         }
 
+
     }
-
-
 
 
     @Override

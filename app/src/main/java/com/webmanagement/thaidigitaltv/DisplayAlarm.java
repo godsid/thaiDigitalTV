@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -26,6 +27,8 @@ import com.androidquery.AQuery;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
+import com.sec.android.allshare.ServiceConnector;
+import com.sec.android.allshare.ServiceProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,12 +44,16 @@ public class DisplayAlarm extends Activity {
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
-
+    ServiceProvider serviceProvider;
     boolean haveTVinNetwork = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_display_alert_time);
         aq = new AQuery(this);
         dbAction = new DatabaseAction(this);
@@ -57,6 +64,35 @@ public class DisplayAlarm extends Activity {
 
         v.cancel();
         r.stop();
+
+        ERROR err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+
+            @Override
+            public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
+                if (serviceProvider2 == null)
+                    return;
+                serviceProvider = serviceProvider2;
+                Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+            }
+
+            @Override
+            public void onDeleted(ServiceProvider serviceProvider) {
+                //  GlobalVariable.setServiceProvider(null);
+                Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
+            }
+        });
+
+
+        if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
+            // AllShare Framework Service is not installed.
+            Log.d("run", "AllShare Framework Service is not installed.");
+        } else if (err == ERROR.INVALID_ARGUMENT) {
+            // Input argument is invalid. Check and try again
+            Log.d("run", "Input argument is invalid. Check and try again.");
+        } else {
+            // Success on calling the function.
+            Log.d("run", "Success on calling the function.");
+        }
 
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
         //Button bt_accept = (Button) findViewById(R.id.bt_disp_accept);
@@ -81,7 +117,7 @@ public class DisplayAlarm extends Activity {
         final ImageView iv_R6 = (ImageView) findViewById(R.id.iv_slide_right6);
         final Button bt_acc = (Button) findViewById(R.id.bt_accept);
         final Button bt_device = (Button) findViewById(R.id.bt_device_sh);
-
+        final ImageView iv_center = (ImageView) findViewById(R.id.iv_center_0);
         SeekBar sk1 = (SeekBar) findViewById(R.id.seek_1);
         sk1.setProgress(50);
         //Drawable ii = getResources().getDrawable(R.drawable.scrubber_control_time);
@@ -99,32 +135,32 @@ public class DisplayAlarm extends Activity {
                     iv_R5.setImageResource(R.drawable.arrow_right_5);
                     iv_R6.setImageResource(R.drawable.arrow_right_6);
                 }
-                if(progress <= 47){
+                if(progress <= 45){
                     iv_L1.setImageResource(R.drawable.arrow_left_1);
                 }
-                if(progress <= 42){
+                if(progress <= 40){
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                 }
-                if(progress <= 37){
+                if(progress <= 35){
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                 }
-                if(progress <= 32){
+                if(progress <= 30){
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                     iv_L4.setImageResource(R.drawable.arrow_left_4_2);
                 }
-                if(progress <= 27){
+                if(progress <= 25){
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                     iv_L4.setImageResource(R.drawable.arrow_left_4_2);
                     iv_L5.setImageResource(R.drawable.arrow_left_5_2);
                 }
-                if(progress <= 22){
+                if(progress <= 20){
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
@@ -199,7 +235,7 @@ public class DisplayAlarm extends Activity {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(DisplayAlarm.this,"ตรวจสอบ : ไม่พบ TV ในเครือข่าย",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DisplayAlarm.this,"ตรวจสอบ: ไม่พบ TV ของคุณในเครือข่าย",Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
@@ -208,9 +244,29 @@ public class DisplayAlarm extends Activity {
                 }
             }
         });
+        /*
+        bt_accept_open_app.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (repeat_id != 0)
+                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+                r.stop();
+                stopVibrator();
+                finish();
+                PackageManager manager = getPackageManager();
+                try {
+                    Intent i;
+                    i = manager.getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
+                    if (i == null)
+                        throw new PackageManager.NameNotFoundException();
+                    i.addCategory(Intent.CATEGORY_LAUNCHER);
+                    startActivity(i);
+                } catch (PackageManager.NameNotFoundException e) {}
+            }
+        });
+        */
 
-
-        try {
+    try {
 
             Intent intent = getIntent();
             prog_id = Integer.parseInt(intent.getStringExtra("prog_id"));
@@ -249,23 +305,21 @@ public class DisplayAlarm extends Activity {
         }
     }
 
-
     private void chkTVinNetwork() {
         ArrayList<Device> mDeviceList;
-        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        DeviceFinder deviceFinder = serviceProvider.getDeviceFinder();
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
         deviceFinder.refresh();
         mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
 
-
         if (mDeviceList.size() > 0) {
             haveTVinNetwork = true;
-
         } else {
             haveTVinNetwork = false;
         }
         Log.d("run","mDeviceList "+mDeviceList.size());
     }
+
 
 
     private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {

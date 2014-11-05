@@ -122,9 +122,9 @@ public class FavoriteList extends Activity {
 
     private void showActionMenuDialog() {
 
-        new AlertDialog.Builder(context)
-                .setTitle("เมนู")
-                .setItems(R.array.dialog_menu_fav,
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("เลือกเมนู");
+        builder.setItems(R.array.dialog_menu_fav,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialoginterface, int i) {
                                 if (i == 0)
@@ -132,9 +132,9 @@ public class FavoriteList extends Activity {
                                 else if (i == 1)
                                     menuActionDelete();
                             }
-                        })
-                .show()
-                .setCanceledOnTouchOutside(true);
+                        });
+        builder.show();
+        builder.setCancelable(true);
 
     }
 
@@ -205,11 +205,12 @@ public class FavoriteList extends Activity {
                         boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
                         if (chkDeleted) {
                             cancelAlarm(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
-                            Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
 
+                            Toast.makeText(context,"สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
                             prepareDataToList();
                         } else {
-                            Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"ผิดพลาด : ไม่สามารถลบรายการได้",Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
@@ -224,11 +225,13 @@ public class FavoriteList extends Activity {
 
     }
 
-
     private void menuActionDeleteAll() {
         int rowCount = dbAction.countFavoriteProgram();
-        if (rowCount > 0) {
 
+
+        if (rowCount <= 0) {
+            Toast.makeText(context, "ไม่มีรายการที่ต้องลบ", Toast.LENGTH_LONG).show();
+        } else {
             String s = "คุณแน่ใจที่จะลบรายการทั้งหมดหรือไม่";
             AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
             builder.setPositiveButton("ใช่",
@@ -236,11 +239,11 @@ public class FavoriteList extends Activity {
                         public void onClick(DialogInterface dialog, int id) {
                             boolean resAction = dbAction.deleteAllFavoriteProgram();
                             if (resAction == true) {
-                                Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "สำเร็จ : ลบรายการทั้งหมดเรียบร้อย", Toast.LENGTH_LONG).show();
                                 cancelAllAlarm();
                                 prepareDataToList();
                             } else {
-                                Toast.makeText(context, "ผิดพลาด : ไม่สามารถรายการได้", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "ผิดพลาด : ไม่สามารถลบรายการได้", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -251,9 +254,9 @@ public class FavoriteList extends Activity {
                         }
                     });
 
+
             builder.show();
-        } else {
-            Toast.makeText(context, "ไม่มีรายการที่ต้องการลบ", Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -262,7 +265,6 @@ public class FavoriteList extends Activity {
         //super.onResume();
         Log.d("run","onResume FAV");
         prepareDataToList();
-    }
-
+        }
 
 }

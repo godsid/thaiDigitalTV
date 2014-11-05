@@ -151,8 +151,8 @@
                 <SeekBar
                     android:secondaryProgress="@android:integer/config_shortAnimTime"
                     android:id="@+id/sb_detail_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:progressDrawable="@drawable/scrubber_progress"
                     android:thumb="@drawable/scrubber_control"

@@ -182,34 +182,59 @@ public class SettingAlert extends Activity {
 
     }
     private void disableChkBoxFromDB() {
-        SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
-        while (!cur.isAfterLast()) {
-            String prog_name = cur.getString(2);
-            int day_id = cur.getInt(6);
-            if (prog_name.equals(program_name)) {
-                setDisableChkBoxDay(day_id);
 
+            SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
+            while (!cur.isAfterLast()) {
+                String prog_name = cur.getString(2);
+                int day_id = cur.getInt(6);
+                if (prog_name.equals(program_name)) {
+
+                    setDisableChkBoxDay(day_id);
+
+                }
+                cur.moveToNext();
             }
-            cur.moveToNext();
-        }
-        cur.close();
+            cur.close();
+
     }
 
     private void isActionEdit() {
         switch (i_day_id) {
-            case 0 : TGB0.setChecked(true);
+            case 0 :
+                TGB0.setEnabled(true);
+                TGB0.setChecked(true);
+                TGB0.setBackgroundResource(R.drawable.toggle0);
                 break;
-            case 1 : TGB1.setChecked(true);
+            case 1 :
+                TGB1.setEnabled(true);
+                TGB1.setChecked(true);
+                TGB1.setBackgroundResource(R.drawable.toggle1);
                 break;
-            case 2 : TGB2.setChecked(true);
+            case 2 :
+                TGB2.setEnabled(true);
+                TGB2.setChecked(true);
+                TGB2.setBackgroundResource(R.drawable.toggle2);
                 break;
-            case 3 : TGB3.setChecked(true);
+            case 3 :
+                TGB3.setEnabled(true);
+                TGB3.setChecked(true);
+                TGB3.setBackgroundResource(R.drawable.toggle3);
                 break;
-            case 4 : TGB4.setChecked(true);
+            case 4 :
+                TGB4.setEnabled(true);
+                TGB4.setChecked(true);
+                TGB4.setBackgroundResource(R.drawable.toggle4);
                 break;
-            case 5 : TGB5.setChecked(true);
+            case 5 :
+                TGB5.setEnabled(true);
+                TGB5.setChecked(true);
+                TGB5.setBackgroundResource(R.drawable.toggle5);
                 break;
-            case 6 : TGB6.setChecked(true);
+            case 6 :
+                TGB6.setEnabled(true);
+                TGB6.setChecked(true);
+                TGB6.setBackgroundResource(R.drawable.toggle6);
+                Log.d("run","6 "+TGB6.isEnabled());
                 break;
         }
         int selectP = 0;
