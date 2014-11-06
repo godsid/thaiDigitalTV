@@ -31,9 +31,18 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         context = SplashScreenActivity.this;
-
         openFirst();
-
+        /*
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+        */
 
     }
 
@@ -49,10 +58,6 @@ public class SplashScreenActivity extends Activity {
 
 
     }
-
-
-
-
 
 
     private void showAlertDialog() {
@@ -95,17 +100,6 @@ public class SplashScreenActivity extends Activity {
         }
         return b;
     }
-/*
-       handler = new Handler();
-      runnable = new Runnable() {
-    @Override
-    public void run() {
-        Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-};
-*/
 
     @Override
     protected void onDestroy() {
@@ -113,16 +107,17 @@ public class SplashScreenActivity extends Activity {
         super.onDestroy();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-//        handler.postDelayed(runnable, 500);
+        handler.postDelayed(runnable, 2000);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-   //     handler.removeCallbacks(runnable);
+        handler.removeCallbacks(runnable);
     }
 
     @Override

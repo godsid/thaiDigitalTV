@@ -3,23 +3,16 @@ package com.webmanagement.thaidigitaltv;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -30,14 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import android.widget.ViewAnimator;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.sec.android.allshare.Device;
-import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
@@ -184,7 +173,7 @@ public class MainActivity extends Activity {
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IV_detail_list_title.setImageResource(R.drawable.ic_launcher);
+                IV_detail_list_title.setImageResource(R.drawable.ic_thaidigitaltv);
                 TV_detail_list_title.setText("ThaiDigitalTV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
@@ -334,7 +323,7 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        if (back_pressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
         else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
         back_pressed = System.currentTimeMillis();
     }

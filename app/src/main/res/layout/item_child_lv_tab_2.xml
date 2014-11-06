@@ -12,7 +12,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/ic_thaidigitaltv"
         android:background="@color/White"/>
 
     <TextView
