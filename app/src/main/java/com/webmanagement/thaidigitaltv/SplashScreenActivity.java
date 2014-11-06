@@ -56,9 +56,8 @@ public class SplashScreenActivity extends Activity {
 
 
     private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("เกิดข้อผิดพลาด");
-        builder.setMessage("ไม่สามารถเชื่อมกับต่อเครือข่ายได้");
+        String s = "ไม่สามารถเชื่อมกับต่อเครือข่ายได้";
+        AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "เกิดข้อผิดพลาด", s);
         builder.setNegativeButton("ลองอีกครั้ง",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

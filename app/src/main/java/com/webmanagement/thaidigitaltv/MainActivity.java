@@ -3,23 +3,16 @@ package com.webmanagement.thaidigitaltv;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -30,14 +23,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import android.widget.ViewAnimator;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.sec.android.allshare.Device;
-import com.sec.android.allshare.DeviceFinder;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
@@ -49,10 +39,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
-
+    //HashMap<Tracker, Tracker> mTrackers = new HashMap<Tracker, Tracker>();
     private DatabaseAction dbAction;
 
     //public static Typeface TF_font;
@@ -99,7 +90,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MyApplication myApplication = (MyApplication)getApplication();
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
@@ -406,5 +397,7 @@ public class MainActivity extends Activity {
         Log.d("run", "MainActivity : onDestroy");
         super.onDestroy();
     }
+
+
 
 }

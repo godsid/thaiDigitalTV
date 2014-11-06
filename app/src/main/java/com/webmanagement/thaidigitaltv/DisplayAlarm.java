@@ -3,6 +3,7 @@ package com.webmanagement.thaidigitaltv;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -46,7 +47,7 @@ public class DisplayAlarm extends Activity {
     int progress1;
     ServiceProvider serviceProvider;
     boolean haveTVinNetwork = false;
-
+    ERROR err;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class DisplayAlarm extends Activity {
         v.cancel();
         r.stop();
 
-        ERROR err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+        err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
 
             @Override
             public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
@@ -95,12 +96,6 @@ public class DisplayAlarm extends Activity {
         }
 
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
-        //Button bt_accept = (Button) findViewById(R.id.bt_disp_accept);
-        //Button buttonKS = (Button) findViewById(R.id.bt_kill_service);
-        //Button bt_accept_open_app = (Button) findViewById(R.id.bt_disp_accept_and_open);
-        //TextView TV_time_before = (TextView) findViewById(R.id.tv_time_before);
-        //TextView TV_time_onair = (TextView) findViewById(R.id.tv_time_onair);
-        //ImageView iv_channel = (ImageView) findViewById(R.id.iv_disp_chan);
 
         final ImageView iv0 = (ImageView) findViewById(R.id.iv_center_0);
         final ImageView iv_L1 = (ImageView) findViewById(R.id.iv_slide_left1);
@@ -244,27 +239,7 @@ public class DisplayAlarm extends Activity {
                 }
             }
         });
-        /*
-        bt_accept_open_app.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeat_id != 0)
-                    Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
-                r.stop();
-                stopVibrator();
-                finish();
-                PackageManager manager = getPackageManager();
-                try {
-                    Intent i;
-                    i = manager.getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
-                    if (i == null)
-                        throw new PackageManager.NameNotFoundException();
-                    i.addCategory(Intent.CATEGORY_LAUNCHER);
-                    startActivity(i);
-                } catch (PackageManager.NameNotFoundException e) {}
-            }
-        });
-        */
+
 
     try {
 
@@ -289,12 +264,7 @@ public class DisplayAlarm extends Activity {
 
             }
 
-            //tv_title.setText(prog_id + " : " + prog_name + "  " + chan_name);
             tv_title.setText("รายการ" + prog_name + "  " + chan_name);
-            //tv_time.setText("แจ้งเตือน " + time_before + " ก่อนถึงเวลา " + time_start);
-            //TV_time_before.setText("แจ้งเตือนก่อนเวลาออกอากาศ " + time_before + " นาที");
-            //TV_time_onair.setText("เวลาออกอากาศ " + time_start + " นาที");
-            //aq.id(iv_channel).image(getIntent().getStringExtra("pic"));
 
             long[] pattern = {1000, 0, 0, 100, 100, 0, 100, 2000, 0, 0,};
             v.vibrate(pattern, 0);
@@ -303,6 +273,7 @@ public class DisplayAlarm extends Activity {
         } catch (Exception e) {
             Log.d("run", "File DisplayAlarm : " + e);
         }
+
     }
 
     private void chkTVinNetwork() {
@@ -349,13 +320,11 @@ public class DisplayAlarm extends Activity {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.MINUTE, Integer.parseInt(time_before));
 
-        //int date = calendar.get(Calendar.DATE);
         String hm = sdf.format(calendar.getTime());
 
         Calendar calendarNext = Calendar.getInstance();
         calendarNext.setTimeInMillis(calendar.getTimeInMillis());
         calendarNext.add(Calendar.DAY_OF_WEEK, 7);
-
 
         return "แจ้งเตือนอีกครั้งวัน"+arr_day[day_id]+" เวลา"+hm;
 
@@ -388,5 +357,17 @@ public class DisplayAlarm extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void unregisterReceiver(BroadcastReceiver receiver) {
+        super.unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        ServiceConnector.deleteServiceProvider(serviceProvider);
+        super.onDestroy();
     }
 }
