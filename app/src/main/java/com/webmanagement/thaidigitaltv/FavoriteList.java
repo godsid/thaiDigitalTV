@@ -101,7 +101,7 @@ public class FavoriteList extends Activity {
             else
                 st_repeat = "เตือนซ้ำทุกวัน"+arr_day[day_id];
             //String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
-            String time_sb = "เตือนล่วงหน้า "+time_before+" นาที ก่อนออกอากาศเวลา " + time_start + " น.";
+            String time_sb = "เตือนล่วงหน้า "+time_before+" นาที \nก่อนออกอากาศเวลา " + time_start + " น.";
             String ln3 = chan_name + "  " + st_repeat;
             arrayListData.add(new DataCustomFavoriteList(prog_id, prog_name, ln3, time_sb));
             cur.moveToNext();

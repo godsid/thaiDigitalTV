@@ -340,6 +340,7 @@ public class DisplayAlarm extends Activity {
        return;
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -358,6 +359,7 @@ public class DisplayAlarm extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+<<<<<<< HEAD
 
     @Override
     public void unregisterReceiver(BroadcastReceiver receiver) {
@@ -370,4 +372,7 @@ public class DisplayAlarm extends Activity {
         ServiceConnector.deleteServiceProvider(serviceProvider);
         super.onDestroy();
     }
+=======
+    */
+>>>>>>> a0de5a30a5d8a11dd7a767ab9fdec22f9d8146cf
 }

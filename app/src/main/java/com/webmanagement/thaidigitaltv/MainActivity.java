@@ -27,7 +27,10 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+<<<<<<< HEAD
 import com.google.android.gms.analytics.GoogleAnalytics;
+=======
+>>>>>>> a0de5a30a5d8a11dd7a767ab9fdec22f9d8146cf
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
@@ -50,6 +53,7 @@ public class MainActivity extends Activity {
     //public String frontPath = "fonts/RSU_BOLD.ttf";
     //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
     static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
+
 
     ImageView IV_ic_nav_top_left, IV_tv_share, IV_detail_list_title;
 
@@ -174,7 +178,7 @@ public class MainActivity extends Activity {
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IV_detail_list_title.setImageResource(R.drawable.ic_launcher);
+                IV_detail_list_title.setImageResource(R.drawable.ic_thaidigitaltv);
                 TV_detail_list_title.setText("ThaiDigitalTV");
                 if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
                     DL_drawer_layout.closeDrawer(LV_menu_left);
@@ -324,7 +328,7 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        if (back_pressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
         else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
         back_pressed = System.currentTimeMillis();
     }
