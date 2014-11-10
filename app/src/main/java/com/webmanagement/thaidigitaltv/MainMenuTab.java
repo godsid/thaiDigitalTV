@@ -2,6 +2,7 @@ package com.webmanagement.thaidigitaltv;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 
 
 import com.androidquery.AQuery;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +41,7 @@ public class MainMenuTab {
     LayoutInflater inflater;
     ListView LV_tab_1;
     Activity activity;
-
+    Tracker t;
 
 
     AQuery aq;
@@ -72,6 +75,8 @@ public class MainMenuTab {
         this.rootView = view;
         this.context = rootView.getContext();
         aq = new AQuery(context);
+
+        t =((MyApplication)((Activity)context).getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
 
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
@@ -116,6 +121,7 @@ public class MainMenuTab {
                 GlobalVariable.setChan_name(get_channel_name);
                 GlobalVariable.setChan_pic(get_channel_pic);
 
+
                 openDetailProgram();
             }
         });
@@ -129,7 +135,8 @@ public class MainMenuTab {
                 //get position highlight
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
-
+                t.setScreenName("หมวดหมู่_"+group_list_tab2.get(groupPosition).getName());
+                t.send(new HitBuilders.AppViewBuilder().build());
 
                 GlobalVariable.setChan_id(get_channel_id);
                 GlobalVariable.setChan_name(get_channel_name);
@@ -150,7 +157,11 @@ public class MainMenuTab {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 //Toast.makeText(context,get_prog_name,Toast.LENGTH_SHORT).show();
+                t.setScreenName("ประเภทรายการ_" + group_list_tab3.get(groupPosition).getTypeName());
+                t.send(new HitBuilders.AppViewBuilder().build());
+
                 showDialogDetailProgram(get_prog_name, get_channel_pic);
+
                 return false;
             }
         });
@@ -300,6 +311,8 @@ public class MainMenuTab {
 
     private void showDialogDetailProgram(String pn, String cp) {
 
+        t.setScreenName("รายการ_"+pn);
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         AlertDialog.Builder dlb = new AlertDialog.Builder(context);
         dlb.setCancelable(true);

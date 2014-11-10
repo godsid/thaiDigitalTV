@@ -33,7 +33,6 @@
     <string name="title_activity_display_alert_time">DisplayAlertTime</string>
     <string name="title_activity_activity_device_list">activity_device_list</string>
 
-
     <!-- Code Color -->
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
@@ -182,4 +181,7 @@
     <color name="BGTitleDialog">#455a64</color>
     <color name="THead1">#ff495259</color>
     <color name="TDescription">#ff76868f</color>
+
+    <string name="title_activity_sample_application">SampleApplication</string>
+
 </resources>

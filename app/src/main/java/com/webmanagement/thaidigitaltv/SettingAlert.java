@@ -19,6 +19,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.androidquery.AQuery;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,12 +53,12 @@ public class SettingAlert extends Activity {
 
     Bundle bundle;
 
-
+    Tracker t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_alert);
-
+        t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
         aq = new AQuery(this);
         bundle = getIntent().getExtras();
         dbAction = new DatabaseAction(this);
@@ -358,6 +360,11 @@ public class SettingAlert extends Activity {
 
 
     private void addAlarm(int pid, int tbf, int d, int rp) {
+
+        t.setScreenName("แจ้งเตือนล่วงหน้า_"+tbf);
+        t.send(new HitBuilders.AppViewBuilder().build());
+        t.setScreenName("รายการโปรด_"+pid+"_"+program_name);
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         Intent intent = new Intent(getApplicationContext(), ReceiverAlarm.class);
         intent.putExtra("prog_id", Integer.toString(pid));

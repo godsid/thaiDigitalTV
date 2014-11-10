@@ -45,9 +45,9 @@ public class DisplayAlarm extends Activity {
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
-    ServiceProvider serviceProvider;
     boolean haveTVinNetwork = false;
     ERROR err;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,44 +56,49 @@ public class DisplayAlarm extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_display_alert_time);
+        context = DisplayAlarm.this;
         aq = new AQuery(this);
         dbAction = new DatabaseAction(this);
         //stopVibrator();
-        v = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+        v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        r = RingtoneManager.getRingtone(context, notification);
 
         v.cancel();
         r.stop();
 
-        err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
 
-            @Override
-            public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
-                if (serviceProvider2 == null)
-                    return;
-                serviceProvider = serviceProvider2;
-                Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+            err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+
+                @Override
+                public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
+
+                    if (serviceProvider2 == null)
+                        return;
+                    GlobalVariable.setServiceProvider(serviceProvider2);
+                    Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+                }
+
+                @Override
+                public void onDeleted(ServiceProvider serviceProvider) {
+                    GlobalVariable.setServiceProvider(null);
+                    Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
+                }
+            });
+
+
+            if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
+                // AllShare Framework Service is not installed.
+                Log.d("run", "AllShare Framework Service is not installed.");
+            } else if (err == ERROR.INVALID_ARGUMENT) {
+                // Input argument is invalid. Check and try again
+                Log.d("run", "Input argument is invalid. Check and try again.");
+            } else {
+                // Success on calling the function.
+                Log.d("run", "Success on calling the function.");
             }
 
-            @Override
-            public void onDeleted(ServiceProvider serviceProvider) {
-                //  GlobalVariable.setServiceProvider(null);
-                Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
-            }
-        });
 
-
-        if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
-            // AllShare Framework Service is not installed.
-            Log.d("run", "AllShare Framework Service is not installed.");
-        } else if (err == ERROR.INVALID_ARGUMENT) {
-            // Input argument is invalid. Check and try again
-            Log.d("run", "Input argument is invalid. Check and try again.");
-        } else {
-            // Success on calling the function.
-            Log.d("run", "Success on calling the function.");
-        }
 
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
 
@@ -213,7 +218,7 @@ public class DisplayAlarm extends Activity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (progress1 <= 10){
                     if (repeat_id != 0)
-                        Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,alertNextTime(time_before),Toast.LENGTH_LONG).show();
                         r.stop();
                         stopVibrator();
                         finish();
@@ -221,13 +226,14 @@ public class DisplayAlarm extends Activity {
                 else if (progress1 >= 90){
                     chkTVinNetwork();
                     if (repeat_id != 0 )
-                        Toast.makeText(getApplicationContext(),alertNextTime(time_before),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,alertNextTime(time_before),Toast.LENGTH_LONG).show();
                         r.stop();
                         stopVibrator();
                         finish();
                     if (haveTVinNetwork) {
-                        Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                       Intent intent = new Intent(getApplicationContext(), DeviceList.class);
                         startActivity(intent);
+
 
                     } else {
                         Toast.makeText(DisplayAlarm.this,"ตรวจสอบ: ไม่พบ TV ของคุณในเครือข่าย",Toast.LENGTH_SHORT).show();
@@ -277,14 +283,13 @@ public class DisplayAlarm extends Activity {
     }
 
     private void chkTVinNetwork() {
-        ArrayList<Device> mDeviceList;
-        DeviceFinder deviceFinder = serviceProvider.getDeviceFinder();
+        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
-        deviceFinder.refresh();
-        mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
+        ArrayList<Device> mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
 
         if (mDeviceList.size() > 0) {
             haveTVinNetwork = true;
+            GlobalVariable.arrDeviceList = mDeviceList;
         } else {
             haveTVinNetwork = false;
         }
@@ -340,7 +345,7 @@ public class DisplayAlarm extends Activity {
        return;
     }
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -348,31 +353,14 @@ public class DisplayAlarm extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-<<<<<<< HEAD
-
-    @Override
-    public void unregisterReceiver(BroadcastReceiver receiver) {
-        super.unregisterReceiver(receiver);
-    }
 
     @Override
     protected void onDestroy() {
 
-        ServiceConnector.deleteServiceProvider(serviceProvider);
+        if (!haveTVinNetwork) {
+            GlobalVariable.setServiceProvider(null);
+            Log.d("run","onDestroy : !haveTVinNetwork");
+        }
         super.onDestroy();
     }
-=======
-    */
->>>>>>> a0de5a30a5d8a11dd7a767ab9fdec22f9d8146cf
 }

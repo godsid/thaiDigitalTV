@@ -1,5 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.control.TVController;
@@ -50,7 +53,6 @@ public class ProgramDetailAdapter extends BaseAdapter {
         context = context2;
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
-
         dbAction = new DatabaseAction(context);
 
     }
@@ -131,7 +133,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
                     IV_col_3.setImageResource(R.drawable.ic_onair);
                 }
             } else {
-                IV_col_3.setImageResource(R.drawable.ic_offline);
+                IV_col_3.setImageDrawable(null);
             }
 
 

@@ -46,7 +46,6 @@ public class DeviceList extends Activity {
 
     private TVController mTVController = null;
     ArrayList<Device> mDeviceList;
-    ProgressDialog progressDialog;
 
 Context context;
 
@@ -57,17 +56,23 @@ Context context;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        setContentView(R.layout.activity_display_alert_time);
         setContentView(R.layout.activity_device_list);
         context = DeviceList.this;
         aq = new AQuery(this);
 
+
         dataCustomDeviceListAdapter = new ArrayList<DataCustomDeviceListAdapter>();
         LV_device_list = (ListView)findViewById(R.id.lv_device_list);
+        ImageView IV_exit = (ImageView)findViewById(R.id.iv_exit);
 
         showDeviceList();
 
-
+        IV_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         LV_device_list.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -81,12 +86,10 @@ Context context;
                         return;
                     } else {
                         mTVController.setEventListener(mEventListener);
-
                         mTVController.connect();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("ยืนยัน");
-                        builder.setMessage("ส่งช่อง " + GlobalVariable.getChan_name()+"\nแสดงไปยัง "+mDeviceList.get(itemSelect).getName());
+                        String s = "ส่งช่อง " + GlobalVariable.getChan_name()+"\nแสดงไปยัง "+mDeviceList.get(itemSelect).getName();
+                        AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
                         builder.setPositiveButton("ตกลง",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
@@ -143,26 +146,6 @@ Context context;
 
         }
 
-    }
-
-
-
-    private ProgressDialog showDialogProgress() {
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMax(100);
-        progressDialog.setMessage("กำลังโหลดข้อมูล TV...");
-        progressDialog.setTitle("กรุณารอสักครู่");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-        progressDialog.setButton(Dialog.BUTTON_NEUTRAL, "ยกเลิก", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                progressDialog.dismiss();
-            }
-        });
-        progressDialog.show();
-        return progressDialog;
     }
 
 
@@ -306,26 +289,15 @@ Context context;
         getMenuInflater().inflate(R.menu.activity_device_list, menu);
         return true;
     }
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onDestroy() {
-       // if (mServiceProvider != null)
-            //ServiceConnector.deleteServiceProvider(mServiceProvider);
+        if (GlobalVariable.getServiceProvider() != null && isFinishing() == true)
+            GlobalVariable.setServiceProvider(null);
+
         super.onDestroy();
     }
-    */
+
 
 }
 

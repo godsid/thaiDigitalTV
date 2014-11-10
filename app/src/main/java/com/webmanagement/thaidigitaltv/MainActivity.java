@@ -27,10 +27,10 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-<<<<<<< HEAD
+
 import com.google.android.gms.analytics.GoogleAnalytics;
-=======
->>>>>>> a0de5a30a5d8a11dd7a767ab9fdec22f9d8146cf
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
@@ -89,12 +89,17 @@ public class MainActivity extends Activity {
     MainMenuTab mainMenuTab;
 
     Context context;
+   Tracker t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MyApplication myApplication = (MyApplication)getApplication();
+        //Get a Tracker (should auto-report)
+     //   t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+    //    t.setScreenName("Main Activity");
+    //    t.send(new HitBuilders.AppViewBuilder().build());
+
         dbAction = new DatabaseAction(this);
         calendar = Calendar.getInstance();
         date = new Date();
@@ -113,7 +118,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onDeleted(ServiceProvider serviceProvider) {
-              //  GlobalVariable.setServiceProvider(null);
+                GlobalVariable.setServiceProvider(null);
                 Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
             }
         });
@@ -399,9 +404,16 @@ public class MainActivity extends Activity {
         arrDataStore_type.clear();
 
         Log.d("run", "MainActivity : onDestroy");
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
         super.onDestroy();
     }
 
+    @Override
+    protected void onStart() {
+        //Get an Analytics tracker to report app starts & uncaught exceptions etc.
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        super.onStart();
+    }
 
 
 }

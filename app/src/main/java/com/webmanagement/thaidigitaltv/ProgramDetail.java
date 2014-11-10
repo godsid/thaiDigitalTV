@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
@@ -78,7 +80,7 @@ public class ProgramDetail extends Activity {
 
 
     private TVController mTVController = null;
-
+    Tracker t;
 
 
     @Override
@@ -95,6 +97,7 @@ public class ProgramDetail extends Activity {
         programDetailAdapter = new ProgramDetailAdapter(this,dataCustomProgramDetail);
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
+        t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         //TV_detail_list_title.setTypeface(TF_font);
@@ -177,40 +180,6 @@ public class ProgramDetail extends Activity {
                 setDefaultToday();
             }
         });
-
-
-
-
-/*
-
-        LV_program_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // Log.d("run", "P "+position+" : "+programDetailAdapter.getSelectedPosition());
-               // Log.d("run",String.valueOf(GlobalVariable.getArrDelOrAdd(position).equals("add")));
-
-               if (!dataCustomProgramDetail.get(position).haveindb) {
-
-                    Intent intent = new Intent(context, SettingAlert.class);
-                    intent.putExtra("i_Prog_id", dataCustomProgramDetail.get(position).id);
-                    intent.putExtra("i_Prog_name", dataCustomProgramDetail.get(position).pname);
-                    intent.putExtra("i_Prog_timestart", dataCustomProgramDetail.get(position).pstart);
-                    intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
-                    intent.putExtra("i_Action_type", "add");
-
-                    startActivity(intent);
-                } else {
-                    position_for_delete = position;
-                    //menuActionDelete(position_for_delete);
-                }
-
-
-                Log.d("run", "Selcet List Position " + position);
-            }
-        });
-
-
-*/
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
@@ -349,6 +318,8 @@ public class ProgramDetail extends Activity {
         aq.id(IV_detail_list_title).image(GlobalVariable.getChan_pic());
         TV_detail_list_title.setText(GlobalVariable.getChan_name());
 
+        t.setScreenName("ช่อง_"+GlobalVariable.getChan_id()+"_"+GlobalVariable.getChan_name());
+        t.send(new HitBuilders.AppViewBuilder().build());
 
         int c = 0;
         for (int j = 0; j < arrDataStore_program.size(); j++) {
