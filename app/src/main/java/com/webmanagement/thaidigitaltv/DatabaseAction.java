@@ -81,7 +81,7 @@ public class DatabaseAction {
     }
 
     public Cursor readFavoriteById(int id) {
-        String countQuery = "SELECT  * FROM " + TB_NAME+" WHERE "+C_program_id+"="+id;
+        String countQuery = "SELECT  * FROM " + TB_NAME + " WHERE " + C_program_id + "=" + id;
         Cursor cursor = database.rawQuery(countQuery, null);
         return cursor;
     }

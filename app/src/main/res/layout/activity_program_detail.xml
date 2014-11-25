@@ -59,45 +59,24 @@
         android:background="#455a64"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:gravity="center_vertical|center_horizontal"
             android:background="@drawable/bg_head_1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
 
                 <ImageButton
                     android:id="@+id/iv_detail_today"
                     android:layout_width="70dp"
-                    android:layout_height="70dp "
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/today_btn"/>
+                    android:background="@drawable/today_btn"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentLeft="false" />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
 
                         <TextView
                             android:id="@+id/tv_detail_day"
@@ -105,16 +84,12 @@
                             android:layout_height="wrap_content"
                             android:text="พฤหัสบดี"
                             android:textSize="19sp"
-                            android:textColor="@color/White"/>
+                            android:textColor="@color/White"
+                            android:layout_alignTop="@+id/iv_detail_today"
+                            android:layout_toLeftOf="@+id/tv_detail_date"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:orientation="horizontal"
-                        android:gravity="center">
 
                         <TextView
                             android:id="@+id/tv_detail_date"
@@ -122,96 +97,111 @@
                             android:layout_height="wrap_content"
                             android:text="30"
                             android:textSize="19sp"
-                            android:layout_marginRight="10dp"
-                            android:textColor="@color/White"/>
+                            android:textColor="@color/White"
+                            android:layout_alignBaseline="@+id/tv_detail_month"
+                            android:layout_alignBottom="@+id/tv_detail_month"
+                            android:layout_toLeftOf="@+id/tv_detail_month"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp" />
                         <TextView
                             android:id="@+id/tv_detail_month"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
                             android:textSize="19sp"
                             android:text="พฤศจิกายน"
-                            android:textColor="@color/White"/>
+                            android:textColor="@color/White"
+                            android:layout_alignBaseline="@+id/tv_detail_year"
+                            android:layout_alignBottom="@+id/tv_detail_year"
+                            android:layout_toLeftOf="@+id/tv_detail_year"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp" />
                         <TextView
                             android:id="@+id/tv_detail_year"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:textSize="19sp"
                             android:text="2557"
-                            android:textColor="@color/White"/>
-                    </LinearLayout>
+                            android:textColor="@color/White"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_alignParentRight="true"
+                            android:gravity="center_horizontal" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="10dp">
                     <SeekBar
                         android:secondaryProgress="@android:integer/config_shortAnimTime"
                         android:id="@+id/sb_detail_date"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
                         android:progressDrawable="@drawable/scrubber_progress"
                         android:thumb="@drawable/scrubber_control"
-                        android:thumbOffset="5dp"/>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    <LinearLayout
+                        android:thumbOffset="5dp"
+                        android:layout_alignBottom="@+id/iv_detail_today"
+                        android:layout_toRightOf="@+id/iv_detail_today"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="15dp" />
+
+        </RelativeLayout>
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:baselineAligned="false"
         android:background="#455a64"
         android:orientation="horizontal"
-        android:gravity="center_horizontal|center_vertical"
-        android:paddingBottom="3dp">
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
 
         <TextView
             android:id="@+id/tv_header_program"
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tb_header_program"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_header_time"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
         <TextView
             android:id="@+id/tv_header_time"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="85dp"
+            android:layout_height="fill_parent"
             android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:text="@string/tb_header_time"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_header_status"
+            android:layout_marginRight="15dp" />
         <TextView
             android:id="@+id/tv_header_status"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tb_header_status"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_header_fav"
+            android:layout_marginRight="15dp" />
         <TextView
             android:id="@+id/tv_header_fav"
-            android:layout_width="85dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tb_header_fav"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@color/SeaGreen"/>
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp" />
+    </RelativeLayout>
+
 
             <ListView
                 android:id="@+id/lv_program_detail"

@@ -48,7 +48,6 @@ public class ProgramDetailAdapter extends BaseAdapter {
     int p;
 
 
-
     public ProgramDetailAdapter(Context context2, ArrayList<DataCustomProgramDetail> arrayList) {
         context = context2;
         this.arrayProgramDetail = arrayList;
@@ -74,8 +73,6 @@ public class ProgramDetailAdapter extends BaseAdapter {
     }
 
 
-
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         try {
@@ -92,7 +89,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
             convertView.setTag(getObject);
 
             getObject.TV_col_1.setText(arrayProgramDetail.get(position).pname);
-            getObject.TV_col_2.setText(arrayProgramDetail.get(position).pstart+"\n"+arrayProgramDetail.get(position).pend);
+            getObject.TV_col_2.setText(arrayProgramDetail.get(position).pstart + "\n" + arrayProgramDetail.get(position).pend);
 
             if (arrayProgramDetail.get(position).haveindb) {
                 getObject.IV_col_4.setImageResource(R.drawable.ic_delete);
@@ -104,7 +101,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     if (arrayProgramDetail.get(position).haveindb) {
-                            actionDelete(position);
+                        actionDelete(position);
 
                     } else {
 
@@ -112,6 +109,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
                         intent.putExtra("i_Prog_id", arrayProgramDetail.get(position).id);
                         intent.putExtra("i_Prog_name", arrayProgramDetail.get(position).pname);
                         intent.putExtra("i_Prog_timestart", arrayProgramDetail.get(position).pstart);
+                        intent.putExtra("i_Day_id", arrayProgramDetail.get(position).did);
                         intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
                         intent.putExtra("i_Action_type", "add");
                         context.startActivity(intent);
@@ -145,15 +143,12 @@ public class ProgramDetailAdapter extends BaseAdapter {
             animation = null;
 
 
-
         } catch (Exception e) {
             Log.d("run", "Exception : " + e);
         }
 
         return convertView;
     }
-
-
 
 
     public void actionDelete(int p) {
@@ -188,26 +183,17 @@ public class ProgramDetailAdapter extends BaseAdapter {
     }
 
 
-
-
-
 } // End Class
-
-
-
-
-
-
 
 
 class DataCustomProgramDetail {
     int id;
     String pname, pstart, pend;
-    boolean st,haveindb;
-
+    boolean st, haveindb;
+    int did;
     int count;
 
-    public DataCustomProgramDetail(int id, String pname, String pstart, String pend, boolean st, int count,boolean haveindb) {
+    public DataCustomProgramDetail(int id, String pname, String pstart, String pend, boolean st, int count, boolean haveindb,int did) {
 
         this.id = id;
         this.pname = pname;
@@ -216,6 +202,7 @@ class DataCustomProgramDetail {
         this.st = st;
         this.count = count;
         this.haveindb = haveindb;
+        this.did = did;
     }
 }
 

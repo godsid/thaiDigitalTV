@@ -19,6 +19,7 @@ import java.util.Calendar;
 public class ReceiverAlarm extends BroadcastReceiver {
 
     private Context mContext;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
@@ -43,7 +44,7 @@ public class ReceiverAlarm extends BroadcastReceiver {
 
             mContext.startService(intent1);
 
-           Log.d("run", "Receiver " + prog_id);
+            Log.d("run", "Receiver " + prog_id);
 
 
         } catch (Exception e) {
@@ -51,7 +52,6 @@ public class ReceiverAlarm extends BroadcastReceiver {
         }
 
     }
-
 
 
     @Override

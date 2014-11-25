@@ -70,7 +70,7 @@ public class ProgramDetail extends Activity {
     ProgramDetailAdapter programDetailAdapter;
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
 
-    public static  ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
+    public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
     ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
 
 
@@ -94,10 +94,10 @@ public class ProgramDetail extends Activity {
         date = new Date();
         dbAction = new DatabaseAction(this);
 
-        programDetailAdapter = new ProgramDetailAdapter(this,dataCustomProgramDetail);
+        programDetailAdapter = new ProgramDetailAdapter(this, dataCustomProgramDetail);
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
-        t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+        t = ((MyApplication) getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
 
         TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         //TV_detail_list_title.setTypeface(TF_font);
@@ -143,7 +143,6 @@ public class ProgramDetail extends Activity {
         TV_header_time.setTextSize(tv_header_tb_size);
         TV_header_status.setTextSize(tv_header_tb_size);
         TV_header_fav.setTextSize(tv_header_tb_size);
-
 
 
         setDataToLV();
@@ -193,6 +192,9 @@ public class ProgramDetail extends Activity {
             @Override
             public void onClick(View v) {
                 new DialogDeviceList(context);
+                // Intent intent = new Intent(getApplicationContext(), DeviceList.class);
+                //  startActivity(intent);
+
             }
         });
 
@@ -227,7 +229,7 @@ public class ProgramDetail extends Activity {
 
         }
         programDetailAdapter.notifyDataSetChanged();
-        Log.d("run","mDeviceList "+mDeviceList.size());
+        Log.d("run", "mDeviceList " + mDeviceList.size());
     }
 
     private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
@@ -235,38 +237,33 @@ public class ProgramDetail extends Activity {
 
         @Override
         public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
-            Log.d("run","onDeviceAdded");
+            Log.d("run", "onDeviceAdded");
             chkTVinNetwork();
         }
 
         @Override
-        public void onDeviceRemoved(Device.DeviceType deviceType,Device device, ERROR error) {
-            Log.d("run","onDeviceRemoved");
+        public void onDeviceRemoved(Device.DeviceType deviceType, Device device, ERROR error) {
+            Log.d("run", "onDeviceRemoved");
             chkTVinNetwork();
         }
     };
 
-    private TVController.IEventListener mEventListener = new TVController.IEventListener()
-    {
+    private TVController.IEventListener mEventListener = new TVController.IEventListener() {
         @Override
-        public void onStringChanged(TVController tv, String text, ERROR result)
-        {
+        public void onStringChanged(TVController tv, String text, ERROR result) {
             chkTVinNetwork();
-            Log.d("run","IEventListener");
+            Log.d("run", "IEventListener");
         }
 
         @Override
-        public void onDisconnected(TVController tv, ERROR result)
-        {
+        public void onDisconnected(TVController tv, ERROR result) {
             chkTVinNetwork();
             setDataToLV();
 
-            Log.d("run","onDisconnected");
+            Log.d("run", "onDisconnected");
         }
 
     };
-
-
 
 
     public void setHoldArrProg_idFromDB() {
@@ -318,7 +315,7 @@ public class ProgramDetail extends Activity {
         aq.id(IV_detail_list_title).image(GlobalVariable.getChan_pic());
         TV_detail_list_title.setText(GlobalVariable.getChan_name());
 
-        t.setScreenName("ช่อง_"+GlobalVariable.getChan_id()+"_"+GlobalVariable.getChan_name());
+        t.setScreenName("ช่อง_" + GlobalVariable.getChan_id() + "_" + GlobalVariable.getChan_name());
         t.send(new HitBuilders.AppViewBuilder().build());
 
         int c = 0;
@@ -329,7 +326,7 @@ public class ProgramDetail extends Activity {
             String prog_title = arrDataStore_program.get(j).getProg_name();
             String prog_timestart = arrDataStore_program.get(j).getProg_timestart();
             String prog_timeend = arrDataStore_program.get(j).getProg_timeend();
-            String prog_type = "test type";
+            //String day = "test type";
             String p_time = prog_timestart + "\n" + prog_timeend;
             int day_id = arrDataStore_program.get(j).getFr_day_id();
             boolean status_onair = false;
@@ -378,7 +375,7 @@ public class ProgramDetail extends Activity {
                     have_in_db = false;
                 }
 
-                dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, prog_timestart,prog_timeend, status_onair, c, have_in_db));
+                dataCustomProgramDetail.add(new DataCustomProgramDetail(prog_id, prog_title, prog_timestart, prog_timeend, status_onair, c, have_in_db,day_id));
                 c++;
 
             }

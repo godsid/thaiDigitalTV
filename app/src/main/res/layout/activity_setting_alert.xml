@@ -14,6 +14,8 @@
         android:layout_height="50dp"
         android:background="#111111"
         android:orientation="horizontal"
+        android:id="@+id/rl_lv"
+
         >
         <ImageView
             android:id="@+id/ic_nav_top_left"
@@ -57,24 +59,10 @@
             android:src="@drawable/ic_save"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/GreenGroupHighlight"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ช่วงเวลา"
-            android:textColor="@color/White"
-            android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-        />
-        </RelativeLayout>
-       <LinearLayout
+
+       <RelativeLayout
            android:layout_width="match_parent"
-           android:layout_height="380dp"
+           android:layout_height="wrap_content"
            android:background="#455a64"
            >
            <ListView
@@ -91,114 +79,29 @@
                android:layout_marginRight="5dp"
                android:layout_marginBottom="5dp"
                />
-       </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#7e8a92"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-            <ToggleButton
-                android:id="@+id/tgb_0"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle0"
-                android:layout_marginTop="15dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_1"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle1"
-                android:layout_toRightOf="@+id/tgb_0"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_2"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle2"
-                android:layout_toRightOf="@+id/tgb_1"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_3"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle3"
-                android:layout_toRightOf="@+id/tgb_2"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_4"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle4"
-                android:layout_toRightOf="@+id/tgb_3"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_5"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle5"
-                android:layout_toRightOf="@+id/tgb_4"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-            <ToggleButton
-                android:id="@+id/tgb_6"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:textOn=""
-                android:textOff=""
-                android:background="@drawable/toggle6"
-                android:layout_toRightOf="@+id/tgb_5"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="-5dp"
-                />
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#7e8a92"
-            android:orientation="horizontal"
-            android:gravity="right"
-            android:paddingTop="5dp"
-            android:paddingRight="7dp">
-            <TextView
-                android:id="@+id/tv_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ทำซ้ำทุกสัปดาห์"
-                android:textSize="20sp"
-                android:textColor="#FFFFFF"
-                android:layout_alignParentBottom="true"
-                />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:id="@+id/cb_settime_repeat"
-                android:button="@drawable/checkbox"
-                android:layout_toRightOf="@+id/tv_check"
-                android:layout_alignParentBottom="true"
-                />
-            </LinearLayout>
+
+       </RelativeLayout>
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="60dp">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb_settime_repeat"
+        android:button="@drawable/checkbox"
+        android:layout_gravity="right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/tv_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ทำซ้ำทุกสัปดาห์"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/cb_settime_repeat" />
+</RelativeLayout>
 </LinearLayout>

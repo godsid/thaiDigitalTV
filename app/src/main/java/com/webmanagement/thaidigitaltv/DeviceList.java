@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.sec.android.allshare.Device;
@@ -42,12 +43,13 @@ public class DeviceList extends Activity {
     ArrayList<DataCustomDeviceListAdapter> dataCustomDeviceListAdapter;
     DeviceListAdapter deviceListAdapter;
 
-    private  int itemSelect;
+    private int itemSelect;
 
     private TVController mTVController = null;
     ArrayList<Device> mDeviceList;
+    private ServiceProvider servicePv;
 
-Context context;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,44 @@ Context context;
         aq = new AQuery(this);
 
 
+        ERROR err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
+
+            @Override
+            public void onCreated(ServiceProvider serviceProvider, ServiceConnector.ServiceState serviceState) {
+                if (serviceProvider == null)
+                    return;
+                servicePv = serviceProvider;
+                Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
+            }
+
+            @Override
+            public void onDeleted(ServiceProvider serviceProvider) {
+                GlobalVariable.setServiceProvider(null);
+                Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
+            }
+        });
+
+
+        if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
+            // AllShare Framework Service is not installed.
+            Log.d("run", "AllShare Framework Service is not installed.");
+        } else if (err == ERROR.INVALID_ARGUMENT) {
+            // Input argument is invalid. Check and try again
+            Log.d("run", "Input argument is invalid. Check and try again.");
+        } else if (err == ERROR.FAIL) {
+            Log.d("run", "AllShare Framework Service ERROR.FAIL");
+        } else if (err == ERROR.SERVICE_NOT_CONNECTED) {
+            // Input argument is invalid. Check and try again
+            Log.d("run", "AllShare Framework Service ERROR.SERVICE_NOT_CONNECTED");
+        } else {
+            // Success on calling the function.
+            Log.d("run", "Success on calling the function. : " + err.toString());
+        }
+
+
         dataCustomDeviceListAdapter = new ArrayList<DataCustomDeviceListAdapter>();
-        LV_device_list = (ListView)findViewById(R.id.lv_device_list);
-        ImageView IV_exit = (ImageView)findViewById(R.id.iv_exit);
+        LV_device_list = (ListView) findViewById(R.id.lv_device_list);
+        ImageView IV_exit = (ImageView) findViewById(R.id.iv_exit);
 
         showDeviceList();
 
@@ -79,21 +116,21 @@ Context context;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     itemSelect = position;
-                    mTVController = (TVController)mDeviceList.get(itemSelect);
+                    mTVController = (TVController) mDeviceList.get(itemSelect);
                     GlobalVariable.setCurrentDevice(mDeviceList.get(itemSelect));
-                    if(mTVController == null) {
-                        Log.d("run","TV Null");
+                    if (mTVController == null) {
+                        Log.d("run", "TV Null");
                         return;
                     } else {
                         mTVController.setEventListener(mEventListener);
                         mTVController.connect();
 
-                        String s = "ส่งช่อง " + GlobalVariable.getChan_name()+"\nแสดงไปยัง "+mDeviceList.get(itemSelect).getName();
+                        String s = "ส่งช่อง " + GlobalVariable.getChan_name() + "\nแสดงไปยัง " + mDeviceList.get(itemSelect).getName();
                         AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
                         builder.setPositiveButton("ตกลง",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        sendKeyToTV( GlobalVariable.getChan_id());
+                                        sendKeyToTV(GlobalVariable.getChan_id());
                                     }
                                 });
                         builder.setNegativeButton("ไม่",
@@ -109,22 +146,20 @@ Context context;
                     }
 
                 } catch (Exception e) {
-                    Log.d("run","Exception LV_device_list.setOnItemClickListener : "+e);
+                    Log.d("run", "Exception LV_device_list.setOnItemClickListener : " + e);
                 }
             }
         });
     }
 
 
-
-
     private void showDeviceList() {
 
-        deviceListAdapter = new DeviceListAdapter(this,dataCustomDeviceListAdapter);
+        deviceListAdapter = new DeviceListAdapter(this, dataCustomDeviceListAdapter);
         deviceListAdapter.arrayList.clear();
         dataCustomDeviceListAdapter.clear();
 
-        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        DeviceFinder deviceFinder = servicePv.getDeviceFinder();
 
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
         mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
@@ -135,24 +170,26 @@ Context context;
 
                 Uri uri = mDeviceList.get(i).getIcon();
 
-                String deviceName =  mDeviceList.get(i).getName();
-                String deviceModel =  mDeviceList.get(i).getModelName();
-                String deviceIp =  mDeviceList.get(i).getIPAddress();
+                String deviceName = mDeviceList.get(i).getName();
+                String deviceModel = mDeviceList.get(i).getModelName();
+                String deviceIp = mDeviceList.get(i).getIPAddress();
                 dataCustomDeviceListAdapter.add(new DataCustomDeviceListAdapter(uri, deviceName, deviceModel, deviceIp));
 
             }
-           LV_device_list.setAdapter(deviceListAdapter);
+            LV_device_list.setAdapter(deviceListAdapter);
 
 
+        } else {
+            Toast.makeText(context, "ตรวจสอบ: ไม่พบ TV ของคุณในเครือข่าย", Toast.LENGTH_LONG).show();
+            finish();
         }
 
     }
 
 
-
     private void sendKeyToTV(int i) {
 
-        switch(i) {
+        switch (i) {
             case 1:
                 mTVController.sendRemoteKey(RemoteKey.KEY_1);
                 break;
@@ -166,78 +203,79 @@ Context context;
                 mTVController.sendRemoteKey(RemoteKey.KEY_4);
                 break;
             case 13:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_3)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_3)).start();
                 break;
             case 14:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_4)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_4)).start();
                 break;
             case 15:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_5)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_5)).start();
                 break;
             case 16:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_6)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_6)).start();
                 break;
             case 17:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_7)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_7)).start();
                 break;
             case 18:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_8)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_8)).start();
                 break;
             case 19:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1,RemoteKey.KEY_9)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_1, RemoteKey.KEY_9)).start();
                 break;
             case 20:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_0)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_0)).start();
                 break;
             case 21:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_1)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_1)).start();
                 break;
             case 22:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_2)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_2)).start();
                 break;
             case 23:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_3)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_3)).start();
                 break;
             case 24:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_4)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_4)).start();
                 break;
             case 25:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_5)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_5)).start();
                 break;
             case 26:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_6)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_6)).start();
                 break;
             case 27:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_7)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_7)).start();
                 break;
             case 28:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_8)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_8)).start();
                 break;
             case 29:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2,RemoteKey.KEY_9)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_2, RemoteKey.KEY_9)).start();
                 break;
             case 30:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_0)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_0)).start();
                 break;
             case 31:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_1)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_1)).start();
                 break;
             case 32:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_2)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_2)).start();
                 break;
             case 33:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_3)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_3)).start();
                 break;
             case 34:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_4)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_4)).start();
                 break;
             case 35:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_5)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_5)).start();
                 break;
             case 36:
-                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3,RemoteKey.KEY_6)).start();
+                new Thread(new ThreadRemoteKey(RemoteKey.KEY_3, RemoteKey.KEY_6)).start();
                 break;
-            default: mTVController.sendRemoteKey(RemoteKey.KEY_1);
+            default:
+                mTVController.sendRemoteKey(RemoteKey.KEY_1);
                 break;
         }
 
@@ -249,13 +287,13 @@ Context context;
 
         @Override
         public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
-            Log.d("run","onDeviceAdded");
+            Log.d("run", "onDeviceAdded");
             showDeviceList();
         }
 
         @Override
-        public void onDeviceRemoved(Device.DeviceType deviceType,Device device, ERROR error) {
-            Log.d("run","onDeviceRemoved");
+        public void onDeviceRemoved(Device.DeviceType deviceType, Device device, ERROR error) {
+            Log.d("run", "onDeviceRemoved");
             showDeviceList();
             if (mDeviceList.size() <= 0)
                 finish();
@@ -263,21 +301,18 @@ Context context;
     };
 
 
-    private TVController.IEventListener mEventListener = new TVController.IEventListener()
-    {
+    private TVController.IEventListener mEventListener = new TVController.IEventListener() {
         @Override
-        public void onStringChanged(TVController tv, String text, ERROR result)
-        {
-            Log.d("run","IEventListener");
+        public void onStringChanged(TVController tv, String text, ERROR result) {
+            Log.d("run", "IEventListener");
         }
 
         @Override
-        public void onDisconnected(TVController tv, ERROR result)
-        {
+        public void onDisconnected(TVController tv, ERROR result) {
             showDeviceList();
             if (mDeviceList.size() <= 0)
                 finish();
-            Log.d("run","onDisconnected");
+            Log.d("run", "onDisconnected");
         }
 
     };

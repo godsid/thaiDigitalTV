@@ -26,6 +26,7 @@ public class SplashScreenActivity extends Activity {
     Handler handler;
     Runnable runnable;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,9 @@ public class SplashScreenActivity extends Activity {
             showAlertDialog();
         } else {
 
-                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 
@@ -81,17 +82,15 @@ public class SplashScreenActivity extends Activity {
     }
 
 
-    public boolean isConnectingToInternet(){
+    public boolean isConnectingToInternet() {
         boolean b = false;
-        ConnectivityManager connectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)
                 for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
-                        b =  true;
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        b = true;
                     }
 
         } else {
@@ -102,7 +101,7 @@ public class SplashScreenActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        Log.d("run","onDestroy : SplashScreenActivity");
+        Log.d("run", "onDestroy : SplashScreenActivity");
         super.onDestroy();
     }
 
@@ -110,13 +109,13 @@ public class SplashScreenActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(runnable, 2000);
+//        handler.postDelayed(runnable, 2000);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        handler.removeCallbacks(runnable);
+     //   handler.removeCallbacks(runnable);
     }
 
     @Override

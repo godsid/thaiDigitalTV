@@ -5,7 +5,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +31,8 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -40,27 +49,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+public class MainActivity extends SherlockFragmentActivity {
 
-public class MainActivity extends Activity {
-
-    //HashMap<Tracker, Tracker> mTrackers = new HashMap<Tracker, Tracker>();
-    private DatabaseAction dbAction;
 
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
-    //static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/item4.js";
-    static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
+    static String urlPath = "https://dl.dropboxusercontent.com/u/40791893/pic_android/thaitv_list_item.js";
+    // static String urlPath = "https://dl.dropboxusercontent.com/s/s26bmc0ok4odpcv/thaitv_list_item.js";
 
 
-    ImageView IV_ic_nav_top_left, IV_tv_share, IV_detail_list_title;
 
     DrawerLayout DL_drawer_layout;
 
     FrameLayout ContentFrame;
-    View ViewFavoriteList, ViewMainMenu;
 
     public static ArrayList<DataStore_Category> arrDataStore_category = new ArrayList<DataStore_Category>();
     public static ArrayList<DataStore_Channel> arrDataStore_channel = new ArrayList<DataStore_Channel>();
@@ -72,37 +73,31 @@ public class MainActivity extends Activity {
 
     ListView LV_menu_left;
 
-
-    TextView TV_detail_list_title;
-
-
-    Calendar calendar;
-    Date date;
+    int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
+    String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
     private Dialog progressDialog;
 
     AQuery aq;
 
-    LinearLayout llFavoriteList;
-    LinearLayout llMainMenu;
-    FavoriteList favoriteList;
-    MainMenuTab mainMenuTab;
-
     Context context;
-   Tracker t;
+    Tracker t;
+
+    Fragment fragment1 = new Fragment1();
+    Fragment fragment2 = new Fragment2();
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Get a Tracker (should auto-report)
-     //   t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
-    //    t.setScreenName("Main Activity");
-    //    t.send(new HitBuilders.AppViewBuilder().build());
+        //   t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+        //    t.setScreenName("Main Activity");
+        //    t.send(new HitBuilders.AppViewBuilder().build());
 
-        dbAction = new DatabaseAction(this);
-        calendar = Calendar.getInstance();
-        date = new Date();
         context = MainActivity.this;
         aq = new AQuery(this);
 
@@ -135,25 +130,25 @@ public class MainActivity extends Activity {
             Log.d("run", "Success on calling the function.");
         }
 
-
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
-
-        TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         //TV_detail_list_title.setTypeface(TF_font);
         //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
 
-        IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
+        mTitle = mDrawerTitle = getTitle();
 
         ContentFrame = (FrameLayout) findViewById(R.id.content_frame);
-        llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
-        llFavoriteList = (LinearLayout) findViewById(R.id.ll_favorite_list);
 
         LV_menu_left = (ListView) findViewById(R.id.lv_menu_left);
 
-        IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
-
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DL_drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
+        LV_menu_left.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        //getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new Dialog(context);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -162,75 +157,114 @@ public class MainActivity extends Activity {
         wv.setVisibility(View.VISIBLE);
         wv.setBackgroundResource(R.color.BGBodyDialog);
         wv.loadUrl("file:///android_asset/loader.gif");
-        TextView title = (TextView)view.findViewById(R.id.title);
-        TextView body = (TextView)view.findViewById(R.id.body);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView body = (TextView) view.findViewById(R.id.body);
         title.setText("กรุณารอสักครู่");
         body.setText("กำลังโหลดข้อมูล...");
-
-        //progressDialog.setMax(100);
-        //progressDialog.setMessage("กำลังโหลดข้อมูล...");
-        //progressDialog.setTitle("กรุณารอสักครู่");
-       // progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setContentView(view);
         progressDialog.show();
-
 
         prepareMenuLeft();
         loadToDataStore();
 
 
-        IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IV_detail_list_title.setImageResource(R.drawable.ic_thaidigitaltv);
-                TV_detail_list_title.setText("ThaiDigitalTV");
-                if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
-                    DL_drawer_layout.closeDrawer(LV_menu_left);
-                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
-                } else {
-                    DL_drawer_layout.openDrawer(LV_menu_left);
-                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_true);
-                }
+
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                DL_drawer_layout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+               super.onDrawerClosed(view);
             }
-        });
 
-
-        LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.getFocusables(position);
-                view.setSelected(true);
-                if (position == 0) {
-                    ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
-                    ContentFrame.removeAllViews();
-                    mainMenuTab = new MainMenuTab(ViewMainMenu);
-                    ContentFrame.addView(ViewMainMenu);
-                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
-                    IV_detail_list_title.setImageResource(R.drawable.ic_channel_tv);
-                    TV_detail_list_title.setText("ช่องรายการ");
-
-                } else if (position == 1) {
-                    ViewFavoriteList = getLayoutInflater().inflate(R.layout.activity_favorite_list, ContentFrame, false);
-                    ContentFrame.removeAllViews();
-                    favoriteList = new FavoriteList(ViewFavoriteList);
-                    ContentFrame.addView(ViewFavoriteList);
-                    IV_ic_nav_top_left.setImageResource(R.drawable.ic_navigation_drawer_flase);
-                    IV_detail_list_title.setImageResource(R.drawable.ic_favorite_flase);
-                    TV_detail_list_title.setText("รายการโปรด");
-                }
-
-                DL_drawer_layout.closeDrawer(LV_menu_left);
-
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+               super.onDrawerOpened(drawerView);
             }
-        });
+        };
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
+        DL_drawer_layout.setDrawerListener(actionBarDrawerToggle);
+    }
+
+
+    private void selectItem(int position) {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        switch (position) {
+            case 0:
+                ft.replace(R.id.content_frame, fragment1);
+                break;
+            case 1:
+                ft.replace(R.id.content_frame, fragment2);
+                break;
+        }
+        ft.commit();
+
+        LV_menu_left.setItemChecked(position, true);
+        setTitle(g_title[position]);
+        DL_drawer_layout.closeDrawer(LV_menu_left);
     }
 
 
 
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        Log.d("run","onOptionsItemSelected");
+        if (item.getItemId() == android.R.id.home) {
+
+            if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
+                DL_drawer_layout.closeDrawer(LV_menu_left);
+            } else {
+                DL_drawer_layout.openDrawer(LV_menu_left);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void setTitle(CharSequence title) {
+        Log.d("run","setTitle");
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    // ListView click listener in the navigation drawer
+    private class DrawerItemClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            selectItem(position);
+        }
+    }
+
+
     public void prepareMenuLeft() {
-        int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
-        String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
+
 
         for (int i = 0; i < g_pic.length; i++) {
 
@@ -256,11 +290,17 @@ public class MainActivity extends Activity {
 
                     try {
 
-
+                        /*
+                        Log.d("logrun2", "O "+object.getJSONArray("allitems"));
                         JSONArray item_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
                         JSONArray item_array_chan = object.getJSONArray("allitems").getJSONObject(1).getJSONArray("tb_channel");
+						JSONArray item_array_type = object.getJSONArray("allitems").getJSONObject(2).getJSONArray("tb_type");
                         JSONArray item_array_prog = object.getJSONArray("allitems").getJSONObject(3).getJSONArray("tb_program");
-                        JSONArray item_array_type = object.getJSONArray("allitems").getJSONObject(4).getJSONArray("tb_type");
+*/
+                        JSONArray item_array_cate = object.getJSONObject("allitems").getJSONArray("tb_category");
+                        JSONArray item_array_chan = object.getJSONObject("allitems").getJSONArray("tb_channel");
+                        JSONArray item_array_type = object.getJSONObject("allitems").getJSONArray("tb_type");
+                        JSONArray item_array_prog = object.getJSONObject("allitems").getJSONArray("tb_program");
 
 
                         for (int j = 0; j < item_array_cate.length(); j++) {
@@ -309,10 +349,6 @@ public class MainActivity extends Activity {
                         //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
                         //  startActivity(intent);
 
-                        ViewMainMenu = getLayoutInflater().inflate(R.layout.activity_main_menu, ContentFrame, false);
-                        ContentFrame.removeAllViews();
-                        mainMenuTab = new MainMenuTab(ViewMainMenu);
-                        ContentFrame.addView(ViewMainMenu);
 
 
                     } catch (JSONException e) {
@@ -331,11 +367,20 @@ public class MainActivity extends Activity {
     private static long back_pressed;
 
     @Override
-    public void onBackPressed()
-    {
-        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
-        else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
-        back_pressed = System.currentTimeMillis();
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            // If there are back-stack entries, leave the FragmentActivity
+            // implementation take care of them.
+            manager.popBackStack();
+
+        } else {
+            if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+            else Toast.makeText(getBaseContext(), "กดอีกครั้งเพื่อออก", Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+        }
+
+
     }
 
 
@@ -360,20 +405,6 @@ public class MainActivity extends Activity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        return false;
-    }
 
 
     @Override
@@ -415,5 +446,18 @@ public class MainActivity extends Activity {
         super.onStart();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+     //   if (resultCode==123) {
+     //       ViewFavoriteList = getLayoutInflater().inflate(R.layout.activity_favorite_list, ContentFrame, false);
+     ///       ContentFrame.removeAllViews();
+      //      favoriteList = new FavoriteList(ViewFavoriteList);
+     ///       ContentFrame.addView(ViewFavoriteList);
+      //  }
+    }
+
 
 }
+
+

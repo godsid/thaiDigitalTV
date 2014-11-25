@@ -31,7 +31,6 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
         this.context2 = context;
 
 
-
     }
 
     @Override
@@ -63,7 +62,7 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
 
 
         TV_day.setText(arrayList.get(position).day);
-        TV_timestart.setText(arrayList.get(position).timestart+" - ");
+        TV_timestart.setText(arrayList.get(position).timestart + " - ");
         TV_timeend.setText(arrayList.get(position).timeend);
 
         Animation animation = null;
@@ -80,7 +79,7 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
 
 
 class DataCustomDialogProgramSchedule {
-    String  day, timestart,timeend;
+    String day, timestart, timeend;
 
     public DataCustomDialogProgramSchedule(String day, String timestart, String timeend) {
         this.day = day;

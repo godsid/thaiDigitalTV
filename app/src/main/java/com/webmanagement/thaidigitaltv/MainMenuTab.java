@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.graphics.Color;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +77,9 @@ public class MainMenuTab {
         this.context = rootView.getContext();
         aq = new AQuery(context);
 
-        t =((MyApplication)((Activity)context).getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+
+
+        t = ((MyApplication) ((Activity) context).getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
 
 
         mTabHost = (TabHost) rootView.findViewById(R.id.tabHost);
@@ -106,8 +109,6 @@ public class MainMenuTab {
         LoadMenuToTab();
 
 
-
-
         LV_tab_1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -135,7 +136,7 @@ public class MainMenuTab {
                 //get position highlight
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
-                t.setScreenName("หมวดหมู่_"+group_list_tab2.get(groupPosition).getName());
+                t.setScreenName("หมวดหมู่_" + group_list_tab2.get(groupPosition).getName());
                 t.send(new HitBuilders.AppViewBuilder().build());
 
                 GlobalVariable.setChan_id(get_channel_id);
@@ -204,7 +205,7 @@ public class MainMenuTab {
 
             }
             // Log.d("run","arrDataStore_channel : "+arrDataStore_channel.size());
-            listTab1Adapter = new ListTab1Adapter(context, dataCustomListTab1);
+            listTab1Adapter = new ListTab1Adapter(context,dataCustomListTab1);
             LV_tab_1.setAdapter(listTab1Adapter);
             listTab1Adapter.notifyDataSetChanged();
 
@@ -311,7 +312,7 @@ public class MainMenuTab {
 
     private void showDialogDetailProgram(String pn, String cp) {
 
-        t.setScreenName("รายการ_"+pn);
+        t.setScreenName("รายการ_" + pn);
         t.send(new HitBuilders.AppViewBuilder().build());
 
         AlertDialog.Builder dlb = new AlertDialog.Builder(context);
@@ -325,7 +326,7 @@ public class MainMenuTab {
 
         //aq.id(IV_chan_pic).image(cp);
         TV_prog_name.setText(pn);
-        prepareDataToList(LV_prog_schedule,pn,TV_chan_id);
+        prepareDataToList(LV_prog_schedule, pn, TV_chan_id);
 
         dlb.setView(view);
         //Toast.makeText(context, cp, Toast.LENGTH_SHORT).show();
@@ -342,11 +343,11 @@ public class MainMenuTab {
     }
 
 
-    private void prepareDataToList(ListView lv,String pn,TextView tvchid) {
-        String item_time_start,item_prog_name,item_time_end;
-        int item_day_id,item_chan_id;
+    private void prepareDataToList(ListView lv, String pn, TextView tvchid) {
+        String item_time_start, item_prog_name, item_time_end;
+        int item_day_id, item_chan_id;
         dataCustomDialogProgramSchedule.clear();
-        Collections.sort(arrDataStore_program,new Comparator<DataStore_Program>() {
+        Collections.sort(arrDataStore_program, new Comparator<DataStore_Program>() {
             @Override
             public int compare(DataStore_Program lhs, DataStore_Program rhs) {
                 if (lhs.getFr_day_id() > rhs.getFr_day_id())
@@ -364,18 +365,16 @@ public class MainMenuTab {
             item_day_id = arrDataStore_program.get(j).getFr_day_id();
             item_chan_id = arrDataStore_program.get(j).getFr_channel_id();
 
-                if (item_prog_name.equals(pn)) {
-                    dataCustomDialogProgramSchedule.add(new DataCustomDialogProgramSchedule(arr_day[item_day_id], item_time_start, item_time_end));
-                    tvchid.setText("ช่อง "+Integer.toString(item_chan_id));
-                }
-
+            if (item_prog_name.equals(pn)) {
+                dataCustomDialogProgramSchedule.add(new DataCustomDialogProgramSchedule(arr_day[item_day_id], item_time_start, item_time_end));
+                tvchid.setText("ช่อง " + Integer.toString(item_chan_id));
             }
+
+        }
 
         dialogProgramScheduleAdapter = new DialogProgramScheduleAdapter(context, dataCustomDialogProgramSchedule);
         lv.setAdapter(dialogProgramScheduleAdapter);
     }
-
-
 
 
 }

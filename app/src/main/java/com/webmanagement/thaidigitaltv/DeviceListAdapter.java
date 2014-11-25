@@ -71,52 +71,40 @@ public class DeviceListAdapter extends BaseAdapter {
         TV_device_model.setText(arrayList.get(position).model);
         TV_device_ip.setText(arrayList.get(position).ip);
 
-        if( icon == null )
-        {
+        if (icon == null) {
             // no thumbnail.
             IC_device.setImageResource(R.drawable.ic_tv);
             return convertView;
         }
 
-        Bitmap bitmap = BitmapCache.getBitmapCache().get( icon.toString() );
-        DownloadThumbnailTask downloader = (DownloadThumbnailTask)IC_device.getTag();
+        Bitmap bitmap = BitmapCache.getBitmapCache().get(icon.toString());
+        DownloadThumbnailTask downloader = (DownloadThumbnailTask) IC_device.getTag();
 
-        if( bitmap == null || bitmap.isRecycled() )
-        {
+        if (bitmap == null || bitmap.isRecycled()) {
             // if there is already assigned job for this image view, cancel it.
-            if( downloader != null )
-            {
-                if( downloader.getUri() != null && downloader.getUri().equals( icon ) )
-                {
+            if (downloader != null) {
+                if (downloader.getUri() != null && downloader.getUri().equals(icon)) {
                     // already downloaded image.
                     // do nothing.
-                }
-                else
-                {
-                    IC_device.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-                    downloader.cancel( true );
-                    downloader = new DownloadThumbnailTask( IC_device, icon );
+                } else {
+                    IC_device.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    downloader.cancel(true);
+                    downloader = new DownloadThumbnailTask(IC_device, icon);
                     downloader.execute();
-                    IC_device.setTag( downloader );
+                    IC_device.setTag(downloader);
                 }
-            }
-            else
-            {
-                IC_device.setImageDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-                downloader = new DownloadThumbnailTask( IC_device, icon );
+            } else {
+                IC_device.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
+                downloader = new DownloadThumbnailTask(IC_device, icon);
                 downloader.execute();
-                IC_device.setTag( downloader );
+                IC_device.setTag(downloader);
             }
-        }
-        else
-        {
-            if( downloader != null )
-            {
-                downloader.cancel( true );
+        } else {
+            if (downloader != null) {
+                downloader.cancel(true);
             }
             IC_device.setImageBitmap(bitmap);
         }
-
 
 
         return convertView;
@@ -127,7 +115,7 @@ public class DeviceListAdapter extends BaseAdapter {
 
 
 class DataCustomDeviceListAdapter {
-    String  name, model,ip;
+    String name, model, ip;
     Uri icon;
 
     public DataCustomDeviceListAdapter(Uri icon, String name, String model, String ip) {

@@ -65,28 +65,24 @@ public class GlobalVariable {
     }
 
 
-    public static void setCurrentDevice( Device device )
-    {
+    public static void setCurrentDevice(Device device) {
         mDevice = device;
     }
 
-    public static Device getCurrentDevice()
-    {
+    public static Device getCurrentDevice() {
         return mDevice;
     }
 
-    public static void setServiceProvider( ServiceProvider serviceProvider )
-    {
+    public static void setServiceProvider(ServiceProvider serviceProvider) {
 
         if (serviceProvider == null)
             ServiceConnector.deleteServiceProvider(mServiceProvider);
-            mServiceProvider = serviceProvider;
-       // Log.d("run","setServiceProvider "+mServiceProvider);
+        mServiceProvider = serviceProvider;
+        // Log.d("run","setServiceProvider "+mServiceProvider);
 
     }
 
-    public static ServiceProvider getServiceProvider()
-    {
+    public static ServiceProvider getServiceProvider() {
 
         return mServiceProvider;
     }
@@ -214,30 +210,29 @@ public class GlobalVariable {
         arrFav_Prog_name.add(j);
     }
 
-    public static AlertDialog.Builder simpleDialogTemplate(Context c,String t,String b) {
+    public static AlertDialog.Builder simpleDialogTemplate(Context c, String t, String b) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle(null);
-        View view = LayoutInflater.from(c).inflate(R.layout.dialog_template,null);
-        TextView title = (TextView)view.findViewById(R.id.title);
-        TextView body = (TextView)view.findViewById(R.id.body);
+        View view = LayoutInflater.from(c).inflate(R.layout.dialog_template, null);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView body = (TextView) view.findViewById(R.id.body);
         title.setText(t);
         body.setText(b);
         builder.setView(view);
-        return  builder;
+        return builder;
     }
 
 
-    public static boolean userChoosed(boolean b){
+    public static boolean userChoosed(boolean b) {
 
-        if(b)
+        if (b)
             //YOUR CODE FOR YES HERE
-           return true;
+            return true;
         else
             return false;
 
     }
-
 
 
 }

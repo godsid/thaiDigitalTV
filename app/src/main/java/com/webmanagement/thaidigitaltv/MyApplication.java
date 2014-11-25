@@ -12,7 +12,9 @@ public class MyApplication extends Application {
     public enum TrackerName {
         APP_TRACKER, // Tracker used only in this app.
     }
+
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+
     synchronized Tracker getTracker(TrackerName trackerId) {
         if (!mTrackers.containsKey(trackerId)) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);

@@ -8,8 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -18,12 +21,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import java.util.ArrayList;
 
 
-public class FavoriteList extends Activity {
+public class FavoriteList extends SherlockFragment {
 
-    View rootView;
+
     Context context;
 
     TextView TV_fav_list_title;
@@ -37,9 +42,11 @@ public class FavoriteList extends Activity {
 
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
 
-    public FavoriteList(View rootView) {
-        this.rootView = rootView;
-        this.context = rootView.getContext();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.activity_favorite_list, container, false);
+
+        context = rootView.getContext();
 
         TV_fav_list_title = (TextView) rootView.findViewById(R.id.tv_fav_list_title);
 
@@ -78,6 +85,8 @@ public class FavoriteList extends Activity {
 
         });
 
+        return rootView;
+
     }
 
 
@@ -97,11 +106,11 @@ public class FavoriteList extends Activity {
             int repeat_id = cur.getInt(7);
             String st_repeat;
             if (repeat_id == 0)
-                st_repeat = "เตือนวัน"+arr_day[day_id]+"ครั้งเดียว";
+                st_repeat = "เตือนวัน" + arr_day[day_id] + "ครั้งเดียว";
             else
-                st_repeat = "เตือนซ้ำทุกวัน"+arr_day[day_id];
+                st_repeat = "เตือนซ้ำทุกวัน" + arr_day[day_id];
             //String time_sb = "แจ้งเตือน " + time_before + " นาที ก่อนออกอากาศเวลา " + time_start;
-            String time_sb = "เตือนล่วงหน้า "+time_before+" นาที \nก่อนออกอากาศเวลา " + time_start + " น.";
+            String time_sb = "เตือนล่วงหน้า " + time_before + " นาที \nก่อนออกอากาศเวลา " + time_start + " น.";
             String ln3 = chan_name + "  " + st_repeat;
             arrayListData.add(new DataCustomFavoriteList(prog_id, prog_name, ln3, time_sb));
             cur.moveToNext();
@@ -125,14 +134,14 @@ public class FavoriteList extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("เลือกเมนู");
         builder.setItems(R.array.dialog_menu_fav,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialoginterface, int i) {
-                                if (i == 0)
-                                    menuActionEdit();
-                                else if (i == 1)
-                                    menuActionDelete();
-                            }
-                        });
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+                        if (i == 0)
+                            menuActionEdit();
+                        else if (i == 1)
+                            menuActionDelete();
+                    }
+                });
         builder.show();
         builder.setCancelable(true);
 
@@ -160,8 +169,9 @@ public class FavoriteList extends Activity {
                 intent.putExtra("i_Day_id", day_id);
                 intent.putExtra("i_Repeat_id", repeat_id);
                 intent.putExtra("i_Action_type", "edit");
-                Log.d("run", prog_name+" "+time_before);
-                context.startActivity(intent);
+                Log.d("run", prog_name + " " + time_before);
+                ((Activity)context).startActivityForResult(intent,13);
+
                 break;
             }
             cur.moveToNext();
@@ -206,10 +216,10 @@ public class FavoriteList extends Activity {
                         if (chkDeleted) {
                             cancelAlarm(GlobalVariable.getArrFav_Prog_id(getItemPosition()));
 
-                            Toast.makeText(context,"สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "สำเร็จ : ลบรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
                             prepareDataToList();
                         } else {
-                            Toast.makeText(context,"ผิดพลาด : ไม่สามารถลบรายการได้",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "ผิดพลาด : ไม่สามารถลบรายการได้", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -260,11 +270,7 @@ public class FavoriteList extends Activity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        //super.onResume();
-        Log.d("run","onResume FAV");
-        prepareDataToList();
-        }
+
+
 
 }

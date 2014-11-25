@@ -23,12 +23,9 @@ import android.widget.ImageView;
 
 
 /**
- *
  * @brief AsyncTask to down load thumbnail of content
- *
  */
-public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap>
-{
+public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap> {
 
     final static String TAG = "DownloadThumbnailTask";
 
@@ -43,45 +40,36 @@ public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap>
     private Uri mUrl = null;
     private WeakReference<ImageView> mIconViewReference = null;
 
-    public DownloadThumbnailTask(ImageView imageView, Uri uri)
-    {
+    public DownloadThumbnailTask(ImageView imageView, Uri uri) {
 
-        if (imageView != null)
-        {
-            if (mThumbWidth == 0 || mThumbHeight == 0)
-            {
+        if (imageView != null) {
+            if (mThumbWidth == 0 || mThumbHeight == 0) {
                 mThumbWidth = (int) imageView.getContext().getResources()
                         .getDimension(R.dimen.thumbnail_width);
                 mThumbHeight = (int) imageView.getContext().getResources()
                         .getDimension(R.dimen.thumbnail_height);
             }
         }
-        if (uri != null && imageView != null)
-        {
+        if (uri != null && imageView != null) {
             mIconViewReference = new WeakReference<ImageView>(imageView);
             mUrl = uri;
-            if (mWorkingUri.contains(mUrl) == true)
-            {
+            if (mWorkingUri.contains(mUrl) == true) {
                 // no need to download image.
                 mUrl = null;
-            }
-            else
-            {
+            } else {
                 mWorkingUri.add(mUrl);
             }
         }
     }
 
-    public Uri getUri()
-    {
+    public Uri getUri() {
 
         return mUrl;
     }
 
     @Override
     // Actual download method, run in the task thread
-    protected Bitmap doInBackground(Void... params)
-    {
+    protected Bitmap doInBackground(Void... params) {
 
         if (mUrl == null)
             return null;
@@ -92,28 +80,22 @@ public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap>
         if (bitmap != null)
             return bitmap; // lucky! already cached icon.
 
-        try
-        {
+        try {
             HttpGet getRequest = new HttpGet(mUrl.toString());
             HttpResponse response = mHttpClient.execute(getRequest);
             final int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK)
-            {
+            if (statusCode != HttpStatus.SC_OK) {
                 return null;
             }
 
             final HttpEntity entity = response.getEntity();
-            if (entity != null)
-            {
+            if (entity != null) {
                 InputStream inputStream = null;
-                try
-                {
+                try {
                     inputStream = entity.getContent();
                     bitmap = BitmapFactory.decodeStream(inputStream);
-                    if (bitmap != null)
-                    {
-                        if (bitmap.getWidth() > mThumbWidth || bitmap.getHeight() > mThumbHeight)
-                        {
+                    if (bitmap != null) {
+                        if (bitmap.getWidth() > mThumbWidth || bitmap.getHeight() > mThumbHeight) {
                             Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, mThumbWidth, mThumbHeight, true);
                             bitmap.recycle();
                             bitmap = bitmap2;
@@ -122,24 +104,17 @@ public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap>
 
                     BitmapCache.getBitmapCache().put(mUrl.toString(), bitmap);
                     return bitmap;
-                }
-                catch (OutOfMemoryError err)
-                {
+                } catch (OutOfMemoryError err) {
                     BitmapCache.getBitmapCache().clear();
                     err.printStackTrace();
-                }
-                finally
-                {
-                    if (inputStream != null)
-                    {
+                } finally {
+                    if (inputStream != null) {
                         inputStream.close();
                     }
                     entity.consumeContent();
                 }
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             return null;
         }
 
@@ -150,32 +125,23 @@ public class DownloadThumbnailTask extends AsyncTask<Void, Void, Bitmap>
 
     @Override
     // Once the image is downloaded, associates it to the imageView
-    protected void onPostExecute(Bitmap bitmap)
-    {
+    protected void onPostExecute(Bitmap bitmap) {
 
-        try
-        {
+        try {
 
-            if (isCancelled() || mUrl == null)
-            {
+            if (isCancelled() || mUrl == null) {
                 return;
-            }
-            else
-            {
-                if (mIconViewReference != null)
-                {
+            } else {
+                if (mIconViewReference != null) {
                     bitmap = BitmapCache.getBitmapCache().get(mUrl.toString());
                     ImageView imageView = mIconViewReference.get();
-                    if (imageView != null )
-                    {
+                    if (imageView != null) {
                         imageView.setImageBitmap(bitmap);
                         imageView.invalidate();
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

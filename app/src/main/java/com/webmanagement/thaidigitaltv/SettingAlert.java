@@ -35,10 +35,9 @@ public class SettingAlert extends Activity {
     ArrayList<DataCustomSettingTime> dataCustomSettingTime = new ArrayList<DataCustomSettingTime>();
     SettingTimeAdapter settingTimeAdapter;
 
-    String program_name, type_name, channel_name, time_start, action_type;
-    ToggleButton TGB0, TGB1, TGB2, TGB3, TGB4, TGB5, TGB6;
+    String program_name, channel_name, time_start, action_type;
     CheckBox CB_settime_repeat;
-    int program_id,i_repeat_id,i_day_id,i_time_before;
+    int program_id, i_repeat_id, i_time_before,day_id;
     ListView LV_Time;
 
     ImageView IV_settime_save;
@@ -46,25 +45,22 @@ public class SettingAlert extends Activity {
     boolean addSuccess = false;
 
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
-    ArrayList<Integer> arrTempDay = new ArrayList<Integer>();
-    ArrayList<Integer> arrTempId = new ArrayList<Integer>();
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     Context context;
 
     Bundle bundle;
 
     Tracker t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_alert);
-        t = ((MyApplication)getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+        t = ((MyApplication) getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
         aq = new AQuery(this);
         bundle = getIntent().getExtras();
         dbAction = new DatabaseAction(this);
         context = SettingAlert.this;
-        arrTempDay.clear();
-        arrTempId.clear();
 
         ImageView IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
         settingTimeAdapter = new SettingTimeAdapter(this, dataCustomSettingTime);
@@ -72,15 +68,15 @@ public class SettingAlert extends Activity {
         LV_Time = (ListView) findViewById(R.id.lv_time);
         LV_Time.setAdapter(settingTimeAdapter);
 
-        if(!bundle.isEmpty()) {
+        if (!bundle.isEmpty()) {
             program_id = bundle.getInt("i_Prog_id");
             program_name = bundle.getString("i_Prog_name");
             channel_name = bundle.getString("i_Chan_name");
             time_start = bundle.getString("i_Prog_timestart");
             action_type = bundle.getString("i_Action_type");
+            day_id = bundle.getInt("i_Day_id");
             if (action_type.equals("edit")) {
                 i_time_before = bundle.getInt("i_prog_timebf");
-                i_day_id = bundle.getInt("i_Day_id");
                 i_repeat_id = bundle.getInt("i_Repeat_id");
             }
 
@@ -91,34 +87,10 @@ public class SettingAlert extends Activity {
         IV_settime_save = (ImageView) findViewById(R.id.iv_settime_save);
         TextView TV_settime_title_prog = (TextView) findViewById(R.id.tv_settime_title_prog);
 
-        TGB0 = (ToggleButton) findViewById(R.id.tgb_0);
-        TGB1 = (ToggleButton) findViewById(R.id.tgb_1);
-        TGB2 = (ToggleButton) findViewById(R.id.tgb_2);
-        TGB3 = (ToggleButton) findViewById(R.id.tgb_3);
-        TGB4 = (ToggleButton) findViewById(R.id.tgb_4);
-        TGB5 = (ToggleButton) findViewById(R.id.tgb_5);
-        TGB6 = (ToggleButton) findViewById(R.id.tgb_6);
         CB_settime_repeat = (CheckBox) findViewById(R.id.cb_settime_repeat);
-
-        for (int i = 0; i < arrDataStore_program.size(); i++) {
-            if (arrDataStore_program.get(i).getProg_name().equals(program_name)) {
-                arrTempDay.add(arrDataStore_program.get(i).getFr_day_id());
-                arrTempId.add(arrDataStore_program.get(i).getProg_id());
-            }
-        }
-
-
-        for (int i = 0; i < 6; i++) {
-            if (!arrTempDay.contains(i)) {
-                setDisableChkBoxDay(i);
-            }
-        }
-
-        disableChkBoxFromDB();
 
 
         TV_settime_title_prog.setText("รายการ " + program_name);
-
 
 
         IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +107,7 @@ public class SettingAlert extends Activity {
 
                 if (action_type.equals("add")) {
                     addDataToDB();
-                } else if(action_type.equals("edit")) {
+                } else if (action_type.equals("edit")) {
                     updateDataToDB();
                 }
 
@@ -150,99 +122,13 @@ public class SettingAlert extends Activity {
 
     }
 
-    private void setDisableChkBoxDay(int i) {
-        switch (i) {
-            case 0 :
-                TGB0.setEnabled(false);
-                TGB0.setBackgroundResource(R.drawable.toggle_0_dis);
-                break;
-            case 1 :
-                TGB1.setEnabled(false);
-                TGB1.setBackgroundResource(R.drawable.toggle_1_dis);
-                break;
-            case 2 :
-                TGB2.setEnabled(false);
-                TGB2.setBackgroundResource(R.drawable.toggle_2_dis);
-                break;
-            case 3 :
-                TGB3.setEnabled(false);
-                TGB3.setBackgroundResource(R.drawable.toggle_3_dis);
-                break;
-            case 4 :
-                TGB4.setEnabled(false);
-                TGB4.setBackgroundResource(R.drawable.toggle_4_dis);
-                break;
-            case 5 :
-                TGB5.setEnabled(false);
-                TGB5.setBackgroundResource(R.drawable.toggle_5_dis);
-                break;
-            case 6 :
-                TGB6.setEnabled(false);
-                TGB6.setBackgroundResource(R.drawable.toggle_6_dis);
-                break;
-        }
-
-    }
-    private void disableChkBoxFromDB() {
-
-            SQLiteCursor cur = (SQLiteCursor) dbAction.readAllFavoriteProgram();
-            while (!cur.isAfterLast()) {
-                String prog_name = cur.getString(2);
-                int day_id = cur.getInt(6);
-                if (prog_name.equals(program_name)) {
-
-                    setDisableChkBoxDay(day_id);
-
-                }
-                cur.moveToNext();
-            }
-            cur.close();
-
-    }
 
     private void isActionEdit() {
-        switch (i_day_id) {
-            case 0 :
-                TGB0.setEnabled(true);
-                TGB0.setChecked(true);
-                TGB0.setBackgroundResource(R.drawable.toggle0);
-                break;
-            case 1 :
-                TGB1.setEnabled(true);
-                TGB1.setChecked(true);
-                TGB1.setBackgroundResource(R.drawable.toggle1);
-                break;
-            case 2 :
-                TGB2.setEnabled(true);
-                TGB2.setChecked(true);
-                TGB2.setBackgroundResource(R.drawable.toggle2);
-                break;
-            case 3 :
-                TGB3.setEnabled(true);
-                TGB3.setChecked(true);
-                TGB3.setBackgroundResource(R.drawable.toggle3);
-                break;
-            case 4 :
-                TGB4.setEnabled(true);
-                TGB4.setChecked(true);
-                TGB4.setBackgroundResource(R.drawable.toggle4);
-                break;
-            case 5 :
-                TGB5.setEnabled(true);
-                TGB5.setChecked(true);
-                TGB5.setBackgroundResource(R.drawable.toggle5);
-                break;
-            case 6 :
-                TGB6.setEnabled(true);
-                TGB6.setChecked(true);
-                TGB6.setBackgroundResource(R.drawable.toggle6);
-                Log.d("run","6 "+TGB6.isEnabled());
-                break;
-        }
+
         int selectP = 0;
-        for(int i =0; i < time_value.length; i++) {
+        for (int i = 0; i < time_value.length; i++) {
             if (time_value[i] == i_time_before) {
-             selectP = i;
+                selectP = i;
 
                 break;
             }
@@ -269,89 +155,17 @@ public class SettingAlert extends Activity {
         else
             isRepeat = 0;
 
-        if (!TGB0.isChecked() && !TGB1.isChecked() && !TGB2.isChecked() && !TGB3.isChecked()
-                && !TGB4.isChecked() && !TGB5.isChecked() && !TGB6.isChecked()) {
-            Toast.makeText(getApplicationContext(), "คำเตือน : กรุณาเลือกวันที่ต้องการแจ้งเตือน", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        for (int i = 0; i < arrTempDay.size(); i++) {
-            if (arrTempDay.get(i) == 0 && TGB0.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 1 && TGB1.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 2 && TGB2.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 3 && TGB3.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 4 && TGB4.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 5 && TGB5.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            } else if (arrTempDay.get(i) == 6 && TGB6.isChecked()) {
-                long resAdd = dbAction.addFavoriteProgram(arrTempId.get(i), program_name, channel_name, time_start, time_selected, arrTempDay.get(i), isRepeat);
-                if (resAdd > 0) {
-                    addSuccess = true;
-                    addAlarm(arrTempId.get(i), time_selected, arrTempDay.get(i), isRepeat);
-                } else {
-                    addSuccess = false;
-                    break;
-                }
-
-            }
+        long resAdd = dbAction.addFavoriteProgram(program_id, program_name, channel_name, time_start, time_selected, day_id, isRepeat);
+        if (resAdd > 0) {
+            addSuccess = true;
+            addAlarm(program_id, time_selected, day_id, isRepeat);
+        } else {
+            addSuccess = false;
 
         }
-
         if (addSuccess) {
-
             Toast.makeText(getApplicationContext(), "สำเร็จ : ทำรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
+            setResult (123);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), "ผิดพลาด : ไม่สามารถเพิ่มรายการได้", Toast.LENGTH_SHORT).show();
@@ -361,9 +175,9 @@ public class SettingAlert extends Activity {
 
     private void addAlarm(int pid, int tbf, int d, int rp) {
 
-        t.setScreenName("แจ้งเตือนล่วงหน้า_"+tbf);
+        t.setScreenName("แจ้งเตือนล่วงหน้า_" + tbf);
         t.send(new HitBuilders.AppViewBuilder().build());
-        t.setScreenName("รายการโปรด_"+pid+"_"+program_name);
+        t.setScreenName("รายการโปรด_" + pid + "_" + program_name);
         t.send(new HitBuilders.AppViewBuilder().build());
 
         Intent intent = new Intent(getApplicationContext(), ReceiverAlarm.class);
@@ -396,7 +210,7 @@ public class SettingAlert extends Activity {
         calNext.setTimeInMillis(calNext.getTimeInMillis());
         calNext.add(Calendar.DAY_OF_WEEK, 7);
 
-        if(calSet.compareTo(calNow) <= 0){
+        if (calSet.compareTo(calNow) <= 0) {
             //Today Set time passed, count to tomorrow
             calSet.add(Calendar.DATE, 7);
         }

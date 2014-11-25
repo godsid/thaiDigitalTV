@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="BGHead">#87B730</color>
+    <color name="BGActionBar">#ECECEC</color>
+    <color name="BGRegular">#EDEAD9</color>
+
+    <color name="FTActionBar">#222222</color>
+    <color name="FTHead">#FCFCFC</color>
+    <color name="FTRegular">#6B6B6B</color>
+
+
+
+</resources>

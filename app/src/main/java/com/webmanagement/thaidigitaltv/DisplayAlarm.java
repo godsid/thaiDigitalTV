@@ -41,13 +41,13 @@ public class DisplayAlarm extends Activity {
     Vibrator v;
     AQuery aq;
     private DatabaseAction dbAction;
-    int prog_id = 0, day_id,repeat_id;
+    int prog_id = 0, day_id, repeat_id;
     String time_before;
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
-    boolean haveTVinNetwork = false;
-    ERROR err;
+    //boolean haveTVinNetwork = false;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,38 +68,6 @@ public class DisplayAlarm extends Activity {
         r.stop();
 
 
-            err = ServiceConnector.createServiceProvider(this, new ServiceConnector.IServiceConnectEventListener() {
-
-                @Override
-                public void onCreated(ServiceProvider serviceProvider2, ServiceConnector.ServiceState serviceState) {
-
-                    if (serviceProvider2 == null)
-                        return;
-                    GlobalVariable.setServiceProvider(serviceProvider2);
-                    Log.d("run", "Service provider created! " + GlobalVariable.getServiceProvider());
-                }
-
-                @Override
-                public void onDeleted(ServiceProvider serviceProvider) {
-                    GlobalVariable.setServiceProvider(null);
-                    Log.d("run", "Service provider Deleted! " + GlobalVariable.getServiceProvider());
-                }
-            });
-
-
-            if (err == ERROR.FRAMEWORK_NOT_INSTALLED) {
-                // AllShare Framework Service is not installed.
-                Log.d("run", "AllShare Framework Service is not installed.");
-            } else if (err == ERROR.INVALID_ARGUMENT) {
-                // Input argument is invalid. Check and try again
-                Log.d("run", "Input argument is invalid. Check and try again.");
-            } else {
-                // Success on calling the function.
-                Log.d("run", "Success on calling the function.");
-            }
-
-
-
         TextView tv_title = (TextView) findViewById(R.id.tv_disp_title);
 
         final ImageView iv0 = (ImageView) findViewById(R.id.iv_center_0);
@@ -115,9 +83,9 @@ public class DisplayAlarm extends Activity {
         final ImageView iv_R4 = (ImageView) findViewById(R.id.iv_slide_right4);
         final ImageView iv_R5 = (ImageView) findViewById(R.id.iv_slide_right5);
         final ImageView iv_R6 = (ImageView) findViewById(R.id.iv_slide_right6);
-        final Button bt_acc = (Button) findViewById(R.id.bt_accept);
-        final Button bt_device = (Button) findViewById(R.id.bt_device_sh);
-        final ImageView iv_center = (ImageView) findViewById(R.id.iv_center_0);
+        // final Button bt_acc = (Button) findViewById(R.id.bt_accept);
+        //  final Button bt_device = (Button) findViewById(R.id.bt_device_sh);
+        //  final ImageView iv_center = (ImageView) findViewById(R.id.iv_center_0);
         SeekBar sk1 = (SeekBar) findViewById(R.id.seek_1);
         sk1.setProgress(50);
         //Drawable ii = getResources().getDrawable(R.drawable.scrubber_control_time);
@@ -127,7 +95,7 @@ public class DisplayAlarm extends Activity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progress1 = progress;
                 //slide left
-                if(progress <= 50){
+                if (progress <= 50) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1);
                     iv_R2.setImageResource(R.drawable.arrow_right_2);
                     iv_R3.setImageResource(R.drawable.arrow_right_3);
@@ -135,32 +103,32 @@ public class DisplayAlarm extends Activity {
                     iv_R5.setImageResource(R.drawable.arrow_right_5);
                     iv_R6.setImageResource(R.drawable.arrow_right_6);
                 }
-                if(progress <= 45){
+                if (progress <= 45) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1);
                 }
-                if(progress <= 40){
+                if (progress <= 40) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                 }
-                if(progress <= 35){
+                if (progress <= 35) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                 }
-                if(progress <= 30){
+                if (progress <= 30) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                     iv_L4.setImageResource(R.drawable.arrow_left_4_2);
                 }
-                if(progress <= 25){
+                if (progress <= 25) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
                     iv_L4.setImageResource(R.drawable.arrow_left_4_2);
                     iv_L5.setImageResource(R.drawable.arrow_left_5_2);
                 }
-                if(progress <= 20){
+                if (progress <= 20) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1_2);
                     iv_L2.setImageResource(R.drawable.arrow_left_2_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3_2);
@@ -168,7 +136,7 @@ public class DisplayAlarm extends Activity {
                     iv_L5.setImageResource(R.drawable.arrow_left_5_2);
                     iv_L6.setImageResource(R.drawable.arrow_left_6_2);
                 }
-                if(progress >= 50){
+                if (progress >= 50) {
                     iv_L1.setImageResource(R.drawable.arrow_left_1);
                     iv_L2.setImageResource(R.drawable.arrow_left_2);
                     iv_L3.setImageResource(R.drawable.arrow_left_3);
@@ -176,32 +144,32 @@ public class DisplayAlarm extends Activity {
                     iv_L5.setImageResource(R.drawable.arrow_left_5);
                     iv_L6.setImageResource(R.drawable.arrow_left_6);
                 }
-                if(progress >= 58){
+                if (progress >= 58) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                 }
-                if(progress >= 62){
+                if (progress >= 62) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                     iv_R2.setImageResource(R.drawable.arrow_right_2_2);
                 }
-                if(progress >= 67){
+                if (progress >= 67) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                     iv_R2.setImageResource(R.drawable.arrow_right_2_2);
                     iv_R3.setImageResource(R.drawable.arrow_right_3_2);
                 }
-                if(progress >= 72){
+                if (progress >= 72) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                     iv_R2.setImageResource(R.drawable.arrow_right_2_2);
                     iv_R3.setImageResource(R.drawable.arrow_right_3_2);
                     iv_R4.setImageResource(R.drawable.arrow_right_4_2);
                 }
-                if(progress >= 77){
+                if (progress >= 77) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                     iv_R2.setImageResource(R.drawable.arrow_right_2_2);
                     iv_R3.setImageResource(R.drawable.arrow_right_3_2);
                     iv_R4.setImageResource(R.drawable.arrow_right_4_2);
                     iv_R5.setImageResource(R.drawable.arrow_right_5_2);
                 }
-                if(progress >= 82){
+                if (progress >= 82) {
                     iv_R1.setImageResource(R.drawable.arrow_right_1_2);
                     iv_R2.setImageResource(R.drawable.arrow_right_2_2);
                     iv_R3.setImageResource(R.drawable.arrow_right_3_2);
@@ -216,38 +184,32 @@ public class DisplayAlarm extends Activity {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (progress1 <= 10){
+                if (progress1 <= 10) {
                     if (repeat_id != 0)
-                        Toast.makeText(context,alertNextTime(time_before),Toast.LENGTH_LONG).show();
-                        r.stop();
-                        stopVibrator();
-                        finish();
-                }
-                else if (progress1 >= 90){
-                    chkTVinNetwork();
-                    if (repeat_id != 0 )
-                        Toast.makeText(context,alertNextTime(time_before),Toast.LENGTH_LONG).show();
-                        r.stop();
-                        stopVibrator();
-                        finish();
-                    if (haveTVinNetwork) {
-                       Intent intent = new Intent(getApplicationContext(), DeviceList.class);
-                        startActivity(intent);
+                        Toast.makeText(context, alertNextTime(time_before), Toast.LENGTH_LONG).show();
+                    r.stop();
+                    stopVibrator();
+                    finish();
+                } else if (progress1 >= 90) {
 
+                    if (repeat_id != 0)
+                        Toast.makeText(context, alertNextTime(time_before), Toast.LENGTH_LONG).show();
+                    r.stop();
+                    stopVibrator();
+                    finish();
+                    Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.webmanagement.thaidigitaltv");
+                    startActivity(LaunchIntent);
+                    //  Intent intent = new Intent(context, DeviceList.class);
+                    //startActivity(intent);
 
-                    } else {
-                        Toast.makeText(DisplayAlarm.this,"ตรวจสอบ: ไม่พบ TV ของคุณในเครือข่าย",Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }
-                else{
+                } else {
                     seekBar.setProgress(50);
                 }
             }
         });
 
 
-    try {
+        try {
 
             Intent intent = getIntent();
             prog_id = Integer.parseInt(intent.getStringExtra("prog_id"));
@@ -282,6 +244,7 @@ public class DisplayAlarm extends Activity {
 
     }
 
+    /*
     private void chkTVinNetwork() {
         DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
@@ -315,7 +278,7 @@ public class DisplayAlarm extends Activity {
     };
 
 
-
+*/
 
     private String alertNextTime(String time_before) {
         Calendar calendar = Calendar.getInstance();
@@ -331,7 +294,7 @@ public class DisplayAlarm extends Activity {
         calendarNext.setTimeInMillis(calendar.getTimeInMillis());
         calendarNext.add(Calendar.DAY_OF_WEEK, 7);
 
-        return "แจ้งเตือนอีกครั้งวัน"+arr_day[day_id]+" เวลา"+hm;
+        return "แจ้งเตือนอีกครั้งวัน" + arr_day[day_id] + " เวลา" + hm;
 
     }
 
@@ -342,7 +305,7 @@ public class DisplayAlarm extends Activity {
 
     @Override
     public void onBackPressed() {
-       return;
+        return;
     }
 
 
@@ -357,10 +320,7 @@ public class DisplayAlarm extends Activity {
     @Override
     protected void onDestroy() {
 
-        if (!haveTVinNetwork) {
-            GlobalVariable.setServiceProvider(null);
-            Log.d("run","onDestroy : !haveTVinNetwork");
-        }
+
         super.onDestroy();
     }
 }

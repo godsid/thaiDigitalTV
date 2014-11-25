@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#455a64">
+    android:background="@drawable/bg_head_1"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -88,27 +89,28 @@
             android:layout_height="fill_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp">
-                <Button
-                    android:id="@+id/bt_accept"
+                <TextView
+                    android:textStyle="bold|italic"
                     android:layout_width="160dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="10dp"
+                    android:paddingLeft="20dp"
                     android:layout_alignParentLeft="true"
                     android:layout_above="@+id/iv_slide_left6"
-                    android:background="@drawable/bg_button_left"
-                    android:text="Accept"
+                    android:textSize="25dp"
+                    android:text="รับทราบ"
                     android:textColor="@color/White"/>
-                <Button
+                <TextView
+                    android:textStyle="bold|italic"
                     android:id="@+id/bt_device_sh"
                     android:layout_width="160dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
+                    android:textSize="25dp"
+                    android:paddingLeft="30dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_above="@+id/iv_slide_right6"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_button_right"
-                    android:text="Connect"
+                   android:text="เปิดแอพ"
                     android:textColor="@color/White"/>
                 <ImageView
                     android:id="@+id/iv_slide_left1"
