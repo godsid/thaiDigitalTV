@@ -12,9 +12,9 @@ import com.actionbarsherlock.app.SherlockFragment;
 import java.lang.reflect.Field;
 
 /**
- * Created by SystemDLL on 24/11/2557.
+ * Created by SystemDLL on 25/11/2557.
  */
-public class Fragment2 extends SherlockFragment {
+public class MainPager extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +24,8 @@ public class Fragment2 extends SherlockFragment {
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         // Set the ViewPagerAdapter into ViewPager
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
+
         return view;
     }
 

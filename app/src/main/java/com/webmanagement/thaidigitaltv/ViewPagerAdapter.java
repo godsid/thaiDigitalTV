@@ -6,12 +6,13 @@ package com.webmanagement.thaidigitaltv;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     // Declare the number of ViewPager pages
-    final int PAGE_COUNT = 2;
-    private String titles[] = new String[] { "Tab1", "Tab2" };
+    final int PAGE_COUNT = 3;
+    private String titles[] = new String[] { "ช่องทีวี", "หมวดหมู่", "ประเภทรายการ" };
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -23,14 +24,19 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
             // Open FragmentTab1.java
             case 0:
-                FragmentTab1 fragmenttab1 = new FragmentTab1();
-                return fragmenttab1;
+                Log.d("run","P "+position);
+                return new ListTab1();
 
             // Open FragmentTab2.java
             case 1:
-                FragmentTab2 fragmenttab2 = new FragmentTab2();
-                return fragmenttab2;
+                Log.d("run","P "+position);
+                return new ListTab2();
+
+            case 2:
+                Log.d("run","P "+position);
+                return new ListTab3();
         }
+        Log.d("run","P "+position);
         return null;
     }
 
@@ -44,3 +50,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
 }
+

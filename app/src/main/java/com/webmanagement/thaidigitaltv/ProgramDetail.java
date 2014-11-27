@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -85,6 +86,7 @@ public class ProgramDetail extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program_detail);
 
@@ -315,8 +317,6 @@ public class ProgramDetail extends Activity {
         aq.id(IV_detail_list_title).image(GlobalVariable.getChan_pic());
         TV_detail_list_title.setText(GlobalVariable.getChan_name());
 
-        t.setScreenName("ช่อง_" + GlobalVariable.getChan_id() + "_" + GlobalVariable.getChan_name());
-        t.send(new HitBuilders.AppViewBuilder().build());
 
         int c = 0;
         for (int j = 0; j < arrDataStore_program.size(); j++) {

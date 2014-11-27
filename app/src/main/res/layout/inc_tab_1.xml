@@ -6,15 +6,6 @@
     android:id="@+id/ll_tab_1">
     <ListView
         android:id="@+id/lv_tab_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#455a64"
-        android:dividerHeight="5dp"
-        android:divider="#455a64"
-        android:childDivider="#455a64"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        />
+        style="@style/RunListView"
+    />
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -85,8 +86,7 @@ public class MainActivity extends SherlockFragmentActivity {
     Context context;
     Tracker t;
 
-    Fragment fragment1 = new Fragment1();
-    Fragment fragment2 = new Fragment2();
+    FragmentTransaction ft;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -143,10 +143,7 @@ public class MainActivity extends SherlockFragmentActivity {
         DL_drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         DL_drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        LV_menu_left.setOnItemClickListener(new DrawerItemClickListener());
 
-
-        //getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -168,7 +165,12 @@ public class MainActivity extends SherlockFragmentActivity {
         prepareMenuLeft();
         loadToDataStore();
 
-
+        LV_menu_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
+            }
+        });
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -179,6 +181,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
+                getActionBar().setTitle(mTitle);
                super.onDrawerClosed(view);
             }
 
@@ -188,22 +191,27 @@ public class MainActivity extends SherlockFragmentActivity {
             }
         };
 
-        if (savedInstanceState == null) {
-            selectItem(0);
-        }
         DL_drawer_layout.setDrawerListener(actionBarDrawerToggle);
+
+        if (savedInstanceState == null) {
+            Log.d("run","selected 0");
+         //   selectItem(0);
+        }
+
+
     }
 
 
     private void selectItem(int position) {
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft = getSupportFragmentManager().beginTransaction();
+
         switch (position) {
             case 0:
-                ft.replace(R.id.content_frame, fragment1);
+                ft.replace(R.id.content_frame, new MainPager());
                 break;
             case 1:
-                ft.replace(R.id.content_frame, fragment2);
+                ft.replace(R.id.content_frame, new FavoriteList());
                 break;
         }
         ft.commit();
@@ -217,7 +225,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
-        Log.d("run","onOptionsItemSelected");
+        Log.d("run","onOptionsItemSelected : "+item.getItemId());
         if (item.getItemId() == android.R.id.home) {
 
             if (DL_drawer_layout.isDrawerOpen(LV_menu_left)) {
@@ -226,6 +234,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 DL_drawer_layout.openDrawer(LV_menu_left);
             }
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -252,15 +261,7 @@ public class MainActivity extends SherlockFragmentActivity {
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    // ListView click listener in the navigation drawer
-    private class DrawerItemClickListener implements
-            ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            selectItem(position);
-        }
-    }
+
 
 
     public void prepareMenuLeft() {
@@ -344,13 +345,7 @@ public class MainActivity extends SherlockFragmentActivity {
                             arrDataStore_program.add(dataStore_program);
 
                         }
-
-
-                        //  Intent intent = new Intent(getApplicationContext(),MyActivity.class);
-                        //  startActivity(intent);
-
-
-
+                        selectItem(0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("logrun2", e.toString());
@@ -456,6 +451,7 @@ public class MainActivity extends SherlockFragmentActivity {
      ///       ContentFrame.addView(ViewFavoriteList);
       //  }
     }
+
 
 
 }
