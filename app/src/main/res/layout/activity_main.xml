@@ -19,7 +19,7 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#cfd8dc"
+            android:background="@color/BG_Content"
             android:scrollbars="vertical">
         </FrameLayout>
 
@@ -29,8 +29,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
-            android:background="#757575"
-            android:listSelector="@drawable/list_selecter"
+            android:background="@color/BG_Content"
+            android:listSelector="@drawable/list_selector"
             />
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

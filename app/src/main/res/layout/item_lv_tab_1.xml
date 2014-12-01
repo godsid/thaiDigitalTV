@@ -3,31 +3,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_group_item"
+    android:background="@drawable/bg_list_item"
     android:layout_height="?android:attr/listPreferredItemHeight">
 
 
     <ImageView
         android:id="@+id/iv_channel_lv_tab_1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:src="@drawable/ic_thaidigitaltv"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         />
 
     <TextView
         android:id="@+id/tv_title_lv_tab_1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:textSize="15sp"
         android:paddingLeft="15dp"
         android:text="new text"
+        android:gravity="center_vertical"
         android:textStyle="bold"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/iv_channel_lv_tab_1"
-        android:textColor="@color/White"
+        android:textColor="@color/Text_ListTitle"
         />
 </RelativeLayout>

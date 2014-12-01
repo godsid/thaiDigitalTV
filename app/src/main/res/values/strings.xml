@@ -174,11 +174,30 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+
+    <!-- =============================================================================================== -->
+
+    <color name="Text_ListNormal">#ff696969</color>
+    <color name="Text_ListTitle">#ff547e00</color>
+    <color name="Text_ListDescription">#ff365300</color>
+    <color name="Text_ActionBar">#fff4f4f4</color>
+
+    <color name="BG_Content">#ffb6b6b6</color>
+
+    <color name="BG_ActionBar">#659700</color>
+
+    <color name="BG_ListSelector">#ffb6b6b6</color>
+    <color name="BG_ListDivider">#ffb6b6b6</color>
+    <color name="BG_ListDividerNormal">#ffbebebe</color>
+    <color name="BG_List">#E5E5E5</color>
+    <color name="BG_ListChildDivider">#ffb6b6b6</color>
+
+    <color name="BG_TabNonFocused">#666666</color>
+
     <color name="GreenGroupHighlight">#85c01f</color>
     <color name="ExpGroupView">#7e8a92</color>
     <color name="ExpListView">#4A4A4A</color>
     <color name="BGBodyDialog">#fff6fbfb</color>
-    <color name="BGTitleDialog">#455a64</color>
     <color name="THead1">#ff495259</color>
     <color name="TDescription">#ff76868f</color>
 

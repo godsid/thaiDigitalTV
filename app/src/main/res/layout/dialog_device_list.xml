@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:background="@color/BG_Content"
+    android:paddingBottom="5dp"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/ll1"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:background="@color/BGTitleDialog">
+        style="@style/ActionBar.Solid.Run_theme">
         <TextView
             android:text="เลือกอุปกรณ์"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/Text_ActionBar"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,8 +26,13 @@
         android:id="@+id/lv_device_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/BG_List"
+        android:divider="@color/BG_ListDivider"
         android:layout_below="@+id/ll1"
-        android:background="@color/BGBodyDialog" />
+        android:dividerHeight="5dp" />
 
 </RelativeLayout>

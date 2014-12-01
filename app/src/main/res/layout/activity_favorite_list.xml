@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/GreenGroupHighlight"
-    android:id="@+id/ll_favorite_list">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#455a64">
+    android:orientation="vertical">
         <ListView
             android:id="@+id/lv_fav_show"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#455a64"
+            android:background="@color/BG_List"
+            android:divider="@color/BG_ListDivider"
             android:dividerHeight="5dp"
-            android:divider="#455a64"
             android:fadeScrollbars="true"
             android:fastScrollEnabled="true"
             android:layout_marginTop="5dp"
@@ -25,12 +20,11 @@
             android:layout_marginBottom="5dp"/>
         <ImageView
             android:id="@+id/iv_fav_delete_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/delete_all"
             android:layout_alignParentBottom="true"
 
             />
     </RelativeLayout>
-</LinearLayout>

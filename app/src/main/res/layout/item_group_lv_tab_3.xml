@@ -2,21 +2,34 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_group_item"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/bg_list_item"
     android:paddingTop="1dp">
 
-    <TextView
-        android:id="@+id/tv_group_lv_tab3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/list_name"
-        android:textSize="17sp"
-        android:layout_centerVertical="true"
-        android:textStyle="bold"
-        android:textColor="@color/White"
+    <ImageView
+        android:id="@+id/iv_group_lv_tab3"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         />
 
+    <TextView
+
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tv_group_lv_tab3"
+        android:layout_width="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/list_name"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="@color/Text_ListTitle"
+        />
+    <!--
+    android:layout_toRightOf="@id/iv_iv_group_lv_tab2"
+    -->
 </RelativeLayout>

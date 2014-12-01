@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_list_item"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="center_vertical"
+    android:layout_height="?android:attr/listPreferredItemHeight">
 
     <ImageView
         android:id="@+id/ic_device"
-        android:layout_width="70dp"
-        android:layout_height="65dp"
-        android:padding="5dp"
-        android:scaleType="fitXY"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_launcher"
+        />
 
-    <RelativeLayout
+
+    <TextView
+        android:id="@+id/tv_device_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_toRightOf="@+id/ic_device"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="Title"
+        android:textColor="@color/Text_ListTitle" />
 
-        <TextView
-            android:id="@+id/tv_device_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="Title"
-            android:textColor="@color/THead1"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/tv_device_model"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_device_name"
+        android:layout_toRightOf="@+id/ic_device"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="Model"
+        android:textColor="@color/Text_ListNormal" />
 
-        <TextView
-            android:id="@+id/tv_device_model"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_device_name"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:textColor="@color/TDescription"
-            android:text="Model"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/tv_device_ip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_device_model"
+        android:layout_toRightOf="@+id/ic_device"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="IP"
+        android:textColor="@color/Text_ListNormal" />
 
-        <TextView
-            android:id="@+id/tv_device_ip"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_device_model"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:text="IP"
-            android:textColor="@color/TDescription"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

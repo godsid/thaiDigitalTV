@@ -9,15 +9,15 @@
         android:id="@+id/exp_tab_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#455a64"
         android:dividerHeight="5dp"
-        android:divider="#455a64"
-        android:childDivider="#455a64"
         android:choiceMode="singleChoice"
         android:groupIndicator="@drawable/group_indicator"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
+        android:background="@color/BG_List"
+        android:childDivider="@color/BG_ListChildDivider"
+        android:divider="@color/BG_ListDivider"
         />
 </LinearLayout>

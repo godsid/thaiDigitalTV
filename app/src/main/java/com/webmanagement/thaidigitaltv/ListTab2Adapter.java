@@ -99,7 +99,7 @@ public class ListTab2Adapter extends BaseExpandableListAdapter {
             LayoutInflater inf = (LayoutInflater) context2.getSystemService(context2.LAYOUT_INFLATER_SERVICE);
             convertView = inf.inflate(R.layout.item_group_lv_tab_2, null);
         }
-        TextView tv = (TextView) convertView.findViewById(R.id.tv_iv_group_lv_tab2);
+        TextView tv = (TextView) convertView.findViewById(R.id.tv_group_lv_tab2);
         //ImageView iv = (ImageView) convertView.findViewById(R.id.iv_iv_group_lv_tab2);
 
 
