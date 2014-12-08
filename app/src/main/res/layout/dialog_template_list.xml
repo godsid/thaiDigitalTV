@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/BG_Content"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/ll1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        style="@style/ActionBar.Solid.Run_theme">
+        <TextView
+            android:id="@+id/title"
+            android:text="เลือกอุปกรณ์"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/dialog_title_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="@color/BG_ListDividerNormal"
+            android:dividerHeight="1dp"
+            android:layout_below="@+id/ll1"
+            android:listSelector="@drawable/bg_list_item"
+            android:background="@color/BG_List"
+            android:layout_marginTop="1dp" />
+
+
+</RelativeLayout>

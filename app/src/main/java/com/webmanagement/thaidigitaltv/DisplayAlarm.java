@@ -3,37 +3,24 @@ package com.webmanagement.thaidigitaltv;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.sec.android.allshare.Device;
-import com.sec.android.allshare.DeviceFinder;
-import com.sec.android.allshare.ERROR;
-import com.sec.android.allshare.ServiceConnector;
-import com.sec.android.allshare.ServiceProvider;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -57,7 +44,7 @@ public class DisplayAlarm extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        setContentView(R.layout.activity_display_alert_time);
+        setContentView(R.layout.activity_display_alarm);
         context = DisplayAlarm.this;
         aq = new AQuery(this);
         dbAction = new DatabaseAction(this);
@@ -246,41 +233,6 @@ public class DisplayAlarm extends Activity {
 
     }
 
-    /*
-    private void chkTVinNetwork() {
-        DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
-        deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
-        ArrayList<Device> mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
-
-        if (mDeviceList.size() > 0) {
-            haveTVinNetwork = true;
-            GlobalVariable.arrDeviceList = mDeviceList;
-        } else {
-            haveTVinNetwork = false;
-        }
-        Log.d("run","mDeviceList "+mDeviceList.size());
-    }
-
-
-
-    private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
-
-
-        @Override
-        public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
-            Log.d("run","onDeviceAdded");
-            chkTVinNetwork();
-        }
-
-        @Override
-        public void onDeviceRemoved(Device.DeviceType deviceType,Device device, ERROR error) {
-            Log.d("run","onDeviceRemoved");
-            chkTVinNetwork();
-        }
-    };
-
-
-*/
 
     private String alertNextTime(String time_before) {
         Calendar calendar = Calendar.getInstance();
@@ -311,12 +263,7 @@ public class DisplayAlarm extends Activity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.display_alert_time, menu);
-        return true;
-    }
+
 
 
     @Override

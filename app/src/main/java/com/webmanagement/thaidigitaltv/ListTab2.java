@@ -41,7 +41,7 @@ public class ListTab2 extends SherlockFragment {
                              Bundle savedInstanceState) {
         // Get the view from fragmenttab1.xml
         View view = inflater.inflate(R.layout.inc_tab_2, container, false);
-        Log.d("run","TAB2");
+        //Log.d("run","TAB2");
 
         this.rootView = view;
         this.context = rootView.getContext();
@@ -81,7 +81,7 @@ public class ListTab2 extends SherlockFragment {
 
 
     private void LoadMenuToTab() {
-        Log.d("run","LoadMenuToTab 2");
+        //Log.d("run","LoadMenuToTab 2");
         try {
 
             String item_cate_title, item_cate_pic;
@@ -102,7 +102,7 @@ public class ListTab2 extends SherlockFragment {
             group_list_tab2 = new ArrayList<ItemGroupTab2>();
             for (int i = 0; i < arrDataStore_category.size(); i++) {
 
-                item_cate_title = arrDataStore_category.get(i).getCate_title();
+                item_cate_title = arrDataStore_category.get(i).getCate_name();
                 item_cate_pic = arrDataStore_category.get(i).getCate_pic();
                 item_cate_id = arrDataStore_category.get(i).getCate_id();
 

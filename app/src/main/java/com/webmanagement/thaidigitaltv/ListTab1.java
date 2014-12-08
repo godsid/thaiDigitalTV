@@ -53,7 +53,7 @@ public class ListTab1 extends SherlockFragment {
                              Bundle savedInstanceState) {
         // Get the view from fragmenttab1.xml
         View view = inflater.inflate(R.layout.inc_tab_1, container, false);
-    Log.d("run","TAB1");
+    //Log.d("run","TAB1");
         this.rootView = view;
         this.context = rootView.getContext();
         aq = new AQuery(context);
@@ -94,7 +94,7 @@ public class ListTab1 extends SherlockFragment {
 
 
     private void LoadMenuToTab() {
-          Log.d("run","LoadMenuToTab 1");
+         // Log.d("run","LoadMenuToTab 1");
         try {
             String item_chan_title, item_chan_pic;
             int item_chan_id;

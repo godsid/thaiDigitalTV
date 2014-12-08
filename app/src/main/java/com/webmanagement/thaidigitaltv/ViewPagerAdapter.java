@@ -24,16 +24,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
             // Open FragmentTab1.java
             case 0:
-                Log.d("run","P "+position);
+               // Log.d("run","P "+position);
                 return new ListTab1();
 
             // Open FragmentTab2.java
             case 1:
-                Log.d("run","P "+position);
+               // Log.d("run","P "+position);
                 return new ListTab2();
 
             case 2:
-                Log.d("run","P "+position);
+                //Log.d("run","P "+position);
                 return new ListTab3();
         }
         Log.d("run","P "+position);

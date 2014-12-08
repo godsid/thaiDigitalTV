@@ -62,8 +62,8 @@ public class DialogProgramScheduleAdapter extends BaseAdapter {
 
 
         TV_day.setText(arrayList.get(position).day);
-        TV_timestart.setText(arrayList.get(position).timestart.replaceAll("\\s","") + " - ");
-        TV_timeend.setText(arrayList.get(position).timeend.replaceAll("\\s",""));
+        TV_timestart.setText(arrayList.get(position).timestart + " - ");
+        TV_timeend.setText(arrayList.get(position).timeend);
 
         Animation animation = null;
         animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);

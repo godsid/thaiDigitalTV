@@ -3,8 +3,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="2dp">
+    android:background="@drawable/bg_list_item"
+    android:padding="2dp"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
 
     <ImageView
         android:layout_width="45dp"
@@ -15,13 +17,15 @@
         android:layout_marginLeft="10dp" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textStyle="bold"
         android:text="New Text"
         android:id="@+id/tv_menu_left"
         android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:textSize="15sp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/Text_ListTitle"
         android:paddingLeft="15dp"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/iv_menu_left"/>

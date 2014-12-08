@@ -4,8 +4,8 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 8/10/2557.
  */
 public class DataStore_Channel {
-    String chan_name, chan_pic;
-    int chan_id;
+    private String chan_name, chan_pic;
+    private int chan_id;
 
     public int getFr_cate_id() {
         return fr_cate_id;

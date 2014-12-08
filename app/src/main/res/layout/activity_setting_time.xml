@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BG_Content"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_prog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:text="Medium Text"
+        android:textStyle="bold"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/Text_ListDescription"
+        android:textSize="18sp" />
+
+
+    <ListView
+        android:id="@+id/lv_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/BG_List"
+        android:choiceMode="singleChoice"
+        android:divider="@color/BG_ListDivider"
+        android:dividerHeight="5dp"
+        android:fadeScrollbars="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:background="@color/BG_List"
+        android:layout_height="60dp">
+
+        <CheckBox
+            android:layout_marginRight="10dp"
+            android:id="@+id/cb_settime_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:button="@drawable/checkbox" />
+
+        <TextView
+            android:id="@+id/tv_check"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_toLeftOf="@+id/cb_settime_repeat"
+            android:text="ทำซ้ำทุกสัปดาห์"
+            android:textColor="@color/Text_ListTitle"
+            android:textSize="20sp" />
+    </RelativeLayout>
+</LinearLayout>

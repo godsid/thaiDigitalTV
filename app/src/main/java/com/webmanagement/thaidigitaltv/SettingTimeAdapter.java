@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,7 +50,7 @@ public class SettingTimeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_setting_list, null);
+            convertView = mInflater.inflate(R.layout.item_setting_time, null);
         }
 
         TextView TV_settime_timeval = (TextView) convertView.findViewById(R.id.tv_settime_timeval);

@@ -6,17 +6,27 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -25,15 +35,23 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.control.TVController;
+import com.squareup.picasso.Picasso;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,11 +60,11 @@ import java.util.Comparator;
 import java.util.Date;
 
 
-public class ProgramDetail extends Activity {
+public class ProgramDetail extends SherlockFragmentActivity {
     AQuery aq;
 
-    TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav, TV_detail_list_title;
-    TextView TV_detail_day, TV_detail_date, TV_detail_month, TV_detail_year;
+    TextView TV_header_program, TV_header_time, TV_header_status, TV_header_fav;
+    TextView TV_detail_day,TV_now ,TV_detail_date, TV_detail_month, TV_detail_year;
 
     //public static Typeface TF_font;
     //public String frontPath = "fonts/RSU_BOLD.ttf";
@@ -57,7 +75,7 @@ public class ProgramDetail extends Activity {
     boolean selectIsToDay = true;
     DatabaseAction dbAction;
 
-    ImageView IV_device_share;
+    //ImageView IV_device_share;
     Context context;
 
     Calendar calendar;
@@ -72,7 +90,7 @@ public class ProgramDetail extends Activity {
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
 
     public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
-    ImageView IV_ic_nav_top_left, IV_detail_today, IV_detail_list_title;
+    ImageView  IV_now;
 
 
     ArrayList<DataStore_Program> arrDataStore_program = MainActivity.arrDataStore_program;
@@ -83,10 +101,10 @@ public class ProgramDetail extends Activity {
     private TVController mTVController = null;
     Tracker t;
 
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program_detail);
 
@@ -95,22 +113,40 @@ public class ProgramDetail extends Activity {
         calendar = Calendar.getInstance();
         date = new Date();
         dbAction = new DatabaseAction(this);
+        actionBar = getSupportActionBar();
+
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(GlobalVariable.getChan_name());
+
+
+        try {
+            String urlPic = MainActivity.dirImage+"/"+GlobalVariable.getChan_id()+".png";
+            Log.d("run"," u : "+urlPic);
+            File bitmapFile = new File(urlPic);
+            Bitmap bitmap = BitmapFactory.decodeFile(bitmapFile.toString());
+            Bitmap bmr = getResizedBitmap(bitmap,96 ,96);
+            Drawable icon = new BitmapDrawable(getResources(), bmr);
+            actionBar.setIcon(icon);
+        } catch (Exception e){
+
+            Log.d("run",e+"");
+        }
+
+
 
         programDetailAdapter = new ProgramDetailAdapter(this, dataCustomProgramDetail);
         //TF_font = Typeface.createFromAsset(getAssets(), frontPath);
 
         t = ((MyApplication) getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
 
-        TV_detail_list_title = (TextView) findViewById(R.id.tv_detail_list_title);
         //TV_detail_list_title.setTypeface(TF_font);
         //TV_detail_list_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-        IV_detail_list_title = (ImageView) findViewById(R.id.iv_detail_list_title);
 
-        IV_device_share = (ImageView) findViewById(R.id.iv_device_share);
+        //IV_device_share = (ImageView) findViewById(R.id.iv_device_share);
 
-        IV_ic_nav_top_left = (ImageView) findViewById(R.id.ic_nav_top_left);
-
-        IV_detail_today = (ImageView) findViewById(R.id.iv_detail_today);
+        IV_now = (ImageView) findViewById(R.id.iv_now);
+        TV_now = (TextView) findViewById(R.id.tv_now);
         TV_detail_day = (TextView) findViewById(R.id.tv_detail_day);
         TV_detail_date = (TextView) findViewById(R.id.tv_detail_date);
         TV_detail_month = (TextView) findViewById(R.id.tv_detail_month);
@@ -147,6 +183,9 @@ public class ProgramDetail extends Activity {
         TV_header_fav.setTextSize(tv_header_tb_size);
 
 
+
+
+
         setDataToLV();
 
 
@@ -175,66 +214,66 @@ public class ProgramDetail extends Activity {
         });
 
 
-        IV_detail_today.setOnClickListener(new View.OnClickListener() {
+        IV_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bt_now));
+                TV_now.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bt_now));
+
                 setDefaultToday();
-            }
-        });
-
-
-        IV_ic_nav_top_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        IV_device_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DialogDeviceList(context);
-                // Intent intent = new Intent(getApplicationContext(), DeviceList.class);
-                //  startActivity(intent);
 
             }
         });
+
 
         chkTVinNetwork();
     } //End Oncreate
 
 
+    public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
+
     private void chkTVinNetwork() {
 
         DeviceFinder deviceFinder = GlobalVariable.getServiceProvider().getDeviceFinder();
+        deviceFinder.refresh();
         deviceFinder.setDeviceFinderEventListener(Device.DeviceType.DEVICE_TV_CONTROLLER, iDeviceFinderEventListener);
         ArrayList<Device> mDeviceList = deviceFinder.getDevices(Device.DeviceDomain.LOCAL_NETWORK, Device.DeviceType.DEVICE_TV_CONTROLLER);
-        //deviceFinder.refresh();
+        deviceFinder.refresh();
         if (mDeviceList != null) {
             if (mDeviceList.size() > 0) {
                 haveTVinNetwork = true;
-                IV_device_share.setImageResource(R.drawable.ic_share);
-                IV_device_share.setEnabled(true);
                 GlobalVariable.arrDeviceList = mDeviceList;
                 mTVController = (TVController) GlobalVariable.arrDeviceList.get(0);
                 mTVController.setEventListener(mEventListener);
             } else {
-                IV_device_share.setEnabled(false);
                 haveTVinNetwork = false;
-                IV_device_share.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             }
         } else {
-            IV_device_share.setEnabled(false);
             haveTVinNetwork = false;
-            IV_device_share.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
         }
+        invalidateOptionsMenu();
         programDetailAdapter.notifyDataSetChanged();
         Log.d("run", "mDeviceList " + mDeviceList.size());
     }
 
-    private final DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
+    private DeviceFinder.IDeviceFinderEventListener iDeviceFinderEventListener = new DeviceFinder.IDeviceFinderEventListener() {
 
 
         @Override
@@ -314,8 +353,7 @@ public class ProgramDetail extends Activity {
 
         GlobalVariable.setDay_id(g_change_day);
 
-        aq.id(IV_detail_list_title).image(GlobalVariable.getChan_pic());
-        TV_detail_list_title.setText(GlobalVariable.getChan_name());
+
 
 
         int c = 0;
@@ -392,6 +430,40 @@ public class ProgramDetail extends Activity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_program_detail, menu);
+        if (haveTVinNetwork)
+            menu.findItem(R.id.action_share).setVisible(true);
+        else
+            menu.findItem(R.id.action_share).setVisible(false);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        Log.d("run","onOptionsItemSelected : "+item.getItemId());
+        switch (item.getItemId()){
+            case android.R.id.home :
+                finish();
+                break;
+            case R.id.action_share :
+                chkTVinNetwork();
+                if (!haveTVinNetwork) {
+                    Toast.makeText(context,"ขาดการเชื่อมต่อกับ TV",Toast.LENGTH_LONG);
+                    return super.onOptionsItemSelected(item);
+                } else {
+                    new DialogDeviceList(context);
+                }
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     @Override

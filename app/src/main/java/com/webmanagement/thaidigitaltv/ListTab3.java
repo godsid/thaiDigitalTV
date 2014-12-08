@@ -4,18 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.text.BoringLayout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -23,7 +21,6 @@ import com.androidquery.AQuery;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,7 +57,7 @@ public class ListTab3  extends SherlockFragment {
                              Bundle savedInstanceState) {
         // Get the view from fragmenttab1.xml
         View view = inflater.inflate(R.layout.inc_tab_3, container, false);
-        Log.d("run","TAB3");
+        //Log.d("run","TAB3");
 
         this.rootView = view;
         this.context = rootView.getContext();
@@ -98,7 +95,7 @@ return view;
 
 
     private void LoadMenuToTab() {
-        Log.d("run","LoadMenuToTab 3");
+        //Log.d("run","LoadMenuToTab 3");
         try {
 
 
@@ -174,7 +171,7 @@ return view;
         t.setScreenName("รายการ_" + pn);
         t.send(new HitBuilders.AppViewBuilder().build());
 
-        AlertDialog.Builder dlb = new AlertDialog.Builder(context);
+        AlertDialog.Builder dlb = new AlertDialog.Builder(context,R.style.Run_ButtonDialog);
         dlb.setCancelable(true);
 
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_program_schedule, null);
@@ -189,15 +186,14 @@ return view;
 
         dlb.setView(view);
         //Toast.makeText(context, cp, Toast.LENGTH_SHORT).show();
-
         dlb.setNegativeButton("ปิดหน้าต่าง", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+
             }
         });
-
         dlb.show();
     }
 

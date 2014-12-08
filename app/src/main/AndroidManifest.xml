@@ -55,7 +55,7 @@
         </activity>
         <activity android:name=".ProgramDetail" >
         </activity>
-        <activity android:name=".SettingAlert" >
+        <activity android:name=".SettingTime" >
         </activity>
         <activity
             android:name=".DisplayAlarm"

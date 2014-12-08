@@ -22,6 +22,6 @@
     specifying the canonical name, and the value the alias to use instead. -->
     <screenName name="com.webmanagement.thaidigitaltv.MainActivity">MainActivity_หน้าหลัก</screenName>
     <screenName name="com.webmanagement.thaidigitaltv.ProgramDetail">ProgramDetail_หน้าแสดงรายการแบ่งตามช่อง</screenName>
-    <screenName name="com.webmanagement.thaidigitaltv.SettingAlert">SettingAlert_หน้าตั้งเวลาเตือนล่วงหน้า</screenName>
+    <screenName name="com.webmanagement.thaidigitaltv.SettingTime">SettingAlert_หน้าตั้งเวลาเตือนล่วงหน้า</screenName>
 
         </resources>

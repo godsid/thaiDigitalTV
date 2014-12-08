@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,6 +42,7 @@ public class FavoriteList extends SherlockFragment {
     FavoriteListAdapter favoriteListAdapter;
     private DatabaseAction dbAction;
     private int itemPosition;
+    private AlertDialog alertMenu;
 
     String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
 
@@ -130,20 +134,35 @@ public class FavoriteList extends SherlockFragment {
     }
 
     private void showActionMenuDialog() {
+        String dialog_menu_fav[] = {"แก้ไข","ลบ"};
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(context, R.layout.item_dialog_menu,R.id.tv, dialog_menu_fav);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("เลือกเมนู");
-        builder.setItems(R.array.dialog_menu_fav,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialoginterface, int i) {
-                        if (i == 0)
-                            menuActionEdit();
-                        else if (i == 1)
-                            menuActionDelete();
-                    }
-                });
-        builder.show();
-        builder.setCancelable(true);
+        builder.setTitle(null);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_template_list, null);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        ListView lv = (ListView) view.findViewById(R.id.lv_dialog);
+        lv.setAdapter(arrayAdapter);
+        title.setText("เลือกเมนู");
+        builder.setView(view);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0 :menuActionEdit();
+                        break;
+                    case 1:menuActionDelete();
+                        break;
+                }
+                alertMenu.dismiss();
+            }
+        });
+        alertMenu = builder.create();
+        alertMenu.show();
+
+
+
 
     }
 
@@ -160,7 +179,7 @@ public class FavoriteList extends SherlockFragment {
             int repeat_id = cur.getInt(7);
             if (arrayListData.get(getItemPosition()).list_id == prog_id) {
 
-                Intent intent = new Intent(context, SettingAlert.class);
+                Intent intent = new Intent(context, SettingTime.class);
                 intent.putExtra("i_Prog_id", prog_id);
                 intent.putExtra("i_Prog_name", prog_name);
                 intent.putExtra("i_Prog_timestart", time_start);
@@ -231,6 +250,7 @@ public class FavoriteList extends SherlockFragment {
                     }
                 });
 
+
         builder.show();
 
     }
@@ -263,7 +283,6 @@ public class FavoriteList extends SherlockFragment {
                             //Toast.makeText(ShowDialog.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
                     });
-
 
             builder.show();
 

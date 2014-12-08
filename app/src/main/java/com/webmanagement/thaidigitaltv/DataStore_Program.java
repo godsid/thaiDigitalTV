@@ -5,7 +5,7 @@ package com.webmanagement.thaidigitaltv;
  */
 public class DataStore_Program {
     private int prog_id, fr_channel_id, fr_day_id, fr_type_id;
-    String prog_name, prog_timestart, prog_timeend;
+    private String prog_name, prog_timestart, prog_timeend;
 
     public int getProg_id() {
         return prog_id;

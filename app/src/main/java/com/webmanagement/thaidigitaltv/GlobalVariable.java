@@ -23,25 +23,25 @@ import java.util.ArrayList;
  */
 public class GlobalVariable {
 
-    public static ArrayList<Integer> arrProg_id = new ArrayList<Integer>();
-    public static ArrayList<String> arrProg_name = new ArrayList<String>();
-    public static ArrayList<String> arrProg_timestart = new ArrayList<String>();
-    public static ArrayList<String> arrProg_timeend = new ArrayList<String>();
+    private static ArrayList<Integer> arrProg_id = new ArrayList<Integer>();
+    private static ArrayList<String> arrProg_name = new ArrayList<String>();
+    private static ArrayList<String> arrProg_timestart = new ArrayList<String>();
+    private static ArrayList<String> arrProg_timeend = new ArrayList<String>();
 
-    public static ArrayList<Integer> arrFav_Prog_id = new ArrayList<Integer>();
-    public static ArrayList<String> arrFav_Prog_name = new ArrayList<String>();
+    private static ArrayList<Integer> arrFav_Prog_id = new ArrayList<Integer>();
+    private static ArrayList<String> arrFav_Prog_name = new ArrayList<String>();
 
-    public static int Item_selected;
-    public static int Day_id;
+    private static int Item_selected;
+    private static int Day_id;
 
-    public static int Chan_id;
-    public static String Chan_name;
-    public static String Chan_pic;
+    private static int Chan_id;
+    private static String Chan_name;
+    private static String Chan_pic;
 
-    public static int Prog_id;
-    public static String Prog_name;
-    public static String Prog_timestart;
-    public static String Prog_timeend;
+    private static int Prog_id;
+    private static String Prog_name;
+    private static String Prog_timestart;
+    private static String Prog_timeend;
 
 
     private static Device mDevice = null;
@@ -212,7 +212,7 @@ public class GlobalVariable {
 
     public static AlertDialog.Builder simpleDialogTemplate(Context c, String t, String b) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        AlertDialog.Builder builder = new AlertDialog.Builder(c,R.style.Run_ButtonDialog);
         builder.setTitle(null);
         View view = LayoutInflater.from(c).inflate(R.layout.dialog_template, null);
         TextView title = (TextView) view.findViewById(R.id.title);

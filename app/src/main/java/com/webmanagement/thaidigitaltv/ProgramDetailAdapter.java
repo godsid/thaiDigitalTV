@@ -1,33 +1,19 @@
 package com.webmanagement.thaidigitaltv;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.sec.android.allshare.Device;
-import com.sec.android.allshare.ERROR;
-import com.sec.android.allshare.control.TVController;
 
 import java.util.ArrayList;
 
@@ -105,7 +91,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
                     } else {
 
-                        Intent intent = new Intent(context, SettingAlert.class);
+                        Intent intent = new Intent(context, SettingTime.class);
                         intent.putExtra("i_Prog_id", arrayProgramDetail.get(position).id);
                         intent.putExtra("i_Prog_name", arrayProgramDetail.get(position).pname);
                         intent.putExtra("i_Prog_timestart", arrayProgramDetail.get(position).pstart);

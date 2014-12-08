@@ -4,8 +4,8 @@ package com.webmanagement.thaidigitaltv;
  * Created by SystemDLL on 8/10/2557.
  */
 public class DataStore_Type {
-    String type_name;
-    int type_id;
+    private String type_name;
+    private int type_id;
 
     public String getType_name() {
         return type_name;

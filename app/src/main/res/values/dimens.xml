@@ -5,5 +5,9 @@
 
 <dimen name="thumbnail_width">70dp</dimen>
 <dimen name="thumbnail_height">70dp</dimen>
+
+    <dimen name="dialog_text_size">18sp</dimen>
+    <dimen name="dialog_title_text_size">20sp</dimen>
+    <dimen name="dialog_button_text_size">18sp</dimen>
 </resources>
 

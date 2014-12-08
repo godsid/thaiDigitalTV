@@ -181,8 +181,19 @@
     <color name="Text_ListTitle">#ff547e00</color>
     <color name="Text_ListDescription">#ff365300</color>
     <color name="Text_ActionBar">#fff4f4f4</color>
+    <color name="Text_SeekerBar">#fff4f4f4</color>
+    <color name="Text_TableHeader">#fff4f4f4</color>
+    <color name="Text_ButtonDialog">#ff365300</color>
 
     <color name="BG_Content">#ffb6b6b6</color>
+
+    <color name="BG_SeekerBar">#ff7d7d7d</color>
+
+    <color name="BG_TableHeader">#ffa5a5a5</color>
+    <color name="BG_TableShadowHeader">#ff696969</color>
+
+    <color name="BG_ButtonDialog">#ffcdcdcd</color>
+    <color name="BG_ButtonDialogPressed">#ffb6b6b6</color>
 
     <color name="BG_ActionBar">#659700</color>
 

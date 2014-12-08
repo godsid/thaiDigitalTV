@@ -20,7 +20,7 @@ public class ServiceAlarm extends Service {
 
     @Override
     public void onCreate() {
-
+        Log.d("run", "Service onCreate");
         //Toast.makeText(getApplicationContext(), "onCreate Service", Toast.LENGTH_SHORT).show();
         super.onCreate();
     }
@@ -30,24 +30,28 @@ public class ServiceAlarm extends Service {
     @Override
     public void onDestroy() {
         //Toast.makeText(getApplicationContext(), "onDestroy Service", Toast.LENGTH_SHORT).show();
+        Log.d("run", "Service onDestroy");
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         //Toast.makeText(getApplicationContext(), "onBind Service", Toast.LENGTH_SHORT).show();
+        Log.d("run", "Service onBind");
         return null;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         //Toast.makeText(getApplicationContext(), "onUnbind Service", Toast.LENGTH_SHORT).show();
+        Log.d("run", "Service onUnbind");
         return super.onUnbind(intent);
     }
 
     @Override
     public void onRebind(Intent intent) {
         //Toast.makeText(getApplicationContext(), "onRebind Service", Toast.LENGTH_SHORT).show();
+        Log.d("run", "Service onRebind");
         super.onRebind(intent);
     }
 
@@ -81,9 +85,9 @@ public class ServiceAlarm extends Service {
         intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent1);
 
-        Log.d("run", "Service " + prog_id);
+        Log.d("run", "Service onStartCommand " + prog_id);
         super.onStartCommand(intent, flags, startId);
-        return Service.START_STICKY;
+        return Service.START_REDELIVER_INTENT;
     }
 
 
