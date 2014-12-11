@@ -72,7 +72,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
     ListView LV_menu_left;
 
-    int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite_flase};
+    int[] g_pic = new int[]{R.drawable.ic_channel_tv, R.drawable.ic_favorite};
     String[] g_title = new String[]{"ช่องรายการ", "รายการโปรด"};
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -272,7 +272,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
     public void prepareMenuLeft() {
 
-
         for (int i = 0; i < g_pic.length; i++) {
 
             dataCustomMenuLeft.add(new DataCustomMenuLeft(g_title[i], g_pic[i]));
@@ -284,86 +283,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
     }
 
-/*
-    public void loadToDataStore() {
 
-        aq.progress(progressDialog).ajax(urlData, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-            @Override
-            public void callback(String url, JSONObject object, AjaxStatus status) {
-
-                if (object != null) {
-
-                    try {
-
-                    //    Log.d("logrun2", "O "+object.getJSONArray("allitems"));
-                      //  JSONArray item_array_cate = object.getJSONArray("allitems").getJSONObject(0).getJSONArray("tb_category");
-
-                        JSONArray item_array_cate = object.getJSONObject("allitems").getJSONArray("tb_category");
-                        JSONArray item_array_chan = object.getJSONObject("allitems").getJSONArray("tb_channel");
-                        JSONArray item_array_type = object.getJSONObject("allitems").getJSONArray("tb_type");
-                        JSONArray item_array_prog = object.getJSONObject("allitems").getJSONArray("tb_program");
-
-
-                        for (int j = 0; j < item_array_cate.length(); j++) {
-                            DataStore_Category dataStore_category = new DataStore_Category();
-                            dataStore_category.setCate_id(item_array_cate.getJSONObject(j).getInt("category_id"));
-                            dataStore_category.setCate_name(item_array_cate.getJSONObject(j).getString("category_name").replaceAll("\\+$", ""));
-                            dataStore_category.setCate_pic(item_array_cate.getJSONObject(j).getString("category_pic").replaceAll("\\s", ""));
-                            arrDataStore_category.add(dataStore_category);
-
-                        }
-                        //Log.d("run", "dataStore_category  " + arrDataStore_category.size());
-
-                        for (int i = 0; i < item_array_chan.length(); i++) {
-
-                            DataStore_Channel dataStore_channel = new DataStore_Channel();
-                            dataStore_channel.setChan_id(item_array_chan.getJSONObject(i).getInt("channel_id"));
-                            dataStore_channel.setChan_name(item_array_chan.getJSONObject(i).getString("channel_name").replaceAll("\\+$", ""));
-                            dataStore_channel.setChan_pic(item_array_chan.getJSONObject(i).getString("channel_pic"));
-                            dataStore_channel.setFr_cate_id(item_array_chan.getJSONObject(i).getInt("category_id"));
-                            arrDataStore_channel.add(dataStore_channel);
-
-                            SaveImage(item_array_chan.getJSONObject(i).getString("channel_pic"),item_array_chan.getJSONObject(i).getInt("channel_id"));
-
-                        }
-                        //Log.d("run", "dataStore_channel  " + arrDataStore_channel.size());
-
-                        for (int i = 0; i < item_array_type.length(); i++) {
-                            DataStore_Type dataStore_type = new DataStore_Type();
-                            dataStore_type.setType_id(item_array_type.getJSONObject(i).getInt("type_id"));
-                            dataStore_type.setType_name(item_array_type.getJSONObject(i).getString("type_name").replaceAll("\\+$", ""));
-                            arrDataStore_type.add(dataStore_type);
-                        }
-
-                        for (int j = 0; j < item_array_prog.length(); j++) {
-
-                            DataStore_Program dataStore_program = new DataStore_Program();
-                            dataStore_program.setProg_id(item_array_prog.getJSONObject(j).getInt("prog_id"));
-                            dataStore_program.setProg_name(item_array_prog.getJSONObject(j).getString("prog_name").replaceAll("\\+$", ""));
-                            dataStore_program.setProg_timeend(item_array_prog.getJSONObject(j).getString("time_end").replace(".", ":").replaceAll("\\s", ""));
-                            dataStore_program.setProg_timestart(item_array_prog.getJSONObject(j).getString("time_start").replace(".", ":").replaceAll("\\s", ""));
-                            dataStore_program.setFr_channel_id(item_array_prog.getJSONObject(j).getInt("channel_id"));
-                            dataStore_program.setFr_day_id(item_array_prog.getJSONObject(j).getInt("day_id"));
-                            dataStore_program.setFr_type_id(item_array_prog.getJSONObject(j).getInt("type_id"));
-                            arrDataStore_program.add(dataStore_program);
-
-                        }
-                        selectItem(0);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Log.d("logrun2", e.toString());
-                    }
-                } else {
-                    showAlertDialog("ไม่สามารถโหลดข้อมูลได้");
-                    Log.d("logrun2", "Object is Null");
-                }
-
-            }
-        });
-    }
-
-    */
 
     private void loadData() {
         getVersionFromUrl();

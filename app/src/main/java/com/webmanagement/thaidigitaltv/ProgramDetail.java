@@ -1,62 +1,40 @@
 package com.webmanagement.thaidigitaltv;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.DeviceFinder;
 import com.sec.android.allshare.ERROR;
 import com.sec.android.allshare.control.TVController;
-import com.squareup.picasso.Picasso;
 
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 
@@ -217,8 +195,8 @@ public class ProgramDetail extends SherlockFragmentActivity {
         IV_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bt_now));
-                TV_now.startAnimation(AnimationUtils.loadAnimation(context, R.anim.bt_now));
+                v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
+                TV_now.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
 
                 setDefaultToday();
 
@@ -433,11 +411,15 @@ public class ProgramDetail extends SherlockFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getSupportMenuInflater().inflate(R.menu.activity_program_detail, menu);
-        if (haveTVinNetwork)
+        if (haveTVinNetwork) {
+            //v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
+
             menu.findItem(R.id.action_share).setVisible(true);
-        else
+        } else {
             menu.findItem(R.id.action_share).setVisible(false);
+        }
         return true;
     }
 
@@ -445,6 +427,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         Log.d("run","onOptionsItemSelected : "+item.getItemId());
+        //item.getActionView().startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
         switch (item.getItemId()){
             case android.R.id.home :
                 finish();
@@ -472,27 +455,6 @@ public class ProgramDetail extends SherlockFragmentActivity {
         chkTVinNetwork();
         super.onResume();
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
 
 
 }

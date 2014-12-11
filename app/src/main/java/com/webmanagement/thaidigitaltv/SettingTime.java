@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -240,6 +242,7 @@ public class SettingTime extends SherlockFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         Log.d("run","onOptionsItemSelected : "+item.getItemId());
+        //item.getActionView().startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
         switch (item.getItemId()){
             case android.R.id.home :
                 finish();

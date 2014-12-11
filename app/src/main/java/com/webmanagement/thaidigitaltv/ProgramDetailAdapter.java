@@ -86,6 +86,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
             getObject.IV_col_4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
                     if (arrayProgramDetail.get(position).haveindb) {
                         actionDelete(position);
 
@@ -110,6 +111,7 @@ public class ProgramDetailAdapter extends BaseAdapter {
                     IV_col_3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
                             new DialogDeviceList(context);
                         }
                     });

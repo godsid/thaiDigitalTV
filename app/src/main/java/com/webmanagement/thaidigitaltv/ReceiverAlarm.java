@@ -22,7 +22,9 @@ public class ReceiverAlarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         try {
+
             this.mContext = context;
             String prog_id = intent.getStringExtra("prog_id");
             String prog_name = intent.getStringExtra("prog_name");
