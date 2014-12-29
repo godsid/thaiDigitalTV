@@ -10,8 +10,6 @@
             android:layout_height="80dp"
             android:background="@color/BG_SeekerBar"
             android:gravity="center_vertical">
-
-
                 <ImageButton
                     android:id="@+id/iv_now"
                     android:layout_width="70dp"
@@ -21,135 +19,125 @@
                     android:background="@drawable/ic_now"
                     android:layout_alignParentTop="false"
                     android:layout_alignParentLeft="false" />
-
-            <TextView
-                android:id="@+id/tv_now"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Now"
-                android:textSize="19sp"
-                android:textColor="@color/Text_ListNormal"
-                android:layout_alignLeft="@+id/iv_now"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_alignBottom="@+id/iv_now"
-                android:layout_alignRight="@+id/iv_now"
-                android:layout_alignTop="@+id/iv_now" />
-
-                        <TextView
-                            android:id="@+id/tv_detail_day"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="พฤหัสบดี"
-                            android:textSize="19sp"
-                            android:textColor="@color/Text_SeekerBar"
-                            android:layout_alignTop="@+id/tv_detail_date"
-                            android:layout_toLeftOf="@+id/tv_detail_date"
-                            android:paddingRight="10dp" />
-
-
-                        <TextView
-                            android:id="@+id/tv_detail_date"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="30"
-                            android:textSize="19sp"
-                            android:textColor="@color/Text_SeekerBar"
-                            android:layout_alignBaseline="@+id/tv_detail_month"
-                            android:layout_alignBottom="@+id/tv_detail_month"
-                            android:layout_toLeftOf="@+id/tv_detail_month"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="5dp" />
-                        <TextView
-                            android:id="@+id/tv_detail_month"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="19sp"
-                            android:text="พฤศจิกายน"
-                            android:textColor="@color/Text_SeekerBar"
-                            android:layout_alignBaseline="@+id/tv_detail_year"
-                            android:layout_alignBottom="@+id/tv_detail_year"
-                            android:layout_toLeftOf="@+id/tv_detail_year"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="5dp" />
-                        <TextView
-                            android:id="@+id/tv_detail_year"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="19sp"
-                            android:text="2557"
-                            android:textColor="@color/Text_SeekerBar"
-                            android:layout_marginRight="26dp"
-                            android:gravity="center_horizontal"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true" />
-
+                <TextView
+                    android:id="@+id/tv_now"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Now"
+                    android:textSize="19sp"
+                    android:textColor="@color/Text_ListNormal"
+                    android:layout_alignLeft="@+id/iv_now"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_alignBottom="@+id/iv_now"
+                    android:layout_alignRight="@+id/iv_now"
+                    android:layout_alignTop="@+id/iv_now" />
+                <TextView
+                    android:id="@+id/tv_detail_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="พฤหัสบดี"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/Text_SeekerBar"
+                    android:paddingRight="10dp"
+                    android:layout_toLeftOf="@+id/tv_detail_date"
+                    android:layout_alignBaseline="@+id/tv_detail_year"/>
+                <TextView
+                    android:id="@+id/tv_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/Text_SeekerBar"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/tv_detail_month"
+                    android:layout_alignBaseline="@+id/tv_detail_year"/>
+                <TextView
+                    android:id="@+id/tv_detail_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="พฤศจิกายน"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/Text_SeekerBar"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/tv_detail_year"
+                    android:layout_alignBaseline="@+id/tv_detail_year"/>
+                <TextView
+                    android:id="@+id/tv_detail_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2557"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/Text_SeekerBar"
+                    android:layout_marginRight="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="10dp"/>
         </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:baselineAligned="false"
-        android:textColor="@color/Text_TableHeader"
-        android:orientation="horizontal"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@drawable/bg_header_table"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
-
-        <TextView
-            android:id="@+id/tv_header_program"
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_program"
+            android:layout_height="50dp"
+            android:baselineAligned="false"
             android:textColor="@color/Text_TableHeader"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_header_time"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" />
-        <TextView
-            android:id="@+id/tv_header_time"
-            android:layout_width="85dp"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="@string/tb_header_time"
-            android:textColor="@color/Text_TableHeader"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_header_status"
-            android:layout_marginRight="15dp" />
-        <TextView
-            android:id="@+id/tv_header_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_status"
-            android:textColor="@color/Text_TableHeader"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_header_fav"
-            android:layout_marginRight="15dp" />
-        <TextView
-            android:id="@+id/tv_header_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/tb_header_fav"
-            android:textColor="@color/Text_TableHeader"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp" />
-    </RelativeLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@color/BG_TableHeader"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+                <TextView
+                    android:id="@+id/tv_header_program"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tb_header_program"
+                    android:textColor="@color/Text_TableHeader"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_header_time"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" />
+                <TextView
+                    android:id="@+id/tv_header_time"
+                    android:layout_width="85dp"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/tb_header_time"
+                    android:textColor="@color/Text_TableHeader"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_header_status"
+                    android:layout_marginRight="15dp" />
+                <TextView
+                    android:id="@+id/tv_header_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tb_header_status"
+                    android:textColor="@color/Text_TableHeader"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_header_fav"
+                    android:layout_marginRight="15dp" />
+                <TextView
+                    android:id="@+id/tv_header_fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tb_header_fav"
+                    android:textColor="@color/Text_TableHeader"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp" />
+        </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_program_detail"
         android:layout_width="fill_parent"
