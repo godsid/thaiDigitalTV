@@ -31,10 +31,10 @@
                 android:textSize="19sp"
                 android:textColor="@color/Text_ListNormal"
                 android:layout_alignLeft="@+id/iv_now"
-                android:layout_toLeftOf="@+id/sb_detail_date"
-                android:layout_alignTop="@+id/tv_detail_day"
-                android:layout_alignBottom="@+id/sb_detail_date"
-                android:gravity="center_vertical|center_horizontal" />
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_alignBottom="@+id/iv_now"
+                android:layout_alignRight="@+id/iv_now"
+                android:layout_alignTop="@+id/iv_now" />
 
                         <TextView
                             android:id="@+id/tv_detail_day"
@@ -44,10 +44,9 @@
                             android:text="พฤหัสบดี"
                             android:textSize="19sp"
                             android:textColor="@color/Text_SeekerBar"
-                            android:layout_alignTop="@+id/iv_now"
+                            android:layout_alignTop="@+id/tv_detail_date"
                             android:layout_toLeftOf="@+id/tv_detail_date"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="5dp" />
+                            android:paddingRight="10dp" />
 
 
                         <TextView
@@ -84,23 +83,10 @@
                             android:textSize="19sp"
                             android:text="2557"
                             android:textColor="@color/Text_SeekerBar"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_alignParentRight="true"
-                            android:gravity="center_horizontal" />
-
-                    <SeekBar
-                        android:secondaryProgress="@android:integer/config_shortAnimTime"
-                        android:id="@+id/sb_detail_date"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:progressDrawable="@drawable/scrubber_progress"
-                        android:thumb="@drawable/scrubber_control"
-                        android:thumbOffset="5dp"
-                        android:layout_alignBottom="@+id/iv_now"
-                        android:layout_toRightOf="@+id/iv_now"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="15dp" />
+                            android:layout_marginRight="26dp"
+                            android:gravity="center_horizontal"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true" />
 
         </RelativeLayout>
     <RelativeLayout
@@ -164,22 +150,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp" />
     </RelativeLayout>
-
-
-            <ListView
-                android:id="@+id/lv_program_detail"
-                android:divider="@color/BG_ListDividerNormal"
-                android:dividerHeight="1dp"
-                android:clickable="false"
-                android:choiceMode="none"
-                android:background="@color/BG_List"
-                android:listSelector="@color/BG_List"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="2dp"
-                android:layout_gravity="center_horizontal"/>
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_program_detail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

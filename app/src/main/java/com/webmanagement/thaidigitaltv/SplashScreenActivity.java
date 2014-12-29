@@ -5,53 +5,46 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteCursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.sec.android.allshare.Device;
-import com.sec.android.allshare.DeviceFinder;
-import com.sec.android.allshare.ERROR;
-import com.sec.android.allshare.ServiceConnector;
-import com.sec.android.allshare.ServiceProvider;
 
 
 public class SplashScreenActivity extends Activity {
 
-    Handler handler;
-    Runnable runnable;
     Context context;
+    private DatabaseAction dbAction;
+    int versionFromLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         context = SplashScreenActivity.this;
+        dbAction = new DatabaseAction(context);
         openFirst();
-        /*
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        };
-        */
 
     }
 
-    private void openFirst() {
-        if (!isConnectingToInternet()) {
-            showAlertDialog();
+    private void getVersionFromLocal() {
+        SQLiteCursor cur = (SQLiteCursor) dbAction.readVersion();
+        if(cur.getCount() == 0) {
+            versionFromLocal = 0;
         } else {
+            versionFromLocal = cur.getInt(0);
+        }
+        Log.d("run", "Ver From Local : " + versionFromLocal);
+        cur.close();
+    }
 
+    private void openFirst() {
+        chkConnectToInternet();
+        getVersionFromLocal();
+        if (!GlobalVariable.isOnlineMode() && versionFromLocal == 0) {
+            showAlertDialog();
+        } else{
             Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -62,11 +55,12 @@ public class SplashScreenActivity extends Activity {
 
 
     private void showAlertDialog() {
-        String s = "ไม่สามารถเชื่อมกับต่อเครือข่ายได้";
+        String s = "กรุณาเชื่อมต่อกับเครือข่ายในครั้งแรก";
         AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "เกิดข้อผิดพลาด", s);
         builder.setNegativeButton("ลองอีกครั้ง",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         openFirst();
                     }
                 });
@@ -82,7 +76,7 @@ public class SplashScreenActivity extends Activity {
     }
 
 
-    public boolean isConnectingToInternet() {
+    public void chkConnectToInternet() {
         boolean b = false;
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
@@ -96,7 +90,7 @@ public class SplashScreenActivity extends Activity {
         } else {
             b = false;
         }
-        return b;
+        GlobalVariable.setOnlineMode(b);
     }
 
     @Override

@@ -116,11 +116,23 @@ public class DatabaseAction {
         return cnt;
     }
 
-    public Cursor readFavoriteById(int id) {
-        String countQuery = "SELECT  * FROM " + TB_Favorite + " WHERE " + f_program_id + "=" + id;
+    public Cursor readProgByChanDayId(int chan ,int day,String shortby) {
+        if (shortby.equals(""))
+            shortby = "";
+        else
+            shortby = " ORDER BY "+shortby;
+        String countQuery = "SELECT  * FROM " + TB_Program + " WHERE " +day_id+"="+day
+                +" AND "+fk_channel_id+"="+chan
+                +shortby;
         Cursor cursor = database.rawQuery(countQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
         return cursor;
     }
+
+
+
 
 
     public boolean deleteAllFavoriteProgram() {

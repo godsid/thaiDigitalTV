@@ -22,7 +22,7 @@ public class ServiceAlarm extends Service {
 
 
     String program_name,channel_name,time_start;
-    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+    String[] arr_day = new String[]{"","อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
 
     @Override
     public void onCreate() {

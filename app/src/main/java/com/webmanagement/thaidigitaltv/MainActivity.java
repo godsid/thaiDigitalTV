@@ -286,9 +286,14 @@ public class MainActivity extends SherlockFragmentActivity {
 
 
     private void loadData() {
-        getVersionFromUrl();
-        selectItem(1);
-        selectItem(0);
+        if (!GlobalVariable.isOnlineMode()) {
+            Log.d("run", "GlobalVariable.isOnlineMode() "+GlobalVariable.isOnlineMode());
+            loadDataFromLocal();
+        } else {
+            getVersionFromUrl();
+            selectItem(1);
+            selectItem(0);
+        }
     }
 
     private void loadDataFromLocal() {
@@ -300,6 +305,7 @@ public class MainActivity extends SherlockFragmentActivity {
         loadType();
         selectItem(1);
         selectItem(0);
+        progressDialog.cancel();
     }
 
     private void loadCategory() {
@@ -346,7 +352,6 @@ public class MainActivity extends SherlockFragmentActivity {
 
     private void loadProgram() {
         SQLiteCursor cur = (SQLiteCursor) dbAction.readProgram();
-
         while (!cur.isAfterLast()) {
 
             int prog_id = cur.getInt(0);
@@ -366,7 +371,6 @@ public class MainActivity extends SherlockFragmentActivity {
             dataStore_program.setFr_channel_id(channel_id);
             dataStore_program.setFr_type_id(type_id);
             arrDataStore_program.add(dataStore_program);
-
             cur.moveToNext();
         }
         cur.close();
@@ -525,8 +529,9 @@ public class MainActivity extends SherlockFragmentActivity {
                         getVersionFromLocal();
                         if (versionFromUrl > versionFromLocal) {
                             dbAction.deleteAllData();
-                            dbAction.updateVersion(versionFromUrl);
                             loadDataFromUrl();
+
+
                         } else {
                             loadDataFromLocal();
                         }
@@ -607,13 +612,20 @@ public class MainActivity extends SherlockFragmentActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // Simulates a background task
+            boolean chk_insert_complete = true;
 
             try {
                 Log.d("run","SaveNewVersionToDB");
                 for (int j = 0; j < arrDataStore_category.size(); j++) {
                     int a = arrDataStore_category.get(j).getCate_id();
                     String b = arrDataStore_category.get(j).getCate_name();
-                    dbAction.addCategory(a,b);
+                    long insert_complete = dbAction.addCategory(a,b);
+                    if (insert_complete <= 0) {
+                        chk_insert_complete = false;
+                        break;
+                    }
+                    Log.d("run","insert_complete "+insert_complete);
+
                 }
 
                 for (int i = 0; i < arrDataStore_channel.size(); i++) {
@@ -621,14 +633,22 @@ public class MainActivity extends SherlockFragmentActivity {
                     String b = arrDataStore_channel.get(i).getChan_name();
                     String c = arrDataStore_channel.get(i).getChan_pic();
                     int d = arrDataStore_channel.get(i).getFr_cate_id();
-                    dbAction.addChannel(a,b,dirImage.toString()+"/"+Integer.toString(a) + ".png",d);
+                    long insert_complete = dbAction.addChannel(a,b,dirImage.toString()+"/"+Integer.toString(a) + ".png",d);
+                    if (insert_complete <= 0) {
+                        chk_insert_complete = false;
+                        break;
+                    }
                     SaveImage(c,a);
                 }
 
                 for (int i = 0; i < arrDataStore_type.size(); i++) {
                     int a = arrDataStore_type.get(i).getType_id();
                     String b = arrDataStore_type.get(i).getType_name();
-                    dbAction.addType(a,b);
+                    long insert_complete = dbAction.addType(a,b);
+                    if (insert_complete <= 0) {
+                        chk_insert_complete = false;
+                        break;
+                    }
                 }
 
                 for (int j = 0; j < arrDataStore_program.size(); j++) {
@@ -640,10 +660,16 @@ public class MainActivity extends SherlockFragmentActivity {
                     int e = arrDataStore_program.get(j).getFr_day_id();
                     int f = arrDataStore_program.get(j).getFr_channel_id();
                     int g = arrDataStore_program.get(j).getFr_type_id();
-                    dbAction.addProgram(a,b,c,d,e,f,g);
+                    long insert_complete = dbAction.addProgram(a,b,c,d,e,f,g);
+                    if (insert_complete <= 0) {
+                        chk_insert_complete = false;
+                        break;
+                    }
 
                 }
-
+                if (chk_insert_complete == true)
+                    dbAction.updateVersion(versionFromUrl);
+                Log.d("run","chk_insert_complete "+chk_insert_complete);
             }
             catch (Exception e) {
             }

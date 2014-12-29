@@ -41,7 +41,7 @@ public class ListTab3  extends SherlockFragment {
     ArrayList<DataCustomDialogProgramSchedule> dataCustomDialogProgramSchedule = new ArrayList<DataCustomDialogProgramSchedule>();
     DialogProgramScheduleAdapter dialogProgramScheduleAdapter;
 
-    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+    String[] arr_day = new String[]{"","อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
 
     ListTab3Adapter listTab3Adapter;
     ArrayList<ItemGroupTab3> group_list_tab3;

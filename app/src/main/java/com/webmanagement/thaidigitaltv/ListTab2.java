@@ -68,7 +68,6 @@ public class ListTab2 extends SherlockFragment {
 
                 GlobalVariable.setChan_id(get_channel_id);
                 GlobalVariable.setChan_name(get_channel_name);
-                GlobalVariable.setChan_pic(get_channel_pic);
 
                 openDetailProgram();
                 return false;

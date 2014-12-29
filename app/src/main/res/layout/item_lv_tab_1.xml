@@ -21,14 +21,26 @@
     <TextView
         android:id="@+id/tv_title_lv_tab_1"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
         android:paddingLeft="15dp"
         android:text="new text"
         android:gravity="center_vertical"
         android:textStyle="bold"
-        android:layout_centerInParent="true"
-        android:layout_toRightOf="@+id/iv_channel_lv_tab_1"
         android:textColor="@color/Text_ListTitle"
-        />
+        android:layout_above="@+id/tv_prog_onair"
+        android:layout_toRightOf="@+id/iv_channel_lv_tab_1" />
+
+    <TextView
+        android:id="@+id/tv_prog_onair"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Simple application"
+        android:gravity="center_vertical"
+        android:textColor="@color/Text_Onair"
+        android:singleLine="true"
+        android:paddingLeft="15dp"
+        android:layout_alignBottom="@+id/iv_channel_lv_tab_1"
+        android:layout_alignLeft="@+id/tv_title_lv_tab_1" />
 </RelativeLayout>

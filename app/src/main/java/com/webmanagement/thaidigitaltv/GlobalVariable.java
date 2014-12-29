@@ -1,20 +1,14 @@
 package com.webmanagement.thaidigitaltv;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sec.android.allshare.Device;
 import com.sec.android.allshare.ServiceConnector;
 import com.sec.android.allshare.ServiceProvider;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,40 +17,45 @@ import java.util.ArrayList;
  */
 public class GlobalVariable {
 
-    private static ArrayList<Integer> arrProg_id = new ArrayList<Integer>();
-    private static ArrayList<String> arrProg_name = new ArrayList<String>();
-    private static ArrayList<String> arrProg_timestart = new ArrayList<String>();
-    private static ArrayList<String> arrProg_timeend = new ArrayList<String>();
 
     private static ArrayList<Integer> arrFav_Prog_id = new ArrayList<Integer>();
     private static ArrayList<String> arrFav_Prog_name = new ArrayList<String>();
 
-    private static int Item_selected;
-    private static int Day_id;
-
     private static int Chan_id;
     private static String Chan_name;
-    private static String Chan_pic;
 
     private static int Prog_id;
-    private static String Prog_name;
-    private static String Prog_timestart;
-    private static String Prog_timeend;
-
 
     private static Device mDevice = null;
     private static ServiceProvider mServiceProvider = null;
     public static ArrayList<Device> arrDeviceList = null;
 
-    private static boolean confDialog;
+    private static boolean isOnlineMode;
 
-    public static void clearAllArray() {
-        arrProg_id.clear();
-        arrProg_name.clear();
-        arrProg_timestart.clear();
-        arrProg_timeend.clear();
+    private static int MAX_DAY_OF_MONTH;
 
+    private static boolean HaveTVNetwork = false;
+
+
+
+
+
+    public static boolean isHaveTVNetwork() {
+        return HaveTVNetwork;
     }
+
+    public static void setHaveTVNetwork(boolean haveTVNetwork) {
+        HaveTVNetwork = haveTVNetwork;
+    }
+
+    public static int getMAX_DAY_OF_MONTH() {
+        return MAX_DAY_OF_MONTH;
+    }
+
+    public static void setMAX_DAY_OF_MONTH(int MAX_DAY_OF_MONTH) {
+        GlobalVariable.MAX_DAY_OF_MONTH = MAX_DAY_OF_MONTH;
+    }
+
 
     public static void clearFavArray() {
         arrFav_Prog_id.clear();
@@ -88,22 +87,14 @@ public class GlobalVariable {
     }
 
 
-    public static int getItem_selected() {
-        return Item_selected;
+    public static boolean isOnlineMode() {
+        return isOnlineMode;
     }
 
-    public static void setItem_selected(int item_selected) {
-        Item_selected = item_selected;
+    public static void setOnlineMode(boolean isOnlineMode) {
+        GlobalVariable.isOnlineMode = isOnlineMode;
     }
 
-
-    public static int getDay_id() {
-        return Day_id;
-    }
-
-    public static void setDay_id(int day_id) {
-        Day_id = day_id;
-    }
 
     public static int getChan_id() {
         return Chan_id;
@@ -121,77 +112,12 @@ public class GlobalVariable {
         Chan_name = chan_name;
     }
 
-    public static String getChan_pic() {
-        return Chan_pic;
-    }
-
-    public static void setChan_pic(String chan_pic) {
-        Chan_pic = chan_pic;
-    }
-
     public static int getProg_id() {
         return Prog_id;
     }
 
     public static void setProg_id(int prog_id) {
         Prog_id = prog_id;
-    }
-
-    public static String getProg_name() {
-        return Prog_name;
-    }
-
-    public static void setProg_name(String prog_name) {
-        Prog_name = prog_name;
-    }
-
-    public static String getProg_timestart() {
-        return Prog_timestart;
-    }
-
-    public static void setProg_timestart(String prog_timestart) {
-        Prog_timestart = prog_timestart;
-    }
-
-    public static String getProg_timeend() {
-        return Prog_timeend;
-    }
-
-    public static void setProg_timeend(String prog_timeend) {
-        Prog_timeend = prog_timeend;
-    }
-
-
-    public static int getArrProg_id(int i) {
-        return arrProg_id.get(i);
-    }
-
-    public static void addArrProg_id(int j) {
-        arrProg_id.add(j);
-    }
-
-    public static String getArrProg_name(int i) {
-        return arrProg_name.get(i);
-    }
-
-    public static void addArrProg_name(String j) {
-        arrProg_name.add(j);
-    }
-
-    public static String getArrProg_timestart(int i) {
-        return arrProg_timestart.get(i);
-    }
-
-    public static void addArrProg_timestart(String j) {
-        arrProg_timestart.add(j);
-    }
-
-    public static String getArrProg_timeend(int i) {
-        return arrProg_timeend.get(i);
-    }
-
-    public static void addArrProg_timeend(String j) {
-        arrProg_timeend.add(j);
     }
 
     public static int getArrFav_Prog_id(int i) {
@@ -223,16 +149,6 @@ public class GlobalVariable {
         return builder;
     }
 
-
-    public static boolean userChoosed(boolean b) {
-
-        if (b)
-            //YOUR CODE FOR YES HERE
-            return true;
-        else
-            return false;
-
-    }
 
 
 }

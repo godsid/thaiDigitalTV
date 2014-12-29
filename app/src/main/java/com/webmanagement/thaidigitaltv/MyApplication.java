@@ -23,6 +23,7 @@ public class MyApplication extends Application {
                 mTrackers.put(trackerId, t);
             }
         }
+
         return mTrackers.get(trackerId);
     }
 }

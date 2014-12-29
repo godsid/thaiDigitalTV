@@ -24,8 +24,6 @@ public class MainPager extends SherlockFragment {
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         // Set the ViewPagerAdapter into ViewPager
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
-
-
         return view;
     }
 

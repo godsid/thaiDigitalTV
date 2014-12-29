@@ -1,5 +1,6 @@
 package com.webmanagement.thaidigitaltv;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,13 +30,17 @@ public class ProgramDetailAdapter extends BaseAdapter {
     getObject getObject;
 
     Context context;
+    Activity activity;
     private int position_for_delete;
     DatabaseAction dbAction;
     int p;
+    private int prog_id;
+    private String prog_name;
 
 
     public ProgramDetailAdapter(Context context2, ArrayList<DataCustomProgramDetail> arrayList) {
         context = context2;
+        activity = (Activity)context2;
         this.arrayProgramDetail = arrayList;
         mInflater = LayoutInflater.from(context);
         dbAction = new DatabaseAction(context);
@@ -99,14 +104,15 @@ public class ProgramDetailAdapter extends BaseAdapter {
                         intent.putExtra("i_Day_id", arrayProgramDetail.get(position).did);
                         intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
                         intent.putExtra("i_Action_type", "add");
-                        context.startActivity(intent);
+                        activity.startActivity(intent);
+                        //context.(intent);
                     }
                 }
             });
 
             if (arrayProgramDetail.get(position).st) {
                 //convertView.setSelected(true);
-                if (ProgramDetail.haveTVinNetwork) {
+                if (GlobalVariable.isHaveTVNetwork()) {
                     IV_col_3.setImageResource(R.drawable.ic_share);
                     IV_col_3.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -141,16 +147,19 @@ public class ProgramDetailAdapter extends BaseAdapter {
 
     public void actionDelete(int p) {
         position_for_delete = p;
-        String s = "คุณแน่ใจที่จะลบรายการ " + GlobalVariable.getArrProg_name(position_for_delete) + " ออกจากรายการโปรดหรือไม่";
+        prog_id = arrayProgramDetail.get(position_for_delete).id;
+        prog_name = arrayProgramDetail.get(position_for_delete).pname;
+       // Log.d("run",position_for_delete+" "+GlobalVariable.getArrProg_id(position_for_delete)+" "+arrayProgramDetail.get(position_for_delete).id);
+        String s = "คุณแน่ใจที่จะลบรายการ " + prog_name + " ออกจากรายการโปรดหรือไม่";
         AlertDialog.Builder builder = GlobalVariable.simpleDialogTemplate(context, "ยืนยัน", s);
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        boolean chkDeleted = dbAction.deleteFavoriteProgram(GlobalVariable.getArrProg_id(position_for_delete));
+                        boolean chkDeleted = dbAction.deleteFavoriteProgram(prog_id);
                         if (chkDeleted) {
                             Toast.makeText(context, "Delete Complete", Toast.LENGTH_SHORT).show();
 
-                            ProgramDetail.arrHoldProg_idDB.add(arrayProgramDetail.get(position_for_delete).id);
+                          //  FragmentProgramDetail.arrHoldProg_idDB.add(arrayProgramDetail.get(position_for_delete).id);
                             arrayProgramDetail.get(position_for_delete).haveindb = false;
                             getObject.IV_col_4.setImageResource(R.drawable.ic_add);
                             notifyDataSetChanged();

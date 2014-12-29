@@ -40,7 +40,7 @@ public class SettingTime extends SherlockFragmentActivity {
 
     boolean addSuccess = false;
 
-    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+    String[] arr_day = new String[]{"","อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     Context context;
 
     Bundle bundle;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/lv_program_detail"
+        android:divider="@color/BG_ListDividerNormal"
+        android:dividerHeight="1dp"
+        android:clickable="false"
+        android:choiceMode="none"
+        android:background="@color/BG_List"
+        android:listSelector="@color/BG_List"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

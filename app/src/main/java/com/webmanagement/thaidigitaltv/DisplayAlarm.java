@@ -31,7 +31,7 @@ public class DisplayAlarm extends Activity {
     private DatabaseAction dbAction;
     int prog_id = 0, day_id, repeat_id;
     String time_before;
-    String[] arr_day = new String[]{"อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
+    String[] arr_day = new String[]{"","อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"};
     int progress1;
     //boolean haveTVinNetwork = false;
     Context context;

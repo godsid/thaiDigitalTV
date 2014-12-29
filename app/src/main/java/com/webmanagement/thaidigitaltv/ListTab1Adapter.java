@@ -26,7 +26,6 @@ public class ListTab1Adapter extends BaseAdapter {
 
     ArrayList<DataCustomListTab1> arrayList = new ArrayList<DataCustomListTab1>();
     private LayoutInflater mInflater;
-    private DataCustomListTab1 dataCustomListTab1;
     AQuery aq;
     Context context2;
 
@@ -61,10 +60,11 @@ public class ListTab1Adapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.item_lv_tab_1, null);
         }
         TextView tv_title_lv_tab_1 = (TextView) convertView.findViewById(R.id.tv_title_lv_tab_1);
+        TextView tv_prog_onair = (TextView) convertView.findViewById(R.id.tv_prog_onair);
         ImageView iv_title_lv_tab_1 = (ImageView) convertView.findViewById(R.id.iv_channel_lv_tab_1);
         tv_title_lv_tab_1.setText(arrayList.get(position).ch_name);
+        tv_prog_onair.setText(arrayList.get(position).prog_onair);
         aq.id(iv_title_lv_tab_1).image(arrayList.get(position).ch_pic);
-
         Animation animation = null;
         animation = AnimationUtils.loadAnimation(context2, R.anim.fade_in);
         animation.setDuration(500);
@@ -79,13 +79,14 @@ public class ListTab1Adapter extends BaseAdapter {
 
 
 class DataCustomListTab1 {
-    String ch_name, ch_pic;
+    String ch_name, ch_pic, prog_onair;
     int ch_id;
 
-    public DataCustomListTab1(int ch_id, String ch_name, String ch_pic) {
+    public DataCustomListTab1(int ch_id, String ch_name, String ch_pic,String prog_onair) {
         this.ch_name = ch_name;
         this.ch_pic = ch_pic;
         this.ch_id = ch_id;
+        this.prog_onair = prog_onair;
     }
 
 
