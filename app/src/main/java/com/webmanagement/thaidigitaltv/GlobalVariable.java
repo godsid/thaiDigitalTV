@@ -38,6 +38,16 @@ public class GlobalVariable {
 
 
 
+    private static int firstVisible;
+
+
+    public static int getFirstVisible() {
+        return firstVisible;
+    }
+
+    public static void setFirstVisible(int firstVisible) {
+        GlobalVariable.firstVisible = firstVisible;
+    }
 
 
     public static boolean isHaveTVNetwork() {

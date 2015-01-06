@@ -23,14 +23,14 @@ import java.util.Date;
  */
 public class FragmentProgramDetail extends SherlockFragment {
 
-    private static ListView LV_program_detail;
+    ListView LV_program_detail;
     DatabaseAction dbAction;
     View rootView;
     Context context;
     Activity activity;
     AQuery aq;
-    private static int scoreFirstVisible = 0;
-    private static ProgramDetailAdapter programDetailAdapter;
+    int scoreFirstVisible = 0;
+    ProgramDetailAdapter programDetailAdapter;
     ArrayList<DataCustomProgramDetail> dataCustomProgramDetail = new ArrayList<DataCustomProgramDetail>();
     Calendar calendar;
     public static ArrayList<Integer> arrHoldProg_idDB = new ArrayList<Integer>();
@@ -131,6 +131,7 @@ public class FragmentProgramDetail extends SherlockFragment {
                                 //  Log.d("run", c + " : " + TimeNow + " NOW " + TS + " - " + TE);
                                 status_onair = true;
                                 scoreFirstVisible = c;
+                                GlobalVariable.setFirstVisible(scoreFirstVisible);
 
                             }
                         } else {
@@ -167,10 +168,6 @@ public class FragmentProgramDetail extends SherlockFragment {
     }
 
 
-    public static void setDefaultSelection() {
-        LV_program_detail.setSelection(5);
-        Log.d("run","setDefaultSelection "+scoreFirstVisible);
-    }
 
     @Override
     public void onResume() {

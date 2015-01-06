@@ -104,7 +104,8 @@ public class ProgramDetailAdapter extends BaseAdapter {
                         intent.putExtra("i_Day_id", arrayProgramDetail.get(position).did);
                         intent.putExtra("i_Chan_name", GlobalVariable.getChan_name());
                         intent.putExtra("i_Action_type", "add");
-                        activity.startActivity(intent);
+                       //activity.startActivity(intent);
+                        activity.startActivityForResult(intent,123);
                         //context.(intent);
                     }
                 }

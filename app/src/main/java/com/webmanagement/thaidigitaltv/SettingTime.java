@@ -140,6 +140,7 @@ public class SettingTime extends SherlockFragmentActivity {
         }
         if (addSuccess) {
             Toast.makeText(getApplicationContext(), "สำเร็จ : ทำรายการเรียบร้อย", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
             finish();
         } else {
             Toast.makeText(getApplicationContext(), "ผิดพลาด : ไม่สามารถเพิ่มรายการได้", Toast.LENGTH_SHORT).show();
@@ -241,7 +242,7 @@ public class SettingTime extends SherlockFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
-        Log.d("run","onOptionsItemSelected : "+item.getItemId());
+        //Log.d("run","onOptionsItemSelected : "+item.getItemId());
         //item.getActionView().startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
         switch (item.getItemId()){
             case android.R.id.home :

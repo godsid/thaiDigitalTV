@@ -59,6 +59,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
     int current_year;
     int current_date;
 
+    int current_page = 0;
 
     ImageView  IV_now;
 
@@ -67,7 +68,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
 
     private ActionBar actionBar;
     private ViewPager viewPager;
-
+    FragmentProgramDetail dd;
     FragmentProgramDetailAdapter fragmentProgramDetailAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
         date = new Date();
         dbAction = new DatabaseAction(this);
         actionBar = getSupportActionBar();
+
 
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -138,8 +140,10 @@ public class ProgramDetail extends SherlockFragmentActivity {
 
         fragmentProgramDetailAdapter = new FragmentProgramDetailAdapter(fm);
         viewPager.setAdapter(fragmentProgramDetailAdapter);
-        viewPager.setCurrentItem(current_date-1);
-
+        viewPager.setCurrentItem(current_date - 1);
+        Log.d("run", "current_date-1 " + (current_date - 1));
+        current_page = (current_date-1);
+        dd = (FragmentProgramDetail)fragmentProgramDetailAdapter.getItem(1);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
@@ -153,7 +157,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
                 int c_day = calendar.get(Calendar.DAY_OF_WEEK);
                 TV_detail_day.setText(arr_day[c_day]);
                 Log.d("run","onPageSelected "+i+" "+c_day);
-
+                current_page = i;
             }
 
             @Override
@@ -168,7 +172,6 @@ public class ProgramDetail extends SherlockFragmentActivity {
                 v.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
                 TV_now.startAnimation(AnimationUtils.loadAnimation(context, R.anim.button_anim_pressed));
                 viewPager.setCurrentItem(current_date-1);
-                FragmentProgramDetail.setDefaultSelection();
 
             }
         });
@@ -225,12 +228,14 @@ public class ProgramDetail extends SherlockFragmentActivity {
         public void onDeviceAdded(Device.DeviceType deviceType, Device device, ERROR error) {
             Log.d("run", "onDeviceAdded");
             chkTVinNetwork();
+            dd.programDetailAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onDeviceRemoved(Device.DeviceType deviceType, Device device, ERROR error) {
             Log.d("run", "onDeviceRemoved");
             chkTVinNetwork();
+            dd.programDetailAdapter.notifyDataSetChanged();
         }
     };
 
@@ -238,12 +243,14 @@ public class ProgramDetail extends SherlockFragmentActivity {
         @Override
         public void onStringChanged(TVController tv, String text, ERROR result) {
             chkTVinNetwork();
+            dd.programDetailAdapter.notifyDataSetChanged();
             Log.d("run", "IEventListener");
         }
 
         @Override
         public void onDisconnected(TVController tv, ERROR result) {
             chkTVinNetwork();
+            dd.programDetailAdapter.notifyDataSetChanged();
             Log.d("run", "onDisconnected");
         }
 
@@ -294,8 +301,20 @@ public class ProgramDetail extends SherlockFragmentActivity {
     @Override
     protected void onResume() {
         chkTVinNetwork();
-        //FragmentProgramDetail.programDetailAdapter.notifyDataSetChanged();
+
         super.onResume();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==123 && requestCode==RESULT_OK){
+            dd.programDetailAdapter.notifyDataSetChanged();
+
+        }
+
+        Log.d("run",requestCode+" "+resultCode+" ");
     }
 
     @Override
