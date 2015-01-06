@@ -178,6 +178,7 @@ public class ProgramDetail extends SherlockFragmentActivity {
 
 
         chkTVinNetwork();
+
     } //End Oncreate
 
 
@@ -255,8 +256,6 @@ public class ProgramDetail extends SherlockFragmentActivity {
         }
 
     };
-
-
 
 
     @Override
